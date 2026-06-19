@@ -1743,7 +1743,7 @@ git commit -m "feat: add knowledge ingestion services"
 
 After commit and review, append `⭐` to the Task 4 heading.
 
-## Task 5: RBAC-Protected Knowledge REST API
+## Task 5: RBAC-Protected Knowledge REST API ⭐
 
 **Files:**
 - Create request/response records under `backend/src/main/java/com/example/aiticket/knowledge/web/`
@@ -1954,6 +1954,7 @@ public class KnowledgeDocumentController {
     @GetMapping("/{id}/chunks")
     @PreAuthorize("hasAuthority('knowledge:document:view')")
     public ApiResponse<List<ChunkResponse>> chunks(@PathVariable Long id) {
+        documentService.getDocument(id);
         return ApiResponse.ok(chunkMapper.findByDocumentId(id).stream().map(ChunkResponse::from).toList());
     }
 }
@@ -2021,7 +2022,7 @@ mvn test -Dtest=KnowledgeDocumentControllerTest,KnowledgeSearchControllerTest
 
 Expected: controller tests pass, including create-with-ingestion-failure response, not-found behavior, and key `@PreAuthorize` annotations.
 
-- [ ] **Step 5: Commit Task 5**
+- [x] **Step 5: Commit Task 5**
 
 Run:
 
