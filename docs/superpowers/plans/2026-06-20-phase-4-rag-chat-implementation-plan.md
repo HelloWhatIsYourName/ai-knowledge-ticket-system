@@ -203,21 +203,21 @@ git add backend/src/main/java/com/example/aiticket/ai/rag/service/RagChatService
 git commit -m "feat: add rag chat orchestration service"
 ```
 
-## Task 5: REST and SSE API
+## Task 5: REST and SSE API ⭐
 
 **Files:**
 - Create: `backend/src/main/java/com/example/aiticket/ai/rag/web/*.java`
 - Test: `backend/src/test/java/com/example/aiticket/ai/rag/web/RagChatControllerTest.java`
 
-- [ ] **Step 1: Write controller tests**
+- [x] **Step 1: Write controller tests**
 
 Cover HTTP ask response mapping, SSE token/metadata behavior with a fake service, session list mapping, message list mapping, and validation for blank questions.
 
-- [ ] **Step 2: Implement DTOs**
+- [x] **Step 2: Implement DTOs**
 
 Create request/response records with validation annotations and no vector fields.
 
-- [ ] **Step 3: Implement controller**
+- [x] **Step 3: Implement controller**
 
 Add:
 
@@ -230,14 +230,14 @@ GET  /api/ai/chat/sessions/{sessionId}/messages
 
 Use `@PreAuthorize("hasAuthority('ai:chat:ask')")` and `@PreAuthorize("hasAuthority('ai:chat:history:view')")`.
 
-- [ ] **Step 4: Run focused tests**
+- [x] **Step 4: Run focused tests**
 
 ```bash
 cd backend
 JAVA_HOME=/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home PATH=/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home/bin:$PATH mvn -Dmaven.repo.local=/Users/xianghuaifeng/Documents/毕业设计/.worktrees/knowledge-live-verification/.m2repo -Dtest=RagChatControllerTest test
 ```
 
-- [ ] **Step 5: Commit Task 5**
+- [x] **Step 5: Commit Task 5**
 
 ```bash
 git add backend/src/main/java/com/example/aiticket/ai/rag/web backend/src/test/java/com/example/aiticket/ai/rag/web/RagChatControllerTest.java
