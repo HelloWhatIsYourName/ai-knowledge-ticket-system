@@ -27,7 +27,11 @@ public class KnowledgeDocumentService {
     }
 
     public KnowledgeDocument getDocument(Long id) {
-        return documentMapper.findById(id);
+        KnowledgeDocument document = documentMapper.findById(id);
+        if (document == null) {
+            throw new KnowledgeDocumentNotFoundException(id);
+        }
+        return document;
     }
 
     public List<KnowledgeDocument> listRecent(int limit) {
@@ -35,11 +39,15 @@ public class KnowledgeDocumentService {
     }
 
     public void setEnabled(Long id, boolean enabled) {
-        documentMapper.updateEnabled(id, enabled ? 1 : 0);
+        if (documentMapper.updateEnabled(id, enabled ? 1 : 0) == 0) {
+            throw new KnowledgeDocumentNotFoundException(id);
+        }
     }
 
     public void resetForRetry(Long id) {
-        documentMapper.resetForRetry(id);
+        if (documentMapper.resetForRetry(id) == 0) {
+            throw new KnowledgeDocumentNotFoundException(id);
+        }
         parseQueue.enqueueParseAndEmbed(id, 0);
     }
 }

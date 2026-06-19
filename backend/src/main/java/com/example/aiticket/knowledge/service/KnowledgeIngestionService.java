@@ -12,7 +12,6 @@ import com.example.aiticket.knowledge.mapper.KnowledgeChunkMapper;
 import com.example.aiticket.knowledge.mapper.KnowledgeDocumentMapper;
 import com.example.aiticket.vector.OracleVectorLiteral;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -44,7 +43,6 @@ public class KnowledgeIngestionService {
         this.aiProviderProperties = aiProviderProperties;
     }
 
-    @Transactional
     public void ingestText(Long documentId, String title, Long categoryId, String text) {
         documentMapper.updateParseStatus(documentId, KnowledgeParseStatus.PARSING, null);
         try {

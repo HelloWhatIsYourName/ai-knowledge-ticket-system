@@ -1749,8 +1749,13 @@ After commit and review, append `⭐` to the Task 4 heading.
 - Create request/response records under `backend/src/main/java/com/example/aiticket/knowledge/web/`
 - Create: `backend/src/main/java/com/example/aiticket/knowledge/web/KnowledgeDocumentController.java`
 - Create: `backend/src/main/java/com/example/aiticket/knowledge/web/KnowledgeSearchController.java`
+- Create: `backend/src/main/java/com/example/aiticket/knowledge/service/KnowledgeDocumentNotFoundException.java`
+- Modify: `backend/src/main/java/com/example/aiticket/knowledge/service/KnowledgeDocumentService.java`
+- Modify: `backend/src/main/java/com/example/aiticket/knowledge/service/KnowledgeIngestionService.java`
+- Test: `backend/src/test/java/com/example/aiticket/knowledge/web/KnowledgeDocumentControllerTest.java`
+- Test: `backend/src/test/java/com/example/aiticket/knowledge/web/KnowledgeSearchControllerTest.java`
 
-- [ ] **Step 1: Create web DTOs**
+- [x] **Step 1: Create web DTOs**
 
 Create:
 
@@ -1860,7 +1865,7 @@ public record SearchKnowledgeResponse(
 }
 ```
 
-- [ ] **Step 2: Implement document controller**
+- [x] **Step 2: Implement document controller**
 
 Create `backend/src/main/java/com/example/aiticket/knowledge/web/KnowledgeDocumentController.java`:
 
@@ -1904,8 +1909,12 @@ public class KnowledgeDocumentController {
     public ApiResponse<DocumentResponse> createTextDocument(@Valid @RequestBody CreateTextDocumentRequest request,
                                                             @AuthenticationPrincipal AuthenticatedUser user) {
         Long categoryId = request.categoryId() == null ? 1L : request.categoryId();
-        Long documentId = documentService.createTextDocument(request.title(), categoryId, request.content(), user.userId());
-        ingestionService.ingestText(documentId, request.title(), categoryId, request.content());
+        Long documentId = documentService.createTextDocument(request.title(), categoryId, request.content(), user.id());
+        try {
+            ingestionService.ingestText(documentId, request.title(), categoryId, request.content());
+        } catch (RuntimeException ex) {
+            return ApiResponse.ok(DocumentResponse.from(documentService.getDocument(documentId)));
+        }
         return ApiResponse.ok(DocumentResponse.from(documentService.getDocument(documentId)));
     }
 
@@ -1950,7 +1959,7 @@ public class KnowledgeDocumentController {
 }
 ```
 
-- [ ] **Step 3: Implement search controller**
+- [x] **Step 3: Implement search controller**
 
 Create `backend/src/main/java/com/example/aiticket/knowledge/web/KnowledgeSearchController.java`:
 
@@ -1992,7 +2001,7 @@ public class KnowledgeSearchController {
 }
 ```
 
-- [ ] **Step 4: Run compile and unit tests**
+- [x] **Step 4: Run compile and unit tests**
 
 Run:
 
@@ -2003,12 +2012,21 @@ mvn test
 
 Expected: all unit tests pass.
 
+This task also adds focused controller boundary tests without Mockito:
+
+```bash
+cd backend
+mvn test -Dtest=KnowledgeDocumentControllerTest,KnowledgeSearchControllerTest
+```
+
+Expected: controller tests pass, including create-with-ingestion-failure response, not-found behavior, and key `@PreAuthorize` annotations.
+
 - [ ] **Step 5: Commit Task 5**
 
 Run:
 
 ```bash
-git add backend/src/main/java/com/example/aiticket/knowledge/web docs/superpowers/plans/2026-06-19-knowledge-base-vector-retrieval-implementation-plan.md
+git add backend/src/main/java/com/example/aiticket/knowledge/web backend/src/main/java/com/example/aiticket/knowledge/service/KnowledgeDocumentNotFoundException.java backend/src/main/java/com/example/aiticket/knowledge/service/KnowledgeDocumentService.java backend/src/main/java/com/example/aiticket/knowledge/service/KnowledgeIngestionService.java backend/src/test/java/com/example/aiticket/knowledge/web docs/superpowers/plans/2026-06-19-knowledge-base-vector-retrieval-implementation-plan.md
 git commit -m "feat: add knowledge REST API"
 ```
 
