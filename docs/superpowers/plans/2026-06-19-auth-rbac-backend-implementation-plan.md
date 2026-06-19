@@ -1136,7 +1136,7 @@ git commit -m "feat: add jwt security filter chain"
 **Files:**
 - Modify: `docs/superpowers/plans/2026-06-19-auth-rbac-backend-implementation-plan.md`
 
-- [ ] **Step 1: Start Docker services if needed**
+- [x] **Step 1: Start Docker services if needed** ⭐
 
 Run:
 
@@ -1152,7 +1152,7 @@ ai-ticket-oracle ... healthy
 ai-ticket-redis ... healthy
 ```
 
-- [ ] **Step 2: Start backend**
+- [x] **Step 2: Start backend** ⭐
 
 Run:
 
@@ -1167,7 +1167,7 @@ Expected:
 Started AiTicketApplication
 ```
 
-- [ ] **Step 3: Verify login succeeds**
+- [x] **Step 3: Verify login succeeds** ⭐
 
 Run:
 
@@ -1187,7 +1187,7 @@ Expected:
 
 Do not commit or paste a real long-lived token into docs. Use temporary shell variables for follow-up calls.
 
-- [ ] **Step 4: Verify protected endpoints**
+- [x] **Step 4: Verify protected endpoints** ⭐
 
 Use the token from login:
 
@@ -1206,7 +1206,7 @@ pong
 admin-pong
 ```
 
-- [ ] **Step 5: Verify unauthorized and forbidden**
+- [x] **Step 5: Verify unauthorized and forbidden** ⭐
 
 Run unauthenticated ping:
 
@@ -1233,7 +1233,7 @@ Expected:
 HTTP/1.1 403
 ```
 
-- [ ] **Step 6: Commit final plan progress**
+- [x] **Step 6: Commit final plan progress** ⭐
 
 Run:
 
