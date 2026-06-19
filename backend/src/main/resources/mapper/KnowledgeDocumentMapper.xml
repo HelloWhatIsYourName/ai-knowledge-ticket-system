@@ -3,28 +3,20 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.aiticket.knowledge.mapper.KnowledgeDocumentMapper">
+    <select id="nextDocumentId" resultType="long">
+        SELECT kb_document_seq.NEXTVAL FROM dual
+    </select>
+
     <insert id="insertTextDocument">
         INSERT INTO kb_document (
-            title, category_id, file_name, storage_name, file_type, file_size,
+            id, title, category_id, file_name, storage_name, file_type, file_size,
             enabled, parse_status, retry_count, uploaded_by
         )
         VALUES (
-            #{title}, #{categoryId}, #{title}, NULL, 'TEXT', #{fileSize},
+            #{id}, #{title}, #{categoryId}, #{title}, NULL, 'TEXT', #{fileSize},
             1, 'PENDING_PARSE', 0, #{uploadedBy}
         )
     </insert>
-
-    <select id="findLatestByTitleAndUploader" resultType="com.example.aiticket.knowledge.domain.KnowledgeDocument">
-        SELECT id, title, category_id, file_name, storage_name, file_type, file_size,
-               enabled, parse_status, parse_error, retry_count, uploaded_by,
-               created_at, updated_at, deleted
-        FROM kb_document
-        WHERE title = #{title}
-          AND uploaded_by = #{uploadedBy}
-          AND deleted = 0
-        ORDER BY created_at DESC, id DESC
-        FETCH FIRST 1 ROW ONLY
-    </select>
 
     <select id="findById" resultType="com.example.aiticket.knowledge.domain.KnowledgeDocument">
         SELECT id, title, category_id, file_name, storage_name, file_type, file_size,
@@ -65,6 +57,16 @@
     <update id="markParseFailed">
         UPDATE kb_document
         SET parse_status = CASE WHEN retry_count + 1 &gt;= #{maxRetryCount} THEN 'PARSE_FAILED' ELSE 'PENDING_PARSE' END,
+            parse_error = #{parseError},
+            retry_count = retry_count + 1,
+            updated_at = CURRENT_TIMESTAMP
+        WHERE id = #{id}
+          AND deleted = 0
+    </update>
+
+    <update id="markParseFailedTerminal">
+        UPDATE kb_document
+        SET parse_status = 'PARSE_FAILED',
             parse_error = #{parseError},
             retry_count = retry_count + 1,
             updated_at = CURRENT_TIMESTAMP

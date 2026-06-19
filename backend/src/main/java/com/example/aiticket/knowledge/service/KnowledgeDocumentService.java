@@ -1,0 +1,45 @@
+package com.example.aiticket.knowledge.service;
+
+import com.example.aiticket.knowledge.domain.KnowledgeDocument;
+import com.example.aiticket.knowledge.mapper.KnowledgeDocumentMapper;
+import com.example.aiticket.knowledge.queue.KnowledgeParseQueue;
+import org.springframework.stereotype.Service;
+
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+
+@Service
+public class KnowledgeDocumentService {
+    private final KnowledgeDocumentMapper documentMapper;
+    private final KnowledgeParseQueue parseQueue;
+
+    public KnowledgeDocumentService(KnowledgeDocumentMapper documentMapper, KnowledgeParseQueue parseQueue) {
+        this.documentMapper = documentMapper;
+        this.parseQueue = parseQueue;
+    }
+
+    public Long createTextDocument(String title, Long categoryId, String content, Long uploadedBy) {
+        int fileSize = content == null ? 0 : content.getBytes(StandardCharsets.UTF_8).length;
+        Long documentId = documentMapper.nextDocumentId();
+        documentMapper.insertTextDocument(documentId, title, categoryId, fileSize, uploadedBy);
+        parseQueue.enqueueParseAndEmbed(documentId, 0);
+        return documentId;
+    }
+
+    public KnowledgeDocument getDocument(Long id) {
+        return documentMapper.findById(id);
+    }
+
+    public List<KnowledgeDocument> listRecent(int limit) {
+        return documentMapper.findRecent(limit);
+    }
+
+    public void setEnabled(Long id, boolean enabled) {
+        documentMapper.updateEnabled(id, enabled ? 1 : 0);
+    }
+
+    public void resetForRetry(Long id) {
+        documentMapper.resetForRetry(id);
+        parseQueue.enqueueParseAndEmbed(id, 0);
+    }
+}

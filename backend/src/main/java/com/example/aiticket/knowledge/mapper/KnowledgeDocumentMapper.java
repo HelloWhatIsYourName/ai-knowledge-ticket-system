@@ -9,13 +9,13 @@ import java.util.List;
 
 @Mapper
 public interface KnowledgeDocumentMapper {
-    int insertTextDocument(@Param("title") String title,
+    Long nextDocumentId();
+
+    int insertTextDocument(@Param("id") Long id,
+                           @Param("title") String title,
                            @Param("categoryId") Long categoryId,
                            @Param("fileSize") long fileSize,
                            @Param("uploadedBy") Long uploadedBy);
-
-    KnowledgeDocument findLatestByTitleAndUploader(@Param("title") String title,
-                                                   @Param("uploadedBy") Long uploadedBy);
 
     KnowledgeDocument findById(@Param("id") Long id);
 
@@ -30,6 +30,8 @@ public interface KnowledgeDocumentMapper {
     int markParseFailed(@Param("id") Long id,
                         @Param("parseError") String parseError,
                         @Param("maxRetryCount") int maxRetryCount);
+
+    int markParseFailedTerminal(@Param("id") Long id, @Param("parseError") String parseError);
 
     int resetForRetry(@Param("id") Long id);
 }
