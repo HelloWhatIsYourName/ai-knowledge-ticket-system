@@ -789,7 +789,7 @@ After commit and review, append `⭐` to the Task 2 heading.
 - Create: `backend/src/main/resources/mapper/KnowledgeDocumentMapper.xml`
 - Create: `backend/src/main/resources/mapper/KnowledgeChunkMapper.xml`
 
-- [ ] **Step 1: Create domain records**
+- [x] **Step 1: Create domain records**
 
 Create these files:
 
@@ -820,7 +820,7 @@ public record KnowledgeDocument(
         String fileType,
         Long fileSize,
         Boolean enabled,
-        String parseStatus,
+        KnowledgeParseStatus parseStatus,
         String parseError,
         Integer retryCount,
         Long uploadedBy,
@@ -895,7 +895,7 @@ public record KnowledgeSearchResult(
 }
 ```
 
-- [ ] **Step 2: Create mapper interfaces**
+- [x] **Step 2: Create mapper interfaces**
 
 Create `backend/src/main/java/com/example/aiticket/knowledge/mapper/KnowledgeDocumentMapper.java`:
 
@@ -903,6 +903,7 @@ Create `backend/src/main/java/com/example/aiticket/knowledge/mapper/KnowledgeDoc
 package com.example.aiticket.knowledge.mapper;
 
 import com.example.aiticket.knowledge.domain.KnowledgeDocument;
+import com.example.aiticket.knowledge.domain.KnowledgeParseStatus;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -922,10 +923,10 @@ public interface KnowledgeDocumentMapper {
 
     List<KnowledgeDocument> findRecent(@Param("limit") int limit);
 
-    int updateEnabled(@Param("id") Long id, @Param("enabled") boolean enabled);
+    int updateEnabled(@Param("id") Long id, @Param("enabled") int enabled);
 
     int updateParseStatus(@Param("id") Long id,
-                          @Param("parseStatus") String parseStatus,
+                          @Param("parseStatus") KnowledgeParseStatus parseStatus,
                           @Param("parseError") String parseError);
 
     int markParseFailed(@Param("id") Long id,
@@ -953,7 +954,14 @@ import java.util.List;
 public interface KnowledgeChunkMapper {
     int deleteByDocumentId(@Param("documentId") Long documentId);
 
-    int insertBatch(@Param("chunks") List<KnowledgeChunkDraft> chunks);
+    default int insertBatch(List<KnowledgeChunkDraft> chunks) {
+        if (chunks == null || chunks.isEmpty()) {
+            return 0;
+        }
+        return insertBatchNonEmpty(chunks);
+    }
+
+    int insertBatchNonEmpty(@Param("chunks") List<KnowledgeChunkDraft> chunks);
 
     List<KnowledgeChunk> findByDocumentId(@Param("documentId") Long documentId);
 
@@ -964,7 +972,7 @@ public interface KnowledgeChunkMapper {
 }
 ```
 
-- [ ] **Step 3: Create `KnowledgeDocumentMapper.xml`**
+- [x] **Step 3: Create `KnowledgeDocumentMapper.xml`**
 
 Create `backend/src/main/resources/mapper/KnowledgeDocumentMapper.xml`:
 
@@ -1018,7 +1026,7 @@ Create `backend/src/main/resources/mapper/KnowledgeDocumentMapper.xml`:
 
     <update id="updateEnabled">
         UPDATE kb_document
-        SET enabled = CASE WHEN #{enabled} = 1 THEN 1 ELSE 0 END,
+        SET enabled = #{enabled},
             updated_at = CURRENT_TIMESTAMP
         WHERE id = #{id}
           AND deleted = 0
@@ -1055,7 +1063,7 @@ Create `backend/src/main/resources/mapper/KnowledgeDocumentMapper.xml`:
 </mapper>
 ```
 
-- [ ] **Step 4: Create `KnowledgeChunkMapper.xml`**
+- [x] **Step 4: Create `KnowledgeChunkMapper.xml`**
 
 Create `backend/src/main/resources/mapper/KnowledgeChunkMapper.xml`:
 
@@ -1070,7 +1078,7 @@ Create `backend/src/main/resources/mapper/KnowledgeChunkMapper.xml`:
         WHERE document_id = #{documentId}
     </delete>
 
-    <insert id="insertBatch">
+    <insert id="insertBatchNonEmpty">
         INSERT ALL
         <foreach collection="chunks" item="chunk">
             INTO kb_chunk (
@@ -1122,7 +1130,7 @@ Create `backend/src/main/resources/mapper/KnowledgeChunkMapper.xml`:
 </mapper>
 ```
 
-- [ ] **Step 5: Run compile check**
+- [x] **Step 5: Run compile check**
 
 Run:
 
@@ -1169,6 +1177,7 @@ import com.example.aiticket.config.KnowledgeProperties;
 import com.example.aiticket.knowledge.chunk.ParagraphTextChunker;
 import com.example.aiticket.knowledge.domain.KnowledgeChunkDraft;
 import com.example.aiticket.knowledge.domain.KnowledgeDocument;
+import com.example.aiticket.knowledge.domain.KnowledgeParseStatus;
 import com.example.aiticket.knowledge.mapper.KnowledgeChunkMapper;
 import com.example.aiticket.knowledge.mapper.KnowledgeDocumentMapper;
 import org.junit.jupiter.api.Test;
@@ -1251,7 +1260,7 @@ class KnowledgeIngestionServiceTest {
         @Override
         public KnowledgeDocument findById(Long id) {
             return new KnowledgeDocument(id, "测试文档", 1L, "测试文档", null, "TEXT", 30L, true,
-                    "PENDING_PARSE", null, 0, 1L, LocalDateTime.now(), LocalDateTime.now(), false);
+                    KnowledgeParseStatus.PENDING_PARSE, null, 0, 1L, LocalDateTime.now(), LocalDateTime.now(), false);
         }
 
         @Override
@@ -1260,13 +1269,13 @@ class KnowledgeIngestionServiceTest {
         }
 
         @Override
-        public int updateEnabled(Long id, boolean enabled) {
+        public int updateEnabled(Long id, int enabled) {
             return 1;
         }
 
         @Override
-        public int updateParseStatus(Long id, String parseStatus, String parseError) {
-            statuses.add(parseStatus);
+        public int updateParseStatus(Long id, KnowledgeParseStatus parseStatus, String parseError) {
+            statuses.add(parseStatus.name());
             return 1;
         }
 
@@ -1293,7 +1302,7 @@ class KnowledgeIngestionServiceTest {
         }
 
         @Override
-        public int insertBatch(List<KnowledgeChunkDraft> chunks) {
+        public int insertBatchNonEmpty(List<KnowledgeChunkDraft> chunks) {
             inserted.addAll(chunks);
             return chunks.size();
         }
@@ -1408,7 +1417,7 @@ public class KnowledgeDocumentService {
     }
 
     public void setEnabled(Long id, boolean enabled) {
-        documentMapper.updateEnabled(id, enabled);
+        documentMapper.updateEnabled(id, enabled ? 1 : 0);
     }
 
     public void resetForRetry(Long id) {
@@ -1431,6 +1440,7 @@ import com.example.aiticket.config.AiProviderProperties;
 import com.example.aiticket.config.KnowledgeProperties;
 import com.example.aiticket.knowledge.chunk.TextChunker;
 import com.example.aiticket.knowledge.domain.KnowledgeChunkDraft;
+import com.example.aiticket.knowledge.domain.KnowledgeParseStatus;
 import com.example.aiticket.knowledge.domain.TextChunk;
 import com.example.aiticket.knowledge.mapper.KnowledgeChunkMapper;
 import com.example.aiticket.knowledge.mapper.KnowledgeDocumentMapper;
@@ -1470,7 +1480,7 @@ public class KnowledgeIngestionService {
 
     @Transactional
     public void ingestText(Long documentId, String title, Long categoryId, String text) {
-        documentMapper.updateParseStatus(documentId, "PARSING", null);
+        documentMapper.updateParseStatus(documentId, KnowledgeParseStatus.PARSING, null);
         try {
             List<TextChunk> chunks = textChunker.chunk(text);
             List<String> texts = chunks.stream().map(TextChunk::content).toList();
@@ -1502,7 +1512,7 @@ public class KnowledgeIngestionService {
             if (!drafts.isEmpty()) {
                 chunkMapper.insertBatch(drafts);
             }
-            documentMapper.updateParseStatus(documentId, "PARSE_SUCCESS", null);
+            documentMapper.updateParseStatus(documentId, KnowledgeParseStatus.PARSE_SUCCESS, null);
         } catch (RuntimeException ex) {
             documentMapper.markParseFailed(documentId, ex.getMessage(), knowledgeProperties.getParse().getMaxRetryCount());
             throw ex;
@@ -1642,7 +1652,7 @@ public record DocumentResponse(
                 document.title(),
                 document.categoryId(),
                 document.enabled(),
-                document.parseStatus(),
+                document.parseStatus().name(),
                 document.parseError(),
                 document.retryCount()
         );
