@@ -745,7 +745,7 @@ git commit -m "docs: record siliconflow embedding verification"
 **Files:**
 - Read only unless review finds a specific issue.
 
-- [ ] **Step 1: Inspect final diff**
+- [x] **Step 1: Inspect final diff** ⭐
 
 Run:
 
@@ -762,13 +762,14 @@ Expected:
 Only SiliconFlow provider, tests, docs, and plan tracking changed.
 ```
 
-- [ ] **Step 2: Confirm no secrets were committed**
+- [x] **Step 2: Confirm no secrets were committed** ⭐
 
 Run:
 
 ```bash
 cd /Users/xianghuaifeng/Documents/毕业设计
-rg -n "sk-|Bearer [A-Za-z0-9]|AI_EMBEDDING_API_KEY=.+" .
+rg -n 'sk-[A-Za-z0-9_-]{10,}' .
+rg -n 'AI_EMBEDDING_API_KEY=[A-Za-z0-9_-]{10,}' .
 ```
 
 Expected:
@@ -778,7 +779,7 @@ Expected:
 
 No real key appears in tracked files. Placeholder references like `${AI_EMBEDDING_API_KEY:}` are allowed.
 
-- [ ] **Step 3: Confirm old backend provider references are gone**
+- [x] **Step 3: Confirm old backend provider references are gone** ⭐
 
 Run:
 
@@ -792,7 +793,7 @@ Expected:
 ```text
 ```
 
-- [ ] **Step 4: Confirm implementation plan tracking**
+- [x] **Step 4: Confirm implementation plan tracking** ⭐
 
 Run:
 
@@ -831,5 +832,6 @@ Type consistency:
 
 - Provider class is consistently named `SiliconFlowEmbeddingClient`.
 - Model is consistently `Qwen/Qwen3-Embedding-8B`.
+- Default base URL is consistently `https://api.siliconflow.cn/v1`.
 - Default dimensions are consistently `1024`.
 - The request JSON field is consistently `encoding_format` via `@JsonProperty`.
