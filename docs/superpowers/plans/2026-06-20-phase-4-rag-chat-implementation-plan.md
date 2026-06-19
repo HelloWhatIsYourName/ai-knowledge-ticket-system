@@ -171,32 +171,32 @@ git add backend/src/main/java/com/example/aiticket/ai/rag/prompt backend/src/mai
 git commit -m "feat: add rag prompt and answer policy"
 ```
 
-## Task 4: RAG Chat Service
+## Task 4: RAG Chat Service ⭐
 
 **Files:**
 - Create: `backend/src/main/java/com/example/aiticket/ai/rag/service/RagChatService.java`
 - Test: `backend/src/test/java/com/example/aiticket/ai/rag/service/RagChatServiceTest.java`
 
-- [ ] **Step 1: Write service tests with fake collaborators**
+- [x] **Step 1: Write service tests with fake collaborators**
 
 Assert the service creates a session when missing, verifies session ownership when provided, persists user message before chat call, persists assistant message after chat call, persists citations linked to assistant message, and does not persist fake assistant messages when chat fails.
 
-- [ ] **Step 2: Implement `ask(...)`**
+- [x] **Step 2: Implement `ask(...)`**
 
 Use `KnowledgeRetrievalService`, `RagPromptBuilder`, `ChatClient`, `RagAnswerPolicy`, and `AiChatMapper`. Return `RagAnswer`.
 
-- [ ] **Step 3: Implement history methods**
+- [x] **Step 3: Implement history methods**
 
 List owned sessions and list messages/citations for an owned session. Do not expose another user's session.
 
-- [ ] **Step 4: Run focused tests**
+- [x] **Step 4: Run focused tests**
 
 ```bash
 cd backend
 JAVA_HOME=/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home PATH=/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home/bin:$PATH mvn -Dmaven.repo.local=/Users/xianghuaifeng/Documents/毕业设计/.worktrees/knowledge-live-verification/.m2repo -Dtest=RagChatServiceTest test
 ```
 
-- [ ] **Step 5: Commit Task 4**
+- [x] **Step 5: Commit Task 4**
 
 ```bash
 git add backend/src/main/java/com/example/aiticket/ai/rag/service/RagChatService.java backend/src/test/java/com/example/aiticket/ai/rag/service/RagChatServiceTest.java
