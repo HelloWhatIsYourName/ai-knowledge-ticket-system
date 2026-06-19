@@ -171,8 +171,8 @@ class RagChatServiceTest {
         }
 
         @Override
-        public int updateSessionSummary(Long id, Long userId, String lastQuestion, boolean transferSuggested) {
-            this.updatedTransferSuggested = transferSuggested;
+        public int updateSessionSummary(Long id, Long userId, String lastQuestion, Integer transferSuggested) {
+            this.updatedTransferSuggested = transferSuggested == 1;
             return 1;
         }
 
@@ -191,10 +191,12 @@ class RagChatServiceTest {
 
         @Override
         public int insertMessage(Long id, Long sessionId, Long userId, AiMessageRole role, String content,
-                                 String modelName, Boolean canAnswer, Double confidence,
-                                 boolean transferSuggested, String transferReason) {
-            messages.add(new AiMessage(id, sessionId, userId, role, content, modelName, canAnswer,
-                    confidence, transferSuggested, transferReason, LocalDateTime.now()));
+                                 String modelName, Integer canAnswer, Double confidence,
+                                 Integer transferSuggested, String transferReason) {
+            messages.add(new AiMessage(id, sessionId, userId, role, content, modelName,
+                    canAnswer == null ? null : canAnswer == 1,
+                    confidence, transferSuggested != null && transferSuggested == 1,
+                    transferReason, LocalDateTime.now()));
             return 1;
         }
 

@@ -63,7 +63,7 @@ public class RagChatService {
         Long resolvedSessionId = resolveSession(userId, sessionId, question);
         Long userMessageId = mapper.nextMessageId();
         mapper.insertMessage(userMessageId, resolvedSessionId, userId, AiMessageRole.USER, question.trim(),
-                null, null, null, false, null);
+                null, null, null, 0, null);
 
         List<KnowledgeSearchResult> results = retrievalService.search(question, categoryId, topK, minSimilarity);
         RagPrompt prompt = promptBuilder.build(question, results);
@@ -75,8 +75,8 @@ public class RagChatService {
 
         Long assistantMessageId = mapper.nextMessageId();
         mapper.insertMessage(assistantMessageId, resolvedSessionId, userId, AiMessageRole.ASSISTANT,
-                chatResult.content(), chatResult.model(), decision.canAnswer(), decision.confidence(),
-                decision.transferSuggested(), decision.transferReason());
+                chatResult.content(), chatResult.model(), toFlag(decision.canAnswer()), decision.confidence(),
+                toFlag(decision.transferSuggested()), decision.transferReason());
 
         for (RagCitation citation : prompt.citations()) {
             mapper.insertCitation(
@@ -90,7 +90,7 @@ public class RagChatService {
                     citation.similarity()
             );
         }
-        mapper.updateSessionSummary(resolvedSessionId, userId, question.trim(), decision.transferSuggested());
+        mapper.updateSessionSummary(resolvedSessionId, userId, question.trim(), toFlag(decision.transferSuggested()));
 
         return new RagAnswer(
                 resolvedSessionId,
@@ -143,5 +143,9 @@ public class RagChatService {
             return trimmed;
         }
         return trimmed.substring(0, SESSION_TITLE_LIMIT);
+    }
+
+    private Integer toFlag(boolean value) {
+        return value ? 1 : 0;
     }
 }

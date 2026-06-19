@@ -25,7 +25,7 @@ public interface AiChatMapper {
     int updateSessionSummary(@Param("id") Long id,
                              @Param("userId") Long userId,
                              @Param("lastQuestion") String lastQuestion,
-                             @Param("transferSuggested") boolean transferSuggested);
+                             @Param("transferSuggested") Integer transferSuggested);
 
     AiSession findOwnedSession(@Param("id") Long id, @Param("userId") Long userId);
 
@@ -37,9 +37,9 @@ public interface AiChatMapper {
                       @Param("role") AiMessageRole role,
                       @Param("content") String content,
                       @Param("modelName") String modelName,
-                      @Param("canAnswer") Boolean canAnswer,
+                      @Param("canAnswer") Integer canAnswer,
                       @Param("confidence") Double confidence,
-                      @Param("transferSuggested") boolean transferSuggested,
+                      @Param("transferSuggested") Integer transferSuggested,
                       @Param("transferReason") String transferReason);
 
     int insertCitation(@Param("id") Long id,

@@ -64,7 +64,7 @@ public class OpenAiCompatibleChatClient implements ChatClient {
                 } catch (IOException ignored) {
                     // The client may have already gone away.
                 }
-                emitter.completeWithError(ex);
+                emitter.complete();
             }
         });
         return emitter;

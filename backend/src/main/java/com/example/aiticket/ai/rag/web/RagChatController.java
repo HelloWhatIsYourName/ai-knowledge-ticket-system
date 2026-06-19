@@ -67,7 +67,7 @@ public class RagChatController {
                 } catch (IOException ignored) {
                     // Client already disconnected.
                 }
-                emitter.completeWithError(ex);
+                emitter.complete();
             }
         });
         return emitter;

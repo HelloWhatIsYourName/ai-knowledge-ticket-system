@@ -23,7 +23,7 @@
     <update id="updateSessionSummary">
         UPDATE ai_session
         SET last_question = #{lastQuestion,jdbcType=VARCHAR},
-            transfer_suggested = CASE WHEN #{transferSuggested} = 1 THEN 1 ELSE 0 END,
+            transfer_suggested = #{transferSuggested,jdbcType=NUMERIC},
             updated_at = CURRENT_TIMESTAMP
         WHERE id = #{id}
           AND user_id = #{userId}
@@ -53,7 +53,7 @@
             #{id}, #{sessionId}, #{userId}, #{role}, #{content},
             #{modelName,jdbcType=VARCHAR}, #{canAnswer,jdbcType=NUMERIC},
             #{confidence,jdbcType=NUMERIC},
-            CASE WHEN #{transferSuggested} = 1 THEN 1 ELSE 0 END,
+            #{transferSuggested,jdbcType=NUMERIC},
             #{transferReason,jdbcType=VARCHAR}
         )
     </insert>

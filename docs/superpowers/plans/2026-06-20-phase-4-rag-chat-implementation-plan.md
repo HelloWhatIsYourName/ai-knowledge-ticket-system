@@ -244,52 +244,54 @@ git add backend/src/main/java/com/example/aiticket/ai/rag/web backend/src/test/j
 git commit -m "feat: expose rag chat api"
 ```
 
-## Task 6: Full Verification and Live Spike
+## Task 6: Full Verification and Live Spike ⭐
 
 **Files:**
 - Create: `docs/spikes/phase-4-rag-chat.md`
 - Modify: `docs/superpowers/plans/2026-06-20-phase-4-rag-chat-implementation-plan.md`
 
-- [ ] **Step 1: Run all unit tests**
+- [x] **Step 1: Run all unit tests**
 
 ```bash
 cd backend
 JAVA_HOME=/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home PATH=/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home/bin:$PATH mvn -Dmaven.repo.local=/Users/xianghuaifeng/Documents/毕业设计/.worktrees/knowledge-live-verification/.m2repo test
 ```
 
-- [ ] **Step 2: Run local backend with chat and embedding keys**
+- [x] **Step 2: Run local backend with chat and embedding keys**
 
 Load `/private/tmp/ai-ticket-secrets/siliconflow.env` and the local chat key file if present. Do not print keys or JWTs.
 
-- [ ] **Step 3: Verify HTTP ask**
+Result: embedding key was present and loaded; `AI_CHAT_API_KEY` was not present, so live verification used a local OpenAI-compatible mock chat server while keeping real SiliconFlow embedding and Oracle vector retrieval.
 
-Login as `admin`, create or reuse the password reset knowledge document, call `POST /api/ai/chat/ask`, and verify response contains answer text, citations, session ID, message IDs, and no raw vector fields.
+- [x] **Step 3: Verify HTTP ask**
 
-- [ ] **Step 4: Verify SSE ask**
+Login as `admin`, create or reuse the password reset knowledge document, then login as chat-enabled `user`, call `POST /api/ai/chat/ask`, and verify response contains answer text, citations, session ID, message IDs, and no raw vector fields.
 
-Call `GET /api/ai/chat/stream` with an admin token and verify at least one `token` event and one `metadata` event.
+- [x] **Step 4: Verify SSE ask**
 
-- [ ] **Step 5: Verify history**
+Call `GET /api/ai/chat/stream` with a chat-enabled user token and verify at least one `token` event and one `metadata` event.
+
+- [x] **Step 5: Verify history**
 
 Call session and message history endpoints as the owning user and confirm persisted citations are returned.
 
-- [ ] **Step 6: Verify RBAC**
+- [x] **Step 6: Verify RBAC**
 
 Call chat/history endpoints without a token and confirm `401`. Use an account without required permission when available and confirm `403`.
 
-- [ ] **Step 7: Record spike report**
+- [x] **Step 7: Record spike report**
 
 Write sanitized evidence to `docs/spikes/phase-4-rag-chat.md`.
 
-- [ ] **Step 8: Final diff and plan marking**
+- [x] **Step 8: Final diff and plan marking**
 
 Run `git diff --check`, inspect scope, mark completed tasks with checkboxes and stars.
 
-- [ ] **Step 9: Commit Task 6**
+- [x] **Step 9: Commit Task 6**
 
 ```bash
-git add docs/spikes/phase-4-rag-chat.md docs/superpowers/plans/2026-06-20-phase-4-rag-chat-implementation-plan.md
-git commit -m "docs: verify phase 4 rag chat"
+git add backend/src/main/java/com/example/aiticket/ai/chat/OpenAiCompatibleChatClient.java backend/src/main/java/com/example/aiticket/ai/rag/mapper/AiChatMapper.java backend/src/main/java/com/example/aiticket/ai/rag/service/RagChatService.java backend/src/main/java/com/example/aiticket/ai/rag/web/RagChatController.java backend/src/main/java/com/example/aiticket/security/SecurityConfig.java backend/src/main/resources/mapper/AiChatMapper.xml backend/src/test/java/com/example/aiticket/ai/rag/service/RagChatServiceTest.java docs/spikes/phase-4-rag-chat.md docs/superpowers/plans/2026-06-20-phase-4-rag-chat-implementation-plan.md
+git commit -m "fix: harden rag chat live verification"
 ```
 
 ## Final Report
