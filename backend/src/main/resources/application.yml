@@ -1,0 +1,36 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: ai-ticket-backend
+  datasource:
+    url: ${APP_DATASOURCE_URL:jdbc:oracle:thin:@localhost:1521/FREEPDB1}
+    username: ${APP_DATASOURCE_USERNAME:AI_TICKET}
+    password: ${APP_DATASOURCE_PASSWORD:ai_ticket_pwd}
+    driver-class-name: oracle.jdbc.OracleDriver
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+  data:
+    redis:
+      host: ${APP_REDIS_HOST:localhost}
+      port: ${APP_REDIS_PORT:6379}
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+ai:
+  chat:
+    provider: deepseek
+    base-url: ${AI_CHAT_BASE_URL:https://api.deepseek.com}
+    api-key: ${AI_CHAT_API_KEY:}
+    model: ${AI_CHAT_MODEL:deepseek-chat}
+  embedding:
+    provider: aliyun-bailian
+    base-url: ${AI_EMBEDDING_BASE_URL:https://dashscope.aliyuncs.com/compatible-mode/v1}
+    api-key: ${AI_EMBEDDING_API_KEY:}
+    model: ${AI_EMBEDDING_MODEL:text-embedding-v3}
+    dimensions: ${AI_EMBEDDING_DIMENSIONS:1024}

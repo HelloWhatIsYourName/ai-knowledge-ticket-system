@@ -70,7 +70,7 @@ README.md
 - Create: `backend/src/main/resources/application.yml`
 - Create: `README.md`
 
-- [ ] **Step 1: Create `backend/pom.xml`**
+- [x] **Step 1: Create `backend/pom.xml`**
 
 ```xml
 <project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -150,7 +150,7 @@ README.md
 </project>
 ```
 
-- [ ] **Step 2: Create `AiTicketApplication.java`**
+- [x] **Step 2: Create `AiTicketApplication.java`**
 
 ```java
 package com.example.aiticket;
@@ -166,7 +166,7 @@ public class AiTicketApplication {
 }
 ```
 
-- [ ] **Step 3: Create `application.yml`**
+- [x] **Step 3: Create `application.yml`**
 
 ```yaml
 server:
@@ -207,7 +207,7 @@ ai:
     dimensions: ${AI_EMBEDDING_DIMENSIONS:1024}
 ```
 
-- [ ] **Step 4: Create root `README.md`**
+- [x] **Step 4: Create root `README.md`**
 
 ```markdown
 # AI Knowledge Ticket System
@@ -229,7 +229,7 @@ cd backend
 ```
 ```
 
-- [ ] **Step 5: Verify Maven project compiles**
+- [x] **Step 5: Verify Maven project compiles**
 
 Run:
 
@@ -240,7 +240,7 @@ mvn test
 
 Expected: build reaches test phase. If dependencies cannot download because network is blocked, rerun with approved network access.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add backend/pom.xml backend/src/main/java/com/example/aiticket/AiTicketApplication.java backend/src/main/resources/application.yml README.md
@@ -253,7 +253,7 @@ git commit -m "chore: scaffold Spring Boot backend"
 - Create: `docker-compose.yml`
 - Create: `.env.example`
 
-- [ ] **Step 1: Create `.env.example`**
+- [x] **Step 1: Create `.env.example`**
 
 ```dotenv
 ORACLE_PASSWORD=OraclePwd_123
@@ -263,7 +263,7 @@ AI_CHAT_API_KEY=
 AI_EMBEDDING_API_KEY=
 ```
 
-- [ ] **Step 2: Create `docker-compose.yml`**
+- [x] **Step 2: Create `docker-compose.yml`**
 
 ```yaml
 services:
@@ -303,7 +303,7 @@ volumes:
   redis-data:
 ```
 
-- [ ] **Step 3: Start services**
+- [x] **Step 3: Start services**
 
 Run:
 
@@ -314,7 +314,7 @@ docker compose ps
 
 Expected: `oracle` and `redis` are running or healthy. Oracle can take several minutes on first start.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add docker-compose.yml .env.example
@@ -328,7 +328,7 @@ git commit -m "chore: add Oracle and Redis compose stack"
 - Create: `backend/src/test/java/com/example/aiticket/config/AiProviderPropertiesTest.java`
 - Modify: `backend/src/main/java/com/example/aiticket/AiTicketApplication.java`
 
-- [ ] **Step 1: Write configuration properties**
+- [x] **Step 1: Write configuration properties**
 
 ```java
 package com.example.aiticket.config;
@@ -424,7 +424,7 @@ public class AiProviderProperties {
 }
 ```
 
-- [ ] **Step 2: Enable configuration properties**
+- [x] **Step 2: Enable configuration properties**
 
 Modify `AiTicketApplication.java`:
 
@@ -445,7 +445,7 @@ public class AiTicketApplication {
 }
 ```
 
-- [ ] **Step 3: Write properties binding test**
+- [x] **Step 3: Write properties binding test**
 
 ```java
 package com.example.aiticket.config;
@@ -498,7 +498,7 @@ class AiProviderPropertiesTest {
 }
 ```
 
-- [ ] **Step 4: Run test**
+- [x] **Step 4: Run test**
 
 Run:
 
@@ -509,7 +509,7 @@ mvn test -Dtest=AiProviderPropertiesTest
 
 Expected: test passes.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add backend/src/main/java/com/example/aiticket/config/AiProviderProperties.java backend/src/main/java/com/example/aiticket/AiTicketApplication.java backend/src/test/java/com/example/aiticket/config/AiProviderPropertiesTest.java
@@ -524,7 +524,7 @@ git commit -m "feat: configure independent AI providers"
 - Create: `backend/src/main/java/com/example/aiticket/ai/chat/ChatClient.java`
 - Create: `backend/src/main/java/com/example/aiticket/ai/chat/ChatResult.java`
 
-- [ ] **Step 1: Create `EmbeddingResult`**
+- [x] **Step 1: Create `EmbeddingResult`**
 
 ```java
 package com.example.aiticket.ai.embedding;
@@ -547,7 +547,7 @@ public record EmbeddingResult(
 }
 ```
 
-- [ ] **Step 2: Create `EmbeddingClient`**
+- [x] **Step 2: Create `EmbeddingClient`**
 
 ```java
 package com.example.aiticket.ai.embedding;
@@ -561,7 +561,7 @@ public interface EmbeddingClient {
 }
 ```
 
-- [ ] **Step 3: Create `ChatResult`**
+- [x] **Step 3: Create `ChatResult`**
 
 ```java
 package com.example.aiticket.ai.chat;
@@ -576,7 +576,7 @@ public record ChatResult(
 }
 ```
 
-- [ ] **Step 4: Create `ChatClient`**
+- [x] **Step 4: Create `ChatClient`**
 
 ```java
 package com.example.aiticket.ai.chat;
@@ -590,7 +590,7 @@ public interface ChatClient {
 }
 ```
 
-- [ ] **Step 5: Compile**
+- [x] **Step 5: Compile**
 
 Run:
 
@@ -601,7 +601,7 @@ mvn test
 
 Expected: build passes.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add backend/src/main/java/com/example/aiticket/ai
@@ -613,7 +613,7 @@ git commit -m "feat: add AI client contracts"
 **Files:**
 - Create: `backend/src/main/resources/db/migration/V1__vector_spike.sql`
 
-- [ ] **Step 1: Create Flyway migration**
+- [x] **Step 1: Create Flyway migration**
 
 ```sql
 CREATE TABLE vector_spike (
@@ -636,7 +636,7 @@ mvn spring-boot:run
 
 Expected: application starts and Flyway applies `V1__vector_spike.sql`.
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add backend/src/main/resources/db/migration/V1__vector_spike.sql
@@ -649,7 +649,7 @@ git commit -m "feat: add vector spike schema"
 - Create: `backend/src/main/java/com/example/aiticket/vector/OracleVectorLiteral.java`
 - Create: `backend/src/test/java/com/example/aiticket/vector/OracleVectorLiteralTest.java`
 
-- [ ] **Step 1: Write failing test**
+- [x] **Step 1: Write failing test**
 
 ```java
 package com.example.aiticket.vector;
@@ -678,7 +678,7 @@ class OracleVectorLiteralTest {
 }
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run:
 
@@ -689,7 +689,7 @@ mvn test -Dtest=OracleVectorLiteralTest
 
 Expected: fails because `OracleVectorLiteral` does not exist.
 
-- [ ] **Step 3: Implement utility**
+- [x] **Step 3: Implement utility**
 
 ```java
 package com.example.aiticket.vector;
@@ -720,7 +720,7 @@ public final class OracleVectorLiteral {
 }
 ```
 
-- [ ] **Step 4: Run test**
+- [x] **Step 4: Run test**
 
 Run:
 
@@ -731,7 +731,7 @@ mvn test -Dtest=OracleVectorLiteralTest
 
 Expected: test passes.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add backend/src/main/java/com/example/aiticket/vector/OracleVectorLiteral.java backend/src/test/java/com/example/aiticket/vector/OracleVectorLiteralTest.java
@@ -746,7 +746,7 @@ git commit -m "feat: add Oracle vector literal utility"
 - Create: `backend/src/main/java/com/example/aiticket/vector/VectorSpikeService.java`
 - Create: `backend/src/main/resources/mapper/VectorSpikeMapper.xml`
 
-- [ ] **Step 1: Create `VectorSpikeRecord`**
+- [x] **Step 1: Create `VectorSpikeRecord`**
 
 ```java
 package com.example.aiticket.vector;
@@ -759,7 +759,7 @@ public record VectorSpikeRecord(
 }
 ```
 
-- [ ] **Step 2: Create `VectorSpikeMapper`**
+- [x] **Step 2: Create `VectorSpikeMapper`**
 
 ```java
 package com.example.aiticket.vector;
@@ -777,7 +777,7 @@ public interface VectorSpikeMapper {
 }
 ```
 
-- [ ] **Step 3: Create `VectorSpikeMapper.xml`**
+- [x] **Step 3: Create `VectorSpikeMapper.xml`**
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -801,7 +801,7 @@ public interface VectorSpikeMapper {
 </mapper>
 ```
 
-- [ ] **Step 4: Create `VectorSpikeService`**
+- [x] **Step 4: Create `VectorSpikeService`**
 
 ```java
 package com.example.aiticket.vector;
@@ -830,7 +830,7 @@ public class VectorSpikeService {
 }
 ```
 
-- [ ] **Step 5: Compile**
+- [x] **Step 5: Compile**
 
 Run:
 
@@ -841,7 +841,7 @@ mvn test
 
 Expected: build passes.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add backend/src/main/java/com/example/aiticket/vector/VectorSpikeRecord.java backend/src/main/java/com/example/aiticket/vector/VectorSpikeMapper.java backend/src/main/java/com/example/aiticket/vector/VectorSpikeService.java backend/src/main/resources/mapper/VectorSpikeMapper.xml
@@ -854,7 +854,7 @@ git commit -m "feat: add Oracle vector spike repository"
 - Create: `backend/src/main/java/com/example/aiticket/common/api/ApiResponse.java`
 - Create: `backend/src/main/java/com/example/aiticket/vector/VectorSpikeController.java`
 
-- [ ] **Step 1: Create `ApiResponse`**
+- [x] **Step 1: Create `ApiResponse`**
 
 ```java
 package com.example.aiticket.common.api;
@@ -870,7 +870,7 @@ public record ApiResponse<T>(
 }
 ```
 
-- [ ] **Step 2: Create `VectorSpikeController`**
+- [x] **Step 2: Create `VectorSpikeController`**
 
 ```java
 package com.example.aiticket.vector;
@@ -949,7 +949,7 @@ curl -X POST http://localhost:8080/api/spike/vector/search \
 
 Expected: response includes `password reset policy` as the nearest inserted record.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add backend/src/main/java/com/example/aiticket/common/api/ApiResponse.java backend/src/main/java/com/example/aiticket/vector/VectorSpikeController.java
@@ -962,7 +962,7 @@ git commit -m "feat: expose vector spike endpoints"
 - Create: `backend/src/main/java/com/example/aiticket/ai/embedding/AliyunBailianEmbeddingClient.java`
 - Create: `backend/src/test/java/com/example/aiticket/ai/embedding/EmbeddingResultTest.java`
 
-- [ ] **Step 1: Write `EmbeddingResultTest`**
+- [x] **Step 1: Write `EmbeddingResultTest`**
 
 ```java
 package com.example.aiticket.ai.embedding;
@@ -983,7 +983,7 @@ class EmbeddingResultTest {
 }
 ```
 
-- [ ] **Step 2: Create adapter skeleton**
+- [x] **Step 2: Create adapter skeleton**
 
 ```java
 package com.example.aiticket.ai.embedding;
@@ -1057,7 +1057,7 @@ public class AliyunBailianEmbeddingClient implements EmbeddingClient {
 }
 ```
 
-- [ ] **Step 3: Run focused test**
+- [x] **Step 3: Run focused test**
 
 Run:
 
@@ -1068,7 +1068,7 @@ mvn test -Dtest=EmbeddingResultTest
 
 Expected: test passes.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add backend/src/main/java/com/example/aiticket/ai/embedding/AliyunBailianEmbeddingClient.java backend/src/test/java/com/example/aiticket/ai/embedding/EmbeddingResultTest.java
@@ -1080,7 +1080,7 @@ git commit -m "feat: add Aliyun embedding adapter skeleton"
 **Files:**
 - Create: `docs/spikes/oracle-vector-spike.md`
 
-- [ ] **Step 1: Create spike report after manual verification**
+- [x] **Step 1: Create spike report after manual verification**
 
 ```markdown
 # Oracle 23ai Vector Spike Report
@@ -1111,7 +1111,7 @@ Use Oracle 23ai `VECTOR(1024, FLOAT32)` with Aliyun Bailian `text-embedding-v3` 
 During execution, append the actual SQL, request samples, command outputs, errors encountered, and final workaround under this section before checking this task complete.
 ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 git add docs/spikes/oracle-vector-spike.md

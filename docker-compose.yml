@@ -1,0 +1,37 @@
+name: ai-knowledge-ticket-system
+
+services:
+  oracle:
+    image: gvenzl/oracle-free:23-slim
+    container_name: ai-ticket-oracle
+    ports:
+      - "1521:1521"
+    environment:
+      ORACLE_PASSWORD: ${ORACLE_PASSWORD:-OraclePwd_123}
+      APP_USER: ${APP_DB_USERNAME:-AI_TICKET}
+      APP_USER_PASSWORD: ${APP_DB_PASSWORD:-ai_ticket_pwd}
+    volumes:
+      - oracle-data:/opt/oracle/oradata
+    healthcheck:
+      test: ["CMD", "healthcheck.sh"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+
+  redis:
+    image: redis:7-alpine
+    container_name: ai-ticket-redis
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  oracle-data:
+  redis-data:
