@@ -900,7 +900,7 @@ git commit -m "feat: add jwt service"
 - Create: `backend/src/main/java/com/example/aiticket/admin/AdminPingController.java`
 - Create: `backend/src/test/java/com/example/aiticket/auth/AuthServiceTest.java`
 
-- [ ] **Step 1: Write AuthService tests**
+- [x] **Step 1: Write AuthService tests** ⭐
 
 Create `AuthServiceTest` covering successful login and unified failure message:
 
@@ -971,11 +971,11 @@ class AuthServiceTest {
 }
 ```
 
-- [ ] **Step 2: Implement DTOs and service**
+- [x] **Step 2: Implement DTOs and service** ⭐
 
 Create DTOs and `AuthService` so the tests pass. `CurrentUserResponse.UserSummary` must include `id`, `username`, and `displayName`.
 
-- [ ] **Step 3: Implement controllers**
+- [x] **Step 3: Implement controllers** ⭐
 
 `AuthController`:
 
@@ -1015,7 +1015,7 @@ public class AdminPingController {
 }
 ```
 
-- [ ] **Step 4: Run focused AuthService tests**
+- [x] **Step 4: Run focused AuthService tests** ⭐
 
 Run:
 
@@ -1030,7 +1030,7 @@ Expected:
 BUILD SUCCESS
 ```
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit** ⭐
 
 Run:
 
