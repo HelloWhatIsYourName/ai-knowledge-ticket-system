@@ -547,7 +547,7 @@ git commit -m "docs: align embedding provider with siliconflow"
 **Files:**
 - Read only unless failures require fixes.
 
-- [ ] **Step 1: Run the full backend test suite**
+- [x] **Step 1: Run the full backend test suite** ⭐
 
 Run:
 
@@ -562,7 +562,7 @@ Expected:
 BUILD SUCCESS
 ```
 
-- [ ] **Step 2: Check Docker service status**
+- [x] **Step 2: Check Docker service status** ⭐
 
 Run:
 
@@ -580,7 +580,7 @@ redis
 
 Both services should be running or healthy before live Oracle regression. If Docker access is blocked by sandboxing, rerun with escalation.
 
-- [ ] **Step 3: Start backend for regression only if needed**
+- [x] **Step 3: Start backend for regression only if needed** ⭐
 
 If no backend is already running on port `8080`, run:
 
@@ -595,7 +595,7 @@ Expected startup evidence:
 Started AiTicketBackendApplication
 ```
 
-- [ ] **Step 4: Re-run existing manual vector spike endpoints**
+- [x] **Step 4: Re-run existing manual vector spike endpoints** ⭐
 
 Insert a deterministic 1024-dimension vector:
 
@@ -621,7 +621,7 @@ Expected:
 siliconflow-regression-manual
 ```
 
-- [ ] **Step 5: Fix failures before continuing**
+- [x] **Step 5: Fix failures before continuing** ⭐
 
 If a test or regression command fails, inspect the exact failure first and make the smallest code or documentation correction that explains the failure. Re-run the same command until it passes.
 
