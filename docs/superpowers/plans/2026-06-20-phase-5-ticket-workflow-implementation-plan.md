@@ -104,24 +104,24 @@ git add backend/src/main/resources/db/migration/V5__ticket_workflow.sql backend/
 git commit -m "feat: add ticket workflow foundation"
 ```
 
-## Task 2: Ticket REST API
+## Task 2: Ticket REST API ⭐
 
 **Files:**
 - Create: `backend/src/main/java/com/example/aiticket/ticket/web/*.java`
 - Test: `backend/src/test/java/com/example/aiticket/ticket/web/TicketControllerTest.java`
 
-- [ ] **Step 1: Write controller tests**
+- [x] **Step 1: Write controller tests**
 
 Cover permission annotations for create/list/detail/assign/start/resolve/reopen/confirm-close/close and response mapping with no internal workflow-only fields.
 
-- [ ] **Step 2: Run controller test to verify RED**
+- [x] **Step 2: Run controller test to verify RED**
 
 ```bash
 cd backend
 JAVA_HOME=/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home PATH=/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home/bin:$PATH mvn -Dmaven.repo.local=/Users/xianghuaifeng/Documents/毕业设计/.worktrees/knowledge-live-verification/.m2repo -Dtest=TicketControllerTest test
 ```
 
-- [ ] **Step 3: Implement DTOs and controller**
+- [x] **Step 3: Implement DTOs and controller**
 
 Expose:
 
@@ -139,11 +139,11 @@ POST /api/tickets/{ticketId}/confirm-close
 POST /api/tickets/{ticketId}/close
 ```
 
-- [ ] **Step 4: Run focused controller tests**
+- [x] **Step 4: Run focused controller tests**
 
 Run the same `TicketControllerTest` command. Expected: tests pass.
 
-- [ ] **Step 5: Commit Task 2**
+- [x] **Step 5: Commit Task 2**
 
 ```bash
 git add backend/src/main/java/com/example/aiticket/ticket/web backend/src/test/java/com/example/aiticket/ticket/web docs/superpowers/plans/2026-06-20-phase-5-ticket-workflow-implementation-plan.md

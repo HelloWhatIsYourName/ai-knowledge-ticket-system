@@ -92,6 +92,69 @@ class TicketWorkflowServiceTest {
         assertThat(mapper.flowLogs).isEmpty();
     }
 
+    @Test
+    void agentCanStartAndResolveAssignedTicket() {
+        FakeTicketMapper mapper = new FakeTicketMapper();
+        mapper.ticketForUpdate = mapper.ticketForUpdate(TicketStatus.PENDING_PROCESS, 3L);
+        TicketWorkflowService service = new TicketWorkflowService(mapper);
+
+        Ticket processing = service.startProcessing(3L, "AGENT", 100L, "开始处理");
+        assertThat(processing.status()).isEqualTo(TicketStatus.PROCESSING);
+        assertThat(mapper.flowLogs.getFirst().action()).isEqualTo(TicketWorkflowAction.START_PROCESS);
+
+        mapper.ticketForUpdate = mapper.ticketForUpdate(TicketStatus.PROCESSING, 3L);
+        Ticket resolved = service.resolve(3L, "AGENT", 100L, "已协助用户重置密码");
+        assertThat(resolved.status()).isEqualTo(TicketStatus.RESOLVED);
+        assertThat(mapper.updatedFirstResolvedAt).isNotNull();
+        assertThat(mapper.flowLogs.get(1).action()).isEqualTo(TicketWorkflowAction.RESOLVE);
+    }
+
+    @Test
+    void userCanReopenAndConfirmResolvedOwnTicket() {
+        FakeTicketMapper mapper = new FakeTicketMapper();
+        mapper.ticketForUpdate = mapper.ticketForUpdate(TicketStatus.RESOLVED, 3L);
+        TicketWorkflowService service = new TicketWorkflowService(mapper);
+
+        Ticket reopened = service.reopen(7L, "USER", 100L, "问题仍未解决");
+        assertThat(reopened.status()).isEqualTo(TicketStatus.PROCESSING);
+        assertThat(reopened.reopenCount()).isEqualTo(1);
+        assertThat(mapper.updatedIncrementReopen).isEqualTo(1);
+        assertThat(mapper.flowLogs.getFirst().action()).isEqualTo(TicketWorkflowAction.REOPEN);
+
+        mapper.ticketForUpdate = mapper.ticketForUpdate(TicketStatus.RESOLVED, 3L);
+        Ticket closed = service.confirmClose(7L, "USER", 100L, "确认解决");
+        assertThat(closed.status()).isEqualTo(TicketStatus.CLOSED);
+        assertThat(mapper.updatedClosedAt).isNotNull();
+        assertThat(mapper.flowLogs.get(1).action()).isEqualTo(TicketWorkflowAction.CONFIRM_CLOSE);
+    }
+
+    @Test
+    void adminCanCloseProcessingTicket() {
+        FakeTicketMapper mapper = new FakeTicketMapper();
+        mapper.ticketForUpdate = mapper.ticketForUpdate(TicketStatus.PROCESSING, 3L);
+        TicketWorkflowService service = new TicketWorkflowService(mapper);
+
+        Ticket closed = service.close(2L, "ADMIN", 100L, "无效工单");
+
+        assertThat(closed.status()).isEqualTo(TicketStatus.CLOSED);
+        assertThat(mapper.updatedClosedAt).isNotNull();
+        assertThat(mapper.flowLogs.getFirst().action()).isEqualTo(TicketWorkflowAction.CLOSE);
+    }
+
+    @Test
+    void listAndDetailHelpersUseCorrectMapperScopes() {
+        FakeTicketMapper mapper = new FakeTicketMapper();
+        TicketWorkflowService service = new TicketWorkflowService(mapper);
+
+        assertThat(service.listCreatedTickets(7L, 100)).hasSize(1);
+        assertThat(service.listAssignedTickets(3L, 100)).hasSize(1);
+        assertThat(service.listManagedTickets(100)).hasSize(1);
+        assertThat(service.getTicket(7L, 100L, false, false).creatorId()).isEqualTo(7L);
+        mapper.ticketForUpdate = mapper.ticketForUpdate(TicketStatus.PENDING_PROCESS, 3L);
+        assertThat(service.getTicket(3L, 100L, false, true).assigneeId()).isEqualTo(3L);
+        assertThat(service.getTicket(2L, 100L, true, false).id()).isEqualTo(100L);
+    }
+
     private static final class FakeTicketMapper implements TicketMapper {
         private long nextTicketId = 100L;
         private long nextFlowLogId = 200L;
@@ -105,6 +168,9 @@ class TicketWorkflowServiceTest {
         private final List<TestFlowLog> flowLogs = new ArrayList<>();
         private TicketStatus updatedStatus;
         private Long updatedAssigneeId;
+        private LocalDateTime updatedFirstResolvedAt;
+        private LocalDateTime updatedClosedAt;
+        private Integer updatedIncrementReopen;
 
         @Override
         public Long nextTicketId() {
@@ -172,11 +238,17 @@ class TicketWorkflowServiceTest {
 
         @Override
         public Ticket findCreatedTicket(Long ticketId, Long creatorId) {
+            if (ticketForUpdate.id().equals(ticketId) && ticketForUpdate.creatorId().equals(creatorId)) {
+                return ticketForUpdate;
+            }
             return null;
         }
 
         @Override
         public Ticket findAssignedTicket(Long ticketId, Long assigneeId) {
+            if (ticketForUpdate.id().equals(ticketId) && assigneeId.equals(ticketForUpdate.assigneeId())) {
+                return ticketForUpdate;
+            }
             return null;
         }
 
@@ -187,17 +259,17 @@ class TicketWorkflowServiceTest {
 
         @Override
         public List<Ticket> listCreatedTickets(Long creatorId, int limit) {
-            return List.of();
+            return List.of(ticketForUpdate);
         }
 
         @Override
         public List<Ticket> listAssignedTickets(Long assigneeId, int limit) {
-            return List.of();
+            return List.of(ticketForUpdate(TicketStatus.PENDING_PROCESS, assigneeId));
         }
 
         @Override
         public List<Ticket> listManagedTickets(int limit) {
-            return List.of();
+            return List.of(ticketForUpdate);
         }
 
         @Override
@@ -206,6 +278,9 @@ class TicketWorkflowServiceTest {
                                       Integer incrementReopen) {
             this.updatedStatus = status;
             this.updatedAssigneeId = assigneeId;
+            this.updatedFirstResolvedAt = firstResolvedAt;
+            this.updatedClosedAt = closedAt;
+            this.updatedIncrementReopen = incrementReopen;
             ticketForUpdate = ticketForUpdate(status, assigneeId);
             return 1;
         }
