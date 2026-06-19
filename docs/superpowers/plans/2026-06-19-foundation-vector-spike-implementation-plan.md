@@ -1101,8 +1101,8 @@ git commit -m "feat: add siliconflow embedding adapter skeleton"
 - [x] ⭐ Spring Boot inserted `VECTOR(1024, FLOAT32)` records.
 - [x] ⭐ Spring Boot queried Top-K by cosine distance.
 - [x] ⭐ MyBatis vector parameter binding approach confirmed.
-- [ ] SiliconFlow single embedding call returned 1024 dimensions.
-- [ ] SiliconFlow batch embedding call returned 1024 dimensions for each input.
+- [x] ⭐ SiliconFlow single embedding call returned 1024 dimensions.
+- [x] ⭐ SiliconFlow batch embedding call returned 1024 dimensions for each input.
 
 ## Decision
 

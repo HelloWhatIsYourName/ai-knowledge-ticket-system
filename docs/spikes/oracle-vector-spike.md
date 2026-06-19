@@ -14,8 +14,8 @@
 - [x] Spring Boot inserted `VECTOR(1024, FLOAT32)` records.
 - [x] Spring Boot queried Top-K by cosine distance.
 - [x] MyBatis vector parameter binding approach confirmed.
-- [ ] SiliconFlow single embedding call returned 1024 dimensions.
-- [ ] SiliconFlow batch embedding call returned 1024 dimensions for each input.
+- [x] SiliconFlow single embedding call returned 1024 dimensions. ⭐
+- [x] SiliconFlow batch embedding call returned 1024 dimensions for each input. ⭐
 
 ## Decision
 
@@ -90,4 +90,27 @@ Tests run: 4, Failures: 0, Errors: 0, Skipped: 0
 BUILD SUCCESS
 ```
 
-SiliconFlow live embedding calls were not executed in this verification pass because `AI_EMBEDDING_API_KEY` was not present in the local environment. The adapter contract and `EmbeddingResult` dimensional validation are covered by local tests, but the two live provider checklist items remain unchecked until a valid key is configured.
+SiliconFlow live embedding calls were initially deferred because `AI_EMBEDDING_API_KEY` was not present in the local environment. The adapter contract and `EmbeddingResult` dimensional validation were covered by local tests before the live key was configured.
+
+### 2026-06-19 SiliconFlow Live Verification
+
+SiliconFlow `Qwen/Qwen3-Embedding-8B` live single and batch calls returned 1024-dimensional vectors through the Spring Boot `EmbeddingClient`.
+
+```text
+single embedding dimensions=1024
+batch embedding count=2 dimensions=1024,1024
+```
+
+A real SiliconFlow provider vector was written to Oracle `VECTOR(1024, FLOAT32)` through `POST /api/spike/vector`:
+
+```json
+{"success":true,"data":null,"message":"ok"}
+```
+
+The same real provider vector was used as a query through `POST /api/spike/vector/search`, and the inserted verification row was returned as the first Top-K result:
+
+```json
+{"id":22,"content":"siliconflow-live-provider-vector","distance":2.220446049250313E-16}
+```
+
+No API key or full embedding vector was written to this report.
