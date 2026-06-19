@@ -533,7 +533,7 @@ git commit -m "feat: add knowledge base schema"
 
 After commit and review, append `⭐` to the Task 1 heading.
 
-## Task 2: Deterministic Text Chunking
+## Task 2: Deterministic Text Chunking ⭐
 
 **Files:**
 - Create: `backend/src/main/java/com/example/aiticket/knowledge/domain/TextChunk.java`
@@ -769,7 +769,7 @@ mvn test -Dtest=ParagraphTextChunkerTest,KnowledgePropertiesTest
 
 Expected: both test classes pass.
 
-- [ ] **Step 8: Commit Task 2**
+- [x] **Step 8: Commit Task 2**
 
 Run:
 
