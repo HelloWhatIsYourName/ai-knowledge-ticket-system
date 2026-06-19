@@ -147,7 +147,7 @@ knowledge:document:view   -> list, detail, chunks, search
 
 For Phase 3, `POST /api/kb/documents/text` ingests plain text synchronously after creating metadata. It may also enqueue a Redis Stream message for the future async consumer, but the synchronous path is the verified path for this phase.
 
-## Task 1: Knowledge Configuration and Schema
+## Task 1: Knowledge Configuration and Schema ⭐
 
 **Files:**
 - Create: `backend/src/main/java/com/example/aiticket/config/KnowledgeProperties.java`
@@ -522,7 +522,7 @@ mvn test -Dtest=KnowledgePropertiesTest
 
 Expected: test passes.
 
-- [ ] **Step 8: Commit Task 1**
+- [x] **Step 8: Commit Task 1**
 
 Run:
 
