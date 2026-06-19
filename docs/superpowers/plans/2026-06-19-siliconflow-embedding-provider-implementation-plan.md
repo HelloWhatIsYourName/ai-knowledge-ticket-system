@@ -58,7 +58,7 @@ Files not to modify:
 - Modify: `backend/src/test/java/com/example/aiticket/config/AiProviderPropertiesTest.java`
 - Modify: `backend/src/main/resources/application.yml`
 
-- [ ] **Step 1: Write the failing config binding expectation**
+- [x] **Step 1: Write the failing config binding expectation** ⭐
 
 Replace the embedding block and assertions in `backend/src/test/java/com/example/aiticket/config/AiProviderPropertiesTest.java` with SiliconFlow values:
 
@@ -78,7 +78,7 @@ Replace the embedding block and assertions in `backend/src/test/java/com/example
         assertThat(properties.getEmbedding().getDimensions()).isEqualTo(1024);
 ```
 
-- [ ] **Step 2: Run the focused test**
+- [x] **Step 2: Run the focused test** ⭐
 
 Run:
 
@@ -95,7 +95,7 @@ BUILD SUCCESS
 
 This test binds an inline YAML fixture, so it should pass after Step 1 even before `application.yml` is changed.
 
-- [ ] **Step 3: Update application defaults**
+- [x] **Step 3: Update application defaults** ⭐
 
 Change `backend/src/main/resources/application.yml`:
 
@@ -108,7 +108,7 @@ Change `backend/src/main/resources/application.yml`:
     dimensions: ${AI_EMBEDDING_DIMENSIONS:1024}
 ```
 
-- [ ] **Step 4: Run the focused test again**
+- [x] **Step 4: Run the focused test again** ⭐
 
 Run:
 
@@ -123,7 +123,7 @@ Expected:
 BUILD SUCCESS
 ```
 
-- [ ] **Step 5: Commit configuration switch**
+- [x] **Step 5: Commit configuration switch** ⭐
 
 Run:
 

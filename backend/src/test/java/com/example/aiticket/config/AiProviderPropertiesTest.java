@@ -23,10 +23,10 @@ class AiProviderPropertiesTest {
                     api-key: chat-key
                     model: deepseek-chat
                   embedding:
-                    provider: aliyun-bailian
-                    base-url: https://dashscope.aliyuncs.com/compatible-mode/v1
+                    provider: siliconflow
+                    base-url: https://api.siliconflow.com/v1
                     api-key: embedding-key
-                    model: text-embedding-v3
+                    model: Qwen/Qwen3-Embedding-8B
                     dimensions: 1024
                 """;
 
@@ -41,8 +41,9 @@ class AiProviderPropertiesTest {
 
         assertThat(properties.getChat().getProvider()).isEqualTo("deepseek");
         assertThat(properties.getChat().getModel()).isEqualTo("deepseek-chat");
-        assertThat(properties.getEmbedding().getProvider()).isEqualTo("aliyun-bailian");
-        assertThat(properties.getEmbedding().getModel()).isEqualTo("text-embedding-v3");
+        assertThat(properties.getEmbedding().getProvider()).isEqualTo("siliconflow");
+        assertThat(properties.getEmbedding().getBaseUrl()).isEqualTo("https://api.siliconflow.com/v1");
+        assertThat(properties.getEmbedding().getModel()).isEqualTo("Qwen/Qwen3-Embedding-8B");
         assertThat(properties.getEmbedding().getDimensions()).isEqualTo(1024);
     }
 }
