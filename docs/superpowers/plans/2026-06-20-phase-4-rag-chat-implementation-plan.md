@@ -101,32 +101,32 @@ git add backend/src/main/resources/db/migration/V4__ai_rag_chat.sql backend/src/
 git commit -m "feat: add rag chat persistence schema"
 ```
 
-## Task 2: Chat Provider Adapter
+## Task 2: Chat Provider Adapter ⭐
 
 **Files:**
 - Create: `backend/src/main/java/com/example/aiticket/ai/chat/OpenAiCompatibleChatClient.java`
 - Test: `backend/src/test/java/com/example/aiticket/ai/chat/OpenAiCompatibleChatClientTest.java`
 
-- [ ] **Step 1: Write provider adapter tests**
+- [x] **Step 1: Write provider adapter tests**
 
 Cover request URL `/chat/completions`, authorization header, model field, message payload, response content extraction, blank prompt rejection, missing response rejection, and optional structured self-assessment parsing when the model returns JSON.
 
-- [ ] **Step 2: Implement `OpenAiCompatibleChatClient`**
+- [x] **Step 2: Implement `OpenAiCompatibleChatClient`**
 
 Use `RestClient`, `AiProviderProperties.getChat()`, and map the first choice message content to `ChatResult`.
 
-- [ ] **Step 3: Keep streaming extensible**
+- [x] **Step 3: Keep streaming extensible**
 
 Implement `streamChat(String prompt)` as completed-answer chunk streaming through `SseEmitter`; keep this method in the adapter so provider-native streaming can replace only adapter internals later.
 
-- [ ] **Step 4: Run focused tests**
+- [x] **Step 4: Run focused tests**
 
 ```bash
 cd backend
 JAVA_HOME=/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home PATH=/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home/bin:$PATH mvn -Dmaven.repo.local=/Users/xianghuaifeng/Documents/毕业设计/.worktrees/knowledge-live-verification/.m2repo -Dtest=OpenAiCompatibleChatClientTest test
 ```
 
-- [ ] **Step 5: Commit Task 2**
+- [x] **Step 5: Commit Task 2**
 
 ```bash
 git add backend/src/main/java/com/example/aiticket/ai/chat/OpenAiCompatibleChatClient.java backend/src/test/java/com/example/aiticket/ai/chat/OpenAiCompatibleChatClientTest.java
