@@ -4,7 +4,7 @@
 
 - Oracle image: `gvenzl/oracle-free:23-slim`
 - Vector dimension: `1024`
-- Embedding provider: Aliyun Bailian `text-embedding-v3`
+- Embedding provider: SiliconFlow `Qwen/Qwen3-Embedding-8B`
 - Query function: `VECTOR_DISTANCE(embedding, TO_VECTOR(:queryVector), COSINE)`
 
 ## Result
@@ -14,12 +14,12 @@
 - [x] Spring Boot inserted `VECTOR(1024, FLOAT32)` records.
 - [x] Spring Boot queried Top-K by cosine distance.
 - [x] MyBatis vector parameter binding approach confirmed.
-- [ ] Aliyun Bailian single embedding call returned 1024 dimensions.
-- [ ] Aliyun Bailian batch embedding call returned 1024 dimensions for each input.
+- [ ] SiliconFlow single embedding call returned 1024 dimensions.
+- [ ] SiliconFlow batch embedding call returned 1024 dimensions for each input.
 
 ## Decision
 
-Use Oracle 23ai `VECTOR(1024, FLOAT32)` with Aliyun Bailian `text-embedding-v3` for first-version RAG.
+Use Oracle 23ai `VECTOR(1024, FLOAT32)` with SiliconFlow `Qwen/Qwen3-Embedding-8B` for first-version RAG.
 
 ## Notes
 
@@ -90,4 +90,4 @@ Tests run: 4, Failures: 0, Errors: 0, Skipped: 0
 BUILD SUCCESS
 ```
 
-Aliyun Bailian live embedding calls were not executed in this verification pass because `AI_EMBEDDING_API_KEY` was not present in the local environment. The adapter contract and `EmbeddingResult` dimensional validation are covered by local tests, but the two live provider checklist items remain unchecked until a valid key is configured.
+SiliconFlow live embedding calls were not executed in this verification pass because `AI_EMBEDDING_API_KEY` was not present in the local environment. The adapter contract and `EmbeddingResult` dimensional validation are covered by local tests, but the two live provider checklist items remain unchecked until a valid key is configured.

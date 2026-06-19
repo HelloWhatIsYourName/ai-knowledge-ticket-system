@@ -29,7 +29,7 @@ Spring Boot 后端
   ├─ Oracle Database 23ai Free
   ├─ Redis 7
   ├─ DeepSeek Chat API
-  └─ 阿里百炼 Embedding API
+  └─ 硅基流动 Embedding API
 ```
 
 ### 2.1 主要技术栈
@@ -43,7 +43,7 @@ Spring Boot 后端
 | 缓存与队列 | Redis 7、Redis Stream、Redis ZSet |
 | 数据迁移 | Flyway |
 | 文档解析 | Apache Tika |
-| AI | DeepSeek Chat API、阿里百炼 `text-embedding-v3` |
+| AI | DeepSeek Chat API、硅基流动 `Qwen/Qwen3-Embedding-8B` |
 | 流式响应 | SSE |
 | 部署 | Docker Compose |
 
@@ -326,7 +326,7 @@ public final class ManualAssignmentStrategy implements AssignmentStrategy {
 | `content_hash` | `VARCHAR2(64)` | 内容哈希，用于重复切片去重和重新解析时跳过未变化片段，减少重复 Embedding 调用 |
 | `source_title` | `VARCHAR2(200)` | 来源标题 |
 | `source_page` | `NUMBER(10)` | 来源页码 |
-| `embedding` | `VECTOR(1024, FLOAT32)` | 向量字段，第一版采用阿里百炼 `text-embedding-v3` 的 1024 维配置 |
+| `embedding` | `VECTOR(1024, FLOAT32)` | 向量字段，第一版采用硅基流动 `Qwen/Qwen3-Embedding-8B` 的 1024 维配置 |
 | `enabled` | `NUMBER(1)` | 是否启用 |
 | `created_at` | `TIMESTAMP` | 创建时间 |
 | `updated_at` | `TIMESTAMP` | 更新时间 |
@@ -404,7 +404,7 @@ Consumer Group：`kb-parser-group`
 处理规则：
 
 1. 消费者读取任务后，将文档状态改为 `PARSING`。
-2. 解析完成后按批次调用阿里百炼 Embedding API，避免逐条请求导致耗时过长或触发限流。
+2. 解析完成后按批次调用硅基流动 Embedding API，避免逐条请求导致耗时过长或触发限流。
 3. 批量向量化成功后写入 `kb_chunk` 并 ACK。
 4. 失败时记录错误、递增重试次数。
 5. 重试次数小于 3 时可重新投递。
@@ -440,9 +440,9 @@ ai:
     base-url: https://api.deepseek.com
     model: deepseek-chat
   embedding:
-    provider: aliyun-bailian
-    base-url: https://dashscope.aliyuncs.com/compatible-mode/v1
-    model: text-embedding-v3
+    provider: siliconflow
+    base-url: https://api.siliconflow.com/v1
+    model: Qwen/Qwen3-Embedding-8B
     dimensions: 1024
 ```
 
@@ -603,7 +603,7 @@ public final class RagQueryContext {
 4. 使用 `VECTOR_DISTANCE(embedding, :queryVector, COSINE)` 查询 Top-K。
 5. Spring Boot 通过 MyBatis XML 查询返回结果。
 6. 验证 `float[]` 到 Oracle `VECTOR` 的绑定方式，包括自定义 TypeHandler 或 `to_vector()` 函数方案。
-7. 验证阿里百炼 `text-embedding-v3` 单条和批量 Embedding 调用，确认维度为 1024。
+7. 验证硅基流动 `Qwen/Qwen3-Embedding-8B` 单条和批量 Embedding 调用，确认维度为 1024。
 
 若该闭环失败，立即评估 PostgreSQL + pgvector 备选方案。
 

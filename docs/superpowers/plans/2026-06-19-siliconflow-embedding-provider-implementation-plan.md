@@ -435,7 +435,7 @@ git commit -m "feat: switch embedding client to siliconflow"
 - Modify: `沟通材料/2026-06-19-ai-knowledge-ticket-v1-project-plan.md`
 - Modify: `沟通材料/2026-06-19-ai-knowledge-ticket-system-design.md`
 
-- [ ] **Step 1: Replace first-version provider descriptions**
+- [x] **Step 1: Replace first-version provider descriptions** ⭐
 
 Replace user-facing references:
 
@@ -461,7 +461,7 @@ with:
 SiliconFlow `Qwen/Qwen3-Embedding-8B`
 ```
 
-- [ ] **Step 2: Replace default config snippets**
+- [x] **Step 2: Replace default config snippets** ⭐
 
 Use this embedding config wherever the docs show provider defaults:
 
@@ -485,7 +485,7 @@ If the snippet is copied from `application.yml`, use placeholder-preserving defa
     dimensions: ${AI_EMBEDDING_DIMENSIONS:1024}
 ```
 
-- [ ] **Step 3: Preserve the verified Oracle vector decision**
+- [x] **Step 3: Preserve the verified Oracle vector decision** ⭐
 
 Keep this conclusion in every project/spec document:
 
@@ -493,7 +493,7 @@ Keep this conclusion in every project/spec document:
 Oracle 向量字段继续使用 `VECTOR(1024, FLOAT32)`，第一版采用精确 `VECTOR_DISTANCE(..., COSINE)` Top-K 检索，暂不引入 HNSW 或 IVF 近似向量索引。
 ```
 
-- [ ] **Step 4: Update live verification checklist wording**
+- [x] **Step 4: Update live verification checklist wording** ⭐
 
 In `docs/spikes/oracle-vector-spike.md`, replace the live checklist with:
 
@@ -504,7 +504,7 @@ In `docs/spikes/oracle-vector-spike.md`, replace the live checklist with:
 
 Do not check these boxes until Task 5 actually runs against SiliconFlow.
 
-- [ ] **Step 5: Add correction note to the old foundation plan**
+- [x] **Step 5: Add correction note to the old foundation plan** ⭐
 
 Near the top of `docs/superpowers/plans/2026-06-19-foundation-vector-spike-implementation-plan.md`, add:
 
@@ -514,13 +514,13 @@ Near the top of `docs/superpowers/plans/2026-06-19-foundation-vector-spike-imple
 
 Do not rewrite every historical task in that old plan unless it would confuse current execution.
 
-- [ ] **Step 6: Scan docs for stale first-version provider references**
+- [x] **Step 6: Scan docs for stale first-version provider references** ⭐
 
 Run:
 
 ```bash
 cd /Users/xianghuaifeng/Documents/毕业设计
-rg -n "阿里百炼|Aliyun Bailian|aliyun-bailian|dashscope|text-embedding-v3" README.md docs 沟通材料
+rg -n "阿里百炼|Aliyun Bailian|aliyun-bailian|dashscope|text-embedding-v3" README.md docs/superpowers/specs/2026-06-19-ai-knowledge-ticket-v1-project-plan.md docs/superpowers/specs/2026-06-19-ai-knowledge-ticket-system-design.md docs/superpowers/plans/2026-06-19-foundation-vector-spike-implementation-plan.md docs/spikes/oracle-vector-spike.md 沟通材料
 ```
 
 Expected:
@@ -530,7 +530,7 @@ Expected:
 
 No stale first-version provider references outside historical context intentionally preserved in the SiliconFlow design spec or correction notes.
 
-- [ ] **Step 7: Commit documentation synchronization**
+- [x] **Step 7: Commit documentation synchronization** ⭐
 
 Run:
 
