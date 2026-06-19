@@ -65,7 +65,7 @@ backend/
 docs/spikes/phase-4-rag-chat.md
 ```
 
-## Task 1: Schema and Domain Model
+## Task 1: Schema and Domain Model ⭐
 
 **Files:**
 - Create: `backend/src/main/resources/db/migration/V4__ai_rag_chat.sql`
@@ -73,19 +73,19 @@ docs/spikes/phase-4-rag-chat.md
 - Create: `backend/src/main/java/com/example/aiticket/ai/rag/mapper/AiChatMapper.java`
 - Create: `backend/src/main/resources/mapper/AiChatMapper.xml`
 
-- [ ] **Step 1: Add V4 migration**
+- [x] **Step 1: Add V4 migration**
 
 Create `ai_session`, `ai_message`, and `ai_message_citation` with foreign keys to `sys_user`, `kb_document`, and `kb_chunk`. Use `NUMBER(1)` for booleans and check constraints for message roles.
 
-- [ ] **Step 2: Add focused domain records**
+- [x] **Step 2: Add focused domain records**
 
 Create records for session, message, citation, response-level answer, response-level citation, prompt, policy decision, and role enum. Keep provider-specific JSON classes out of this package.
 
-- [ ] **Step 3: Add mapper interface and XML**
+- [x] **Step 3: Add mapper interface and XML**
 
 Implement insert session, update session summary, insert message, insert citation, list owned sessions, get owned session, list session messages, and list message citations.
 
-- [ ] **Step 4: Verify mapper XML loads**
+- [x] **Step 4: Verify mapper XML loads**
 
 Run:
 
@@ -94,7 +94,7 @@ cd backend
 JAVA_HOME=/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home PATH=/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home/bin:$PATH mvn -Dmaven.repo.local=/Users/xianghuaifeng/Documents/毕业设计/.worktrees/knowledge-live-verification/.m2repo -Dtest=KnowledgeMapperXmlTest test
 ```
 
-- [ ] **Step 5: Commit Task 1**
+- [x] **Step 5: Commit Task 1**
 
 ```bash
 git add backend/src/main/resources/db/migration/V4__ai_rag_chat.sql backend/src/main/java/com/example/aiticket/ai/rag/domain backend/src/main/java/com/example/aiticket/ai/rag/mapper backend/src/main/resources/mapper/AiChatMapper.xml

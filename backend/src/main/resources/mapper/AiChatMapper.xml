@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.aiticket.ai.rag.mapper.AiChatMapper">
+    <select id="nextSessionId" resultType="long">
+        SELECT ai_session_seq.NEXTVAL FROM dual
+    </select>
+
+    <select id="nextMessageId" resultType="long">
+        SELECT ai_message_seq.NEXTVAL FROM dual
+    </select>
+
+    <select id="nextCitationId" resultType="long">
+        SELECT ai_message_citation_seq.NEXTVAL FROM dual
+    </select>
+
+    <insert id="insertSession">
+        INSERT INTO ai_session (id, user_id, title, last_question, transfer_suggested)
+        VALUES (#{id}, #{userId}, #{title}, #{lastQuestion,jdbcType=VARCHAR}, 0)
+    </insert>
+
+    <update id="updateSessionSummary">
+        UPDATE ai_session
+        SET last_question = #{lastQuestion,jdbcType=VARCHAR},
+            transfer_suggested = CASE WHEN #{transferSuggested} = 1 THEN 1 ELSE 0 END,
+            updated_at = CURRENT_TIMESTAMP
+        WHERE id = #{id}
+          AND user_id = #{userId}
+    </update>
+
+    <select id="findOwnedSession" resultType="com.example.aiticket.ai.rag.domain.AiSession">
+        SELECT id, user_id, title, last_question, transfer_suggested, created_at, updated_at
+        FROM ai_session
+        WHERE id = #{id}
+          AND user_id = #{userId}
+    </select>
+
+    <select id="listOwnedSessions" resultType="com.example.aiticket.ai.rag.domain.AiSession">
+        SELECT id, user_id, title, last_question, transfer_suggested, created_at, updated_at
+        FROM ai_session
+        WHERE user_id = #{userId}
+        ORDER BY updated_at DESC, id DESC
+        FETCH FIRST #{limit} ROWS ONLY
+    </select>
+
+    <insert id="insertMessage">
+        INSERT INTO ai_message (
+            id, session_id, user_id, role, content, model_name, can_answer,
+            confidence, transfer_suggested, transfer_reason
+        )
+        VALUES (
+            #{id}, #{sessionId}, #{userId}, #{role}, #{content},
+            #{modelName,jdbcType=VARCHAR}, #{canAnswer,jdbcType=NUMERIC},
+            #{confidence,jdbcType=NUMERIC},
+            CASE WHEN #{transferSuggested} = 1 THEN 1 ELSE 0 END,
+            #{transferReason,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <insert id="insertCitation">
+        INSERT INTO ai_message_citation (
+            id, message_id, chunk_id, document_id, citation_index,
+            source_title, snippet, similarity
+        )
+        VALUES (
+            #{id}, #{messageId}, #{chunkId}, #{documentId}, #{citationIndex},
+            #{sourceTitle}, #{snippet}, #{similarity,jdbcType=NUMERIC}
+        )
+    </insert>
+
+    <select id="listMessages" resultType="com.example.aiticket.ai.rag.domain.AiMessage">
+        SELECT m.id, m.session_id, m.user_id, m.role, m.content, m.model_name,
+               m.can_answer, m.confidence, m.transfer_suggested, m.transfer_reason,
+               m.created_at
+        FROM ai_message m
+        JOIN ai_session s ON s.id = m.session_id
+        WHERE m.session_id = #{sessionId}
+          AND s.user_id = #{userId}
+        ORDER BY m.created_at ASC, m.id ASC
+    </select>
+
+    <select id="listCitations" resultType="com.example.aiticket.ai.rag.domain.AiMessageCitation">
+        SELECT id, message_id, chunk_id, document_id, citation_index,
+               source_title, snippet, similarity, created_at
+        FROM ai_message_citation
+        WHERE message_id = #{messageId}
+        ORDER BY citation_index ASC
+    </select>
+</mapper>
