@@ -133,7 +133,7 @@ git add backend/src/main/java/com/example/aiticket/ai/chat/OpenAiCompatibleChatC
 git commit -m "feat: add openai compatible chat client"
 ```
 
-## Task 3: Prompt Builder and Answer Policy
+## Task 3: Prompt Builder and Answer Policy ⭐
 
 **Files:**
 - Create: `backend/src/main/java/com/example/aiticket/ai/rag/prompt/RagPromptBuilder.java`
@@ -141,30 +141,30 @@ git commit -m "feat: add openai compatible chat client"
 - Test: `backend/src/test/java/com/example/aiticket/ai/rag/prompt/RagPromptBuilderTest.java`
 - Test: `backend/src/test/java/com/example/aiticket/ai/rag/service/RagAnswerPolicyTest.java`
 
-- [ ] **Step 1: Write prompt builder tests**
+- [x] **Step 1: Write prompt builder tests**
 
 Assert numbered sources, source metadata, user question, and safety constraints are present. Assert blank retrieval still produces a prompt that instructs the model to say it cannot confirm.
 
-- [ ] **Step 2: Implement prompt builder**
+- [x] **Step 2: Implement prompt builder**
 
 Return `RagPrompt` with the full prompt and citation drafts derived from `KnowledgeSearchResult`.
 
-- [ ] **Step 3: Write policy tests**
+- [x] **Step 3: Write policy tests**
 
 Cover no recall, top similarity below threshold, high-confidence answer, and model self-refusal.
 
-- [ ] **Step 4: Implement answer policy**
+- [x] **Step 4: Implement answer policy**
 
 Calculate confidence conservatively from retrieval similarity and model confidence. Set transfer suggestions when recall is empty/weak or model refuses.
 
-- [ ] **Step 5: Run focused tests**
+- [x] **Step 5: Run focused tests**
 
 ```bash
 cd backend
 JAVA_HOME=/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home PATH=/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home/bin:$PATH mvn -Dmaven.repo.local=/Users/xianghuaifeng/Documents/毕业设计/.worktrees/knowledge-live-verification/.m2repo -Dtest=RagPromptBuilderTest,RagAnswerPolicyTest test
 ```
 
-- [ ] **Step 6: Commit Task 3**
+- [x] **Step 6: Commit Task 3**
 
 ```bash
 git add backend/src/main/java/com/example/aiticket/ai/rag/prompt backend/src/main/java/com/example/aiticket/ai/rag/service/RagAnswerPolicy.java backend/src/test/java/com/example/aiticket/ai/rag/prompt backend/src/test/java/com/example/aiticket/ai/rag/service/RagAnswerPolicyTest.java
