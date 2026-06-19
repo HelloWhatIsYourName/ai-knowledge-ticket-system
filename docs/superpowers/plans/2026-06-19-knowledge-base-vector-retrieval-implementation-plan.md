@@ -156,7 +156,7 @@ For Phase 3, `POST /api/kb/documents/text` ingests plain text synchronously afte
 - Create: `backend/src/main/resources/db/migration/V3__knowledge_base.sql`
 - Test: `backend/src/test/java/com/example/aiticket/config/KnowledgePropertiesTest.java`
 
-- [ ] **Step 1: Write failing configuration test**
+- [x] **Step 1: Write failing configuration test**
 
 Create `backend/src/test/java/com/example/aiticket/config/KnowledgePropertiesTest.java`:
 
@@ -168,6 +168,8 @@ import org.springframework.boot.context.properties.bind.BindResult;
 import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.boot.context.properties.source.MapConfigurationPropertySource;
 
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -198,10 +200,42 @@ class KnowledgePropertiesTest {
         assertThat(properties.getQueue().getStreamKey()).isEqualTo("stream:kb:parse");
         assertThat(properties.getQueue().getConsumerGroup()).isEqualTo("kb-parser-group");
     }
+
+    @Test
+    void providesSafeDefaults() {
+        KnowledgeProperties properties = new KnowledgeProperties();
+
+        assertThat(properties.getChunk().getMaxChars()).isEqualTo(700);
+        assertThat(properties.getChunk().getOverlapChars()).isEqualTo(100);
+        assertThat(properties.getRetrieval().getTopK()).isEqualTo(5);
+        assertThat(properties.getRetrieval().getMinSimilarity()).isEqualTo(0.70);
+        assertThat(properties.getParse().getMaxRetryCount()).isEqualTo(3);
+        assertThat(properties.getQueue().getStreamKey()).isEqualTo("stream:kb:parse");
+        assertThat(properties.getQueue().getConsumerGroup()).isEqualTo("kb-parser-group");
+    }
+
+    @Test
+    void rejectsUnsafeChunkAndRetrievalSettings() {
+        KnowledgeProperties properties = new KnowledgeProperties();
+        properties.getChunk().setMaxChars(700);
+        properties.getChunk().setOverlapChars(700);
+        properties.getRetrieval().setTopK(100);
+        properties.getParse().setMaxRetryCount(100);
+
+        Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+
+        assertThat(validator.validate(properties))
+                .extracting(violation -> violation.getPropertyPath().toString())
+                .contains(
+                        "chunk.overlapSmallerThanMaxChars",
+                        "retrieval.topK",
+                        "parse.maxRetryCount"
+                );
+    }
 }
 ```
 
-- [ ] **Step 2: Run test and verify it fails**
+- [x] **Step 2: Run test and verify it fails**
 
 Run:
 
@@ -212,7 +246,7 @@ mvn test -Dtest=KnowledgePropertiesTest
 
 Expected: compilation fails because `KnowledgeProperties` does not exist.
 
-- [ ] **Step 3: Add `KnowledgeProperties`**
+- [x] **Step 3: Add `KnowledgeProperties`**
 
 Create `backend/src/main/java/com/example/aiticket/config/KnowledgeProperties.java`:
 
@@ -220,9 +254,12 @@ Create `backend/src/main/java/com/example/aiticket/config/KnowledgeProperties.ja
 package com.example.aiticket.config;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.validation.annotation.Validated;
 
@@ -295,10 +332,16 @@ public class KnowledgeProperties {
         public void setOverlapChars(int overlapChars) {
             this.overlapChars = overlapChars;
         }
+
+        @AssertTrue(message = "overlapChars must be smaller than maxChars")
+        public boolean isOverlapSmallerThanMaxChars() {
+            return overlapChars < maxChars;
+        }
     }
 
     public static class Retrieval {
         @Min(1)
+        @Max(20)
         private int topK = 5;
 
         @DecimalMin("0.0")
@@ -324,6 +367,7 @@ public class KnowledgeProperties {
 
     public static class Parse {
         @Min(0)
+        @Max(10)
         private int maxRetryCount = 3;
 
         public int getMaxRetryCount() {
@@ -336,7 +380,10 @@ public class KnowledgeProperties {
     }
 
     public static class Queue {
+        @NotBlank
         private String streamKey = "stream:kb:parse";
+
+        @NotBlank
         private String consumerGroup = "kb-parser-group";
 
         public String getStreamKey() {
@@ -358,7 +405,7 @@ public class KnowledgeProperties {
 }
 ```
 
-- [ ] **Step 4: Register configuration properties**
+- [x] **Step 4: Register configuration properties**
 
 Create `backend/src/main/java/com/example/aiticket/knowledge/config/KnowledgeModuleConfig.java`:
 
@@ -375,7 +422,7 @@ public class KnowledgeModuleConfig {
 }
 ```
 
-- [ ] **Step 5: Add `knowledge` defaults to `application.yml`**
+- [x] **Step 5: Add `knowledge` defaults to `application.yml`**
 
 Append this section to `backend/src/main/resources/application.yml`:
 
@@ -394,7 +441,7 @@ knowledge:
     consumer-group: ${KNOWLEDGE_QUEUE_CONSUMER_GROUP:kb-parser-group}
 ```
 
-- [ ] **Step 6: Add Flyway schema migration**
+- [x] **Step 6: Add Flyway schema migration**
 
 Create `backend/src/main/resources/db/migration/V3__knowledge_base.sql`:
 
@@ -464,7 +511,7 @@ CREATE INDEX idx_kb_chunk_hash ON kb_chunk (content_hash);
 INSERT INTO kb_category (id, name, sort_order, enabled) VALUES (1, '默认分类', 1, 1);
 ```
 
-- [ ] **Step 7: Run focused tests**
+- [x] **Step 7: Run focused tests**
 
 Run:
 

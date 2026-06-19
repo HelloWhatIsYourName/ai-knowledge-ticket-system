@@ -35,6 +35,19 @@ ai:
     model: ${AI_EMBEDDING_MODEL:Qwen/Qwen3-Embedding-8B}
     dimensions: ${AI_EMBEDDING_DIMENSIONS:1024}
 
+knowledge:
+  chunk:
+    max-chars: ${KNOWLEDGE_CHUNK_MAX_CHARS:700}
+    overlap-chars: ${KNOWLEDGE_CHUNK_OVERLAP_CHARS:100}
+  retrieval:
+    top-k: ${KNOWLEDGE_RETRIEVAL_TOP_K:5}
+    min-similarity: ${KNOWLEDGE_RETRIEVAL_MIN_SIMILARITY:0.70}
+  parse:
+    max-retry-count: ${KNOWLEDGE_PARSE_MAX_RETRY_COUNT:3}
+  queue:
+    stream-key: ${KNOWLEDGE_QUEUE_STREAM_KEY:stream:kb:parse}
+    consumer-group: ${KNOWLEDGE_QUEUE_CONSUMER_GROUP:kb-parser-group}
+
 security:
   jwt:
     secret: ${APP_JWT_SECRET:dev-only-change-me-to-a-long-random-secret}
