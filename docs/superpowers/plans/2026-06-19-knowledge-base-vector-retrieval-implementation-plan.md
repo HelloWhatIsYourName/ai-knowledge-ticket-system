@@ -1159,7 +1159,7 @@ git commit -m "feat: add knowledge mapper layer"
 
 After commit and review, append `⭐` to the Task 3 heading.
 
-## Task 4: Ingestion and Retrieval Services
+## Task 4: Ingestion and Retrieval Services ⭐
 
 **Files:**
 - Create: `backend/src/main/java/com/example/aiticket/knowledge/service/KnowledgeDocumentService.java`
@@ -1732,7 +1732,7 @@ mvn test -Dtest=KnowledgeIngestionServiceTest,KnowledgeRetrievalServiceTest,Para
 
 Expected: tests pass.
 
-- [ ] **Step 7: Commit Task 4**
+- [x] **Step 7: Commit Task 4**
 
 Run:
 
