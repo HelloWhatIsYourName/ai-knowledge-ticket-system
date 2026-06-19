@@ -18,7 +18,7 @@
             VALUES (
                 #{chunk.documentId}, #{chunk.categoryId}, #{chunk.chunkIndex},
                 #{chunk.content}, #{chunk.contentHash}, #{chunk.sourceTitle},
-                #{chunk.sourcePage}, TO_VECTOR(#{chunk.vectorLiteral}), 1
+                #{chunk.sourcePage,jdbcType=NUMERIC}, TO_VECTOR(#{chunk.vectorLiteral}), 1
             )
         </foreach>
         SELECT 1 FROM dual

@@ -48,7 +48,7 @@
     <update id="updateParseStatus">
         UPDATE kb_document
         SET parse_status = #{parseStatus},
-            parse_error = #{parseError},
+            parse_error = #{parseError,jdbcType=VARCHAR},
             updated_at = CURRENT_TIMESTAMP
         WHERE id = #{id}
           AND deleted = 0
@@ -57,7 +57,7 @@
     <update id="markParseFailed">
         UPDATE kb_document
         SET parse_status = CASE WHEN retry_count + 1 &gt;= #{maxRetryCount} THEN 'PARSE_FAILED' ELSE 'PENDING_PARSE' END,
-            parse_error = #{parseError},
+            parse_error = #{parseError,jdbcType=VARCHAR},
             retry_count = retry_count + 1,
             updated_at = CURRENT_TIMESTAMP
         WHERE id = #{id}
@@ -67,7 +67,7 @@
     <update id="markParseFailedTerminal">
         UPDATE kb_document
         SET parse_status = 'PARSE_FAILED',
-            parse_error = #{parseError},
+            parse_error = #{parseError,jdbcType=VARCHAR},
             retry_count = retry_count + 1,
             updated_at = CURRENT_TIMESTAMP
         WHERE id = #{id}

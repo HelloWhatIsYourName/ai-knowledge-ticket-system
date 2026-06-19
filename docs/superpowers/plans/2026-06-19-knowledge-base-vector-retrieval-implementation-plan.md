@@ -2033,13 +2033,13 @@ git commit -m "feat: add knowledge REST API"
 
 After commit and review, append `⭐` to the Task 5 heading.
 
-## Task 6: Live Oracle, Redis, Auth, and SiliconFlow Verification
+## Task 6: Live Oracle, Redis, Auth, and SiliconFlow Verification ⭐
 
 **Files:**
 - Create: `docs/spikes/knowledge-base-vector-retrieval.md`
 - Modify: `docs/superpowers/plans/2026-06-19-knowledge-base-vector-retrieval-implementation-plan.md`
 
-- [ ] **Step 1: Verify Docker services are running**
+- [x] **Step 1: Verify Docker services are running**
 
 Run:
 
@@ -2049,7 +2049,7 @@ docker compose ps
 
 Expected: Oracle and Redis services are healthy or running. If Docker access requires approval, request escalation.
 
-- [ ] **Step 2: Run Flyway migration through application startup**
+- [x] **Step 2: Run Flyway migration through application startup**
 
 Run with the user's local secret file loaded by the shell, without printing the key:
 
@@ -2067,7 +2067,7 @@ Expected:
 2. Flyway applies `V3__knowledge_base.sql`.
 3. No secret value is printed by the application logs.
 
-- [ ] **Step 3: Login as admin**
+- [x] **Step 3: Login as admin**
 
 Run in another terminal:
 
@@ -2085,7 +2085,7 @@ knowledge:document:manage
 knowledge:document:view
 ```
 
-- [ ] **Step 4: Create and ingest a demo text document**
+- [x] **Step 4: Create and ingest a demo text document**
 
 Run with the token from Step 3:
 
@@ -2102,7 +2102,7 @@ curl -s http://localhost:8080/api/kb/documents/text \
 
 Expected: response `data.parseStatus` is `PARSE_SUCCESS`.
 
-- [ ] **Step 5: Search the knowledge base**
+- [x] **Step 5: Search the knowledge base**
 
 Run:
 
@@ -2119,7 +2119,7 @@ Expected:
 2. The top result `sourceTitle` is `密码重置操作指南`.
 3. The response does not contain raw embedding vectors.
 
-- [ ] **Step 6: Verify RBAC denial for ordinary user**
+- [x] **Step 6: Verify RBAC denial for ordinary user**
 
 Login as `user / Admin_123456`, then run:
 
@@ -2132,7 +2132,7 @@ curl -i http://localhost:8080/api/kb/documents/text \
 
 Expected: HTTP `403`.
 
-- [ ] **Step 7: Record spike report**
+- [x] **Step 7: Record spike report**
 
 Create `docs/spikes/knowledge-base-vector-retrieval.md`:
 
@@ -2161,7 +2161,7 @@ Phase 3 keeps multipart parsing, Tika, RAG answer generation, SSE, AI message pe
 
 Fill the `Commands` section with sanitized evidence from Steps 1-6.
 
-- [ ] **Step 8: Commit Task 6**
+- [x] **Step 8: Commit Task 6**
 
 Run:
 
@@ -2172,13 +2172,13 @@ git commit -m "docs: record knowledge retrieval verification"
 
 After commit and review, append `⭐` to the Task 6 heading.
 
-## Task 7: Final Verification and Project Plan Alignment
+## Task 7: Final Verification and Project Plan Alignment ⭐
 
 **Files:**
 - Modify: `docs/superpowers/specs/2026-06-19-ai-knowledge-ticket-v1-project-plan.md` only if a concise progress note is needed.
 - Modify: `docs/superpowers/plans/2026-06-19-knowledge-base-vector-retrieval-implementation-plan.md`
 
-- [ ] **Step 1: Run all unit tests**
+- [x] **Step 1: Run all unit tests**
 
 Run:
 
@@ -2189,7 +2189,7 @@ mvn test
 
 Expected: all tests pass.
 
-- [ ] **Step 2: Inspect git diff**
+- [x] **Step 2: Inspect git diff**
 
 Run:
 
@@ -2205,7 +2205,7 @@ Expected:
 2. No API keys, JWTs, or raw secrets are present.
 3. No unrelated user changes are reverted.
 
-- [ ] **Step 3: Confirm scope alignment**
+- [x] **Step 3: Confirm scope alignment**
 
 Check against:
 
@@ -2224,7 +2224,7 @@ Confirm:
 6. Redis Stream enqueue foundation exists.
 7. Full RAG answer generation remains outside Phase 3.
 
-- [ ] **Step 4: Commit final plan progress markings**
+- [x] **Step 4: Commit final plan progress markings**
 
 If any task stars were added after prior commits, run:
 
@@ -2233,7 +2233,7 @@ git add docs/superpowers/plans/2026-06-19-knowledge-base-vector-retrieval-implem
 git commit -m "docs: mark knowledge retrieval plan progress"
 ```
 
-- [ ] **Step 5: Final report**
+- [x] **Step 5: Final report**
 
 Final response must include:
 

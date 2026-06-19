@@ -45,6 +45,23 @@ class KnowledgeDocumentControllerTest {
     }
 
     @Test
+    void createTextDocumentPropagatesIngestionFailureWhenDocumentStateDoesNotChange() {
+        FakeDocumentMapper documentMapper = new FakeDocumentMapper();
+        KnowledgeDocumentController controller = new KnowledgeDocumentController(
+                new KnowledgeDocumentService(documentMapper, new NoopParseQueue()),
+                new FailingBeforeStatusUpdateIngestionService(),
+                new FakeChunkMapper()
+        );
+
+        assertThatThrownBy(() -> controller.createTextDocument(
+                new CreateTextDocumentRequest("失败文档", 1L, "内容"),
+                user()
+        ))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("ingestion failed before status update");
+    }
+
+    @Test
     void getDocumentThrowsNotFoundForMissingDocument() {
         KnowledgeDocumentController controller = new KnowledgeDocumentController(
                 new KnowledgeDocumentService(new FakeDocumentMapper(), new NoopParseQueue()),
@@ -132,6 +149,17 @@ class KnowledgeDocumentControllerTest {
                 documentMapper.status = KnowledgeParseStatus.PARSE_FAILED;
             }
             throw new IllegalStateException("ingestion failed");
+        }
+    }
+
+    private static final class FailingBeforeStatusUpdateIngestionService extends KnowledgeIngestionService {
+        private FailingBeforeStatusUpdateIngestionService() {
+            super(null, null, null, null, null, null);
+        }
+
+        @Override
+        public void ingestText(Long documentId, String title, Long categoryId, String text) {
+            throw new IllegalStateException("ingestion failed before status update");
         }
     }
 

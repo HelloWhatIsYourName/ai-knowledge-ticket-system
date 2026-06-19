@@ -1,6 +1,8 @@
 package com.example.aiticket.knowledge.web;
 
 import com.example.aiticket.common.api.ApiResponse;
+import com.example.aiticket.knowledge.domain.KnowledgeDocument;
+import com.example.aiticket.knowledge.domain.KnowledgeParseStatus;
 import com.example.aiticket.knowledge.mapper.KnowledgeChunkMapper;
 import com.example.aiticket.knowledge.service.KnowledgeDocumentService;
 import com.example.aiticket.knowledge.service.KnowledgeIngestionService;
@@ -41,7 +43,11 @@ public class KnowledgeDocumentController {
         try {
             ingestionService.ingestText(documentId, request.title(), categoryId, request.content());
         } catch (RuntimeException ex) {
-            return ApiResponse.ok(DocumentResponse.from(documentService.getDocument(documentId)));
+            KnowledgeDocument document = documentService.getDocument(documentId);
+            if (document.parseStatus() == KnowledgeParseStatus.PENDING_PARSE) {
+                throw ex;
+            }
+            return ApiResponse.ok(DocumentResponse.from(document));
         }
         return ApiResponse.ok(DocumentResponse.from(documentService.getDocument(documentId)));
     }
