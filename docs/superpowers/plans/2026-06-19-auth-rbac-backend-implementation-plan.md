@@ -726,7 +726,7 @@ git commit -m "feat: add user authority query layer"
 - Create: `backend/src/main/java/com/example/aiticket/security/AuthenticatedUser.java`
 - Create: `backend/src/test/java/com/example/aiticket/security/JwtServiceTest.java`
 
-- [ ] **Step 1: Write JWT service tests**
+- [x] **Step 1: Write JWT service tests** ⭐
 
 Create `JwtServiceTest` to assert token generation, parsing, and expiry:
 
@@ -773,7 +773,7 @@ class JwtServiceTest {
 }
 ```
 
-- [ ] **Step 2: Implement JWT service**
+- [x] **Step 2: Implement JWT service** ⭐
 
 Create `JwtClaims`:
 
@@ -862,7 +862,7 @@ public record AuthenticatedUser(
 }
 ```
 
-- [ ] **Step 3: Run focused JWT tests**
+- [x] **Step 3: Run focused JWT tests** ⭐
 
 Run:
 
@@ -877,7 +877,7 @@ Expected:
 BUILD SUCCESS
 ```
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit** ⭐
 
 Run:
 
