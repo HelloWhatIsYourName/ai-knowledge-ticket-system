@@ -1,6 +1,8 @@
 package com.example.aiticket.ai.embedding;
 
 import com.example.aiticket.config.AiProviderProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
@@ -8,15 +10,16 @@ import java.util.Comparator;
 import java.util.List;
 
 @Component
-public class AliyunBailianEmbeddingClient implements EmbeddingClient {
+public class SiliconFlowEmbeddingClient implements EmbeddingClient {
     private final AiProviderProperties properties;
     private final RestClient restClient;
 
-    public AliyunBailianEmbeddingClient(AiProviderProperties properties, RestClient.Builder builder) {
+    public SiliconFlowEmbeddingClient(AiProviderProperties properties, RestClient.Builder builder) {
         this.properties = properties;
         this.restClient = builder
                 .baseUrl(properties.getEmbedding().getBaseUrl())
                 .defaultHeader("Authorization", "Bearer " + properties.getEmbedding().getApiKey())
+                .defaultHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
                 .build();
     }
 
@@ -31,11 +34,15 @@ public class AliyunBailianEmbeddingClient implements EmbeddingClient {
         if (texts == null || texts.isEmpty()) {
             throw new IllegalArgumentException("texts must not be empty");
         }
+        if (texts.stream().anyMatch(text -> text == null || text.isBlank())) {
+            throw new IllegalArgumentException("texts must not contain blank values");
+        }
 
         EmbeddingRequest request = new EmbeddingRequest(
                 properties.getEmbedding().getModel(),
                 texts,
-                properties.getEmbedding().getDimensions()
+                properties.getEmbedding().getDimensions(),
+                "float"
         );
 
         EmbeddingResponse response = restClient.post()
@@ -58,7 +65,12 @@ public class AliyunBailianEmbeddingClient implements EmbeddingClient {
                 .toList();
     }
 
-    private record EmbeddingRequest(String model, List<String> input, Integer dimensions) {
+    private record EmbeddingRequest(
+            String model,
+            List<String> input,
+            Integer dimensions,
+            @JsonProperty("encoding_format") String encodingFormat
+    ) {
     }
 
     private record EmbeddingResponse(List<EmbeddingData> data) {

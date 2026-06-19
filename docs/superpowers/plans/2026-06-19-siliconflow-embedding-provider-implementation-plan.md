@@ -143,7 +143,7 @@ git commit -m "feat: default embedding provider to siliconflow"
 - Create: `backend/src/test/java/com/example/aiticket/ai/embedding/SiliconFlowEmbeddingClientTest.java`
 - Modify: `backend/src/test/java/com/example/aiticket/ai/embedding/EmbeddingResultTest.java`
 
-- [ ] **Step 1: Add the failing SiliconFlow client test**
+- [x] **Step 1: Add the failing SiliconFlow client test** ⭐
 
 Create `backend/src/test/java/com/example/aiticket/ai/embedding/SiliconFlowEmbeddingClientTest.java`:
 
@@ -254,7 +254,7 @@ class SiliconFlowEmbeddingClientTest {
 }
 ```
 
-- [ ] **Step 2: Run the focused client test to verify it fails**
+- [x] **Step 2: Run the focused client test to verify it fails** ⭐
 
 Run:
 
@@ -271,7 +271,7 @@ cannot find symbol
   symbol:   class SiliconFlowEmbeddingClient
 ```
 
-- [ ] **Step 3: Create `SiliconFlowEmbeddingClient`**
+- [x] **Step 3: Create `SiliconFlowEmbeddingClient`** ⭐
 
 Delete `backend/src/main/java/com/example/aiticket/ai/embedding/AliyunBailianEmbeddingClient.java`.
 
@@ -355,7 +355,7 @@ public class SiliconFlowEmbeddingClient implements EmbeddingClient {
 }
 ```
 
-- [ ] **Step 4: Fix JSON property naming**
+- [x] **Step 4: Fix JSON property naming** ⭐
 
 If the focused test fails because `encodingFormat` serializes as `encodingFormat` instead of `encoding_format`, add Jackson annotation:
 
@@ -373,7 +373,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
     }
 ```
 
-- [ ] **Step 5: Update provider-neutral result test fixture**
+- [x] **Step 5: Update provider-neutral result test fixture** ⭐
 
 Change `backend/src/test/java/com/example/aiticket/ai/embedding/EmbeddingResultTest.java`:
 
@@ -381,7 +381,7 @@ Change `backend/src/test/java/com/example/aiticket/ai/embedding/EmbeddingResultT
 assertThatThrownBy(() -> new EmbeddingResult("Qwen/Qwen3-Embedding-8B", 1024, List.of(0.1f, 0.2f)))
 ```
 
-- [ ] **Step 6: Run focused embedding tests**
+- [x] **Step 6: Run focused embedding tests** ⭐
 
 Run:
 
@@ -396,7 +396,7 @@ Expected:
 BUILD SUCCESS
 ```
 
-- [ ] **Step 7: Search for old provider class references**
+- [x] **Step 7: Search for old provider class references** ⭐
 
 Run:
 
@@ -412,7 +412,7 @@ Expected:
 
 No output from `backend` after the code and config switch.
 
-- [ ] **Step 8: Commit provider adapter replacement**
+- [x] **Step 8: Commit provider adapter replacement** ⭐
 
 Run:
 
