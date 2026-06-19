@@ -303,7 +303,7 @@ volumes:
   redis-data:
 ```
 
-- [x] **Step 3: Start services**
+- [x] ⭐ **Step 3: Start services**
 
 Run:
 
@@ -624,7 +624,7 @@ CREATE TABLE vector_spike (
 );
 ```
 
-- [ ] **Step 2: Start Oracle and run application**
+- [x] ⭐ **Step 2: Start Oracle and run application**
 
 Run:
 
@@ -920,7 +920,7 @@ public class VectorSpikeController {
 }
 ```
 
-- [ ] **Step 3: Run application and manual vector test**
+- [x] ⭐ **Step 3: Run application and manual vector test**
 
 Run:
 
@@ -1080,7 +1080,7 @@ git commit -m "feat: add Aliyun embedding adapter skeleton"
 **Files:**
 - Create: `docs/spikes/oracle-vector-spike.md`
 
-- [x] **Step 1: Create spike report after manual verification**
+- [x] ⭐ **Step 1: Create spike report after manual verification**
 
 ```markdown
 # Oracle 23ai Vector Spike Report
@@ -1094,11 +1094,11 @@ git commit -m "feat: add Aliyun embedding adapter skeleton"
 
 ## Result
 
-- [ ] Docker Oracle started.
-- [ ] Flyway created `vector_spike`.
-- [ ] Spring Boot inserted `VECTOR(1024, FLOAT32)` records.
-- [ ] Spring Boot queried Top-K by cosine distance.
-- [ ] MyBatis vector parameter binding approach confirmed.
+- [x] ⭐ Docker Oracle started.
+- [x] ⭐ Flyway created `vector_spike`.
+- [x] ⭐ Spring Boot inserted `VECTOR(1024, FLOAT32)` records.
+- [x] ⭐ Spring Boot queried Top-K by cosine distance.
+- [x] ⭐ MyBatis vector parameter binding approach confirmed.
 - [ ] Aliyun Bailian single embedding call returned 1024 dimensions.
 - [ ] Aliyun Bailian batch embedding call returned 1024 dimensions for each input.
 
@@ -1111,7 +1111,7 @@ Use Oracle 23ai `VECTOR(1024, FLOAT32)` with Aliyun Bailian `text-embedding-v3` 
 During execution, append the actual SQL, request samples, command outputs, errors encountered, and final workaround under this section before checking this task complete.
 ```
 
-- [x] **Step 2: Commit**
+- [x] ⭐ **Step 2: Commit**
 
 ```bash
 git add docs/spikes/oracle-vector-spike.md
@@ -1120,14 +1120,14 @@ git commit -m "docs: add Oracle vector spike report"
 
 ## Self-Review Checklist
 
-- [ ] Plan creates a runnable backend foundation.
-- [ ] Plan proves Oracle `VECTOR(1024, FLOAT32)` before full RAG development.
-- [ ] Chat and Embedding providers are configured separately.
-- [ ] Aliyun Bailian is the only first-version Embedding provider.
-- [ ] DeepSeek is only used for Chat.
-- [ ] Redis and Oracle are available through Docker Compose.
-- [ ] No frontend, RBAC, ticket workflow, or document upload feature is implemented in this plan.
-- [ ] Later plans can build on this foundation without changing vector dimensions.
+- [x] ⭐ Plan creates a runnable backend foundation.
+- [x] ⭐ Plan proves Oracle `VECTOR(1024, FLOAT32)` before full RAG development.
+- [x] ⭐ Chat and Embedding providers are configured separately.
+- [x] ⭐ Aliyun Bailian is the only first-version Embedding provider.
+- [x] ⭐ DeepSeek is only used for Chat.
+- [x] ⭐ Redis and Oracle are available through Docker Compose.
+- [x] ⭐ No frontend, RBAC, ticket workflow, or document upload feature is implemented in this plan.
+- [x] ⭐ Later plans can build on this foundation without changing vector dimensions.
 
 ## Execution Handoff
 
