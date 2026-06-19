@@ -34,3 +34,8 @@ ai:
     api-key: ${AI_EMBEDDING_API_KEY:}
     model: ${AI_EMBEDDING_MODEL:Qwen/Qwen3-Embedding-8B}
     dimensions: ${AI_EMBEDDING_DIMENSIONS:1024}
+
+security:
+  jwt:
+    secret: ${APP_JWT_SECRET:dev-only-change-me-to-a-long-random-secret}
+    expires-in-seconds: ${APP_JWT_EXPIRES_IN_SECONDS:7200}

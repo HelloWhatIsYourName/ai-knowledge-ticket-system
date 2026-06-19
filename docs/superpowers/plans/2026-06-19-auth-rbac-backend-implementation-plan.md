@@ -93,7 +93,7 @@ Do not implement in this plan:
 - Create: `backend/src/main/java/com/example/aiticket/config/JwtProperties.java`
 - Create: `backend/src/test/java/com/example/aiticket/config/JwtPropertiesTest.java`
 
-- [ ] **Step 1: Write JWT configuration binding test**
+- [x] **Step 1: Write JWT configuration binding test** ⭐
 
 Create `backend/src/test/java/com/example/aiticket/config/JwtPropertiesTest.java`:
 
@@ -137,7 +137,7 @@ class JwtPropertiesTest {
 }
 ```
 
-- [ ] **Step 2: Run the focused test and confirm it fails**
+- [x] **Step 2: Run the focused test and confirm it fails** ⭐
 
 Run:
 
@@ -153,7 +153,7 @@ cannot find symbol
   symbol:   class JwtProperties
 ```
 
-- [ ] **Step 3: Add dependencies and configuration class**
+- [x] **Step 3: Add dependencies and configuration class** ⭐
 
 Add dependencies to `backend/pom.xml`:
 
@@ -233,7 +233,7 @@ security:
     expires-in-seconds: ${APP_JWT_EXPIRES_IN_SECONDS:7200}
 ```
 
-- [ ] **Step 4: Run focused test**
+- [x] **Step 4: Run focused test** ⭐
 
 Run:
 
@@ -248,7 +248,7 @@ Expected:
 BUILD SUCCESS
 ```
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit** ⭐
 
 Run:
 
