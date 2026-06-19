@@ -780,7 +780,7 @@ git commit -m "feat: add knowledge text chunking"
 
 After commit and review, append `⭐` to the Task 2 heading.
 
-## Task 3: Knowledge Mapper Layer and Vector SQL
+## Task 3: Knowledge Mapper Layer and Vector SQL ⭐
 
 **Files:**
 - Create domain records under `backend/src/main/java/com/example/aiticket/knowledge/domain/`
@@ -1141,7 +1141,7 @@ mvn test -DskipTests
 
 Expected: compilation succeeds. If XML parsing fails, fix mapper syntax before continuing.
 
-- [ ] **Step 6: Commit Task 3**
+- [x] **Step 6: Commit Task 3**
 
 Run:
 
