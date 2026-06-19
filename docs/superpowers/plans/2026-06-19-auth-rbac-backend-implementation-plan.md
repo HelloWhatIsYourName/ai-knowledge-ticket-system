@@ -265,7 +265,7 @@ git commit -m "feat: add jwt security configuration"
 **Files:**
 - Create: `backend/src/main/resources/db/migration/V2__auth_rbac.sql`
 
-- [ ] **Step 1: Add Flyway migration**
+- [x] **Step 1: Add Flyway migration** ⭐
 
 Create `backend/src/main/resources/db/migration/V2__auth_rbac.sql` with these tables:
 
@@ -385,7 +385,7 @@ JAVA_HOME=/opt/homebrew/opt/openjdk@21 mvn -q -DskipTests exec:java -Dexec.mainC
 
 If the direct encoder command is not available, use a temporary Java test to print hashes, then delete it before committing. Do not store plaintext passwords in the migration.
 
-- [ ] **Step 2: Verify migration with Oracle**
+- [x] **Step 2: Verify migration with Oracle** ⭐
 
 Run:
 
@@ -401,7 +401,7 @@ Migrating schema "AI_TICKET" to version "2 - auth rbac"
 Successfully applied 1 migration
 ```
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit** ⭐
 
 Run:
 
