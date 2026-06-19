@@ -541,7 +541,7 @@ After commit and review, append `⭐` to the Task 1 heading.
 - Create: `backend/src/main/java/com/example/aiticket/knowledge/chunk/ParagraphTextChunker.java`
 - Test: `backend/src/test/java/com/example/aiticket/knowledge/chunk/ParagraphTextChunkerTest.java`
 
-- [ ] **Step 1: Write failing chunker tests**
+- [x] **Step 1: Write failing chunker tests**
 
 Create `backend/src/test/java/com/example/aiticket/knowledge/chunk/ParagraphTextChunkerTest.java`:
 
@@ -592,6 +592,16 @@ class ParagraphTextChunkerTest {
     }
 
     @Test
+    void preservesFormattingInsideNonBlankChunks() {
+        ParagraphTextChunker chunker = new ParagraphTextChunker(80, 10);
+
+        List<TextChunk> chunks = chunker.chunk("  - 第一步\n    保留缩进  ");
+
+        assertThat(chunks).hasSize(1);
+        assertThat(chunks.getFirst().content()).isEqualTo("  - 第一步\n    保留缩进  ");
+    }
+
+    @Test
     void rejectsOverlapGreaterThanOrEqualToMaxChars() {
         assertThatThrownBy(() -> new ParagraphTextChunker(100, 100))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -600,7 +610,7 @@ class ParagraphTextChunkerTest {
 }
 ```
 
-- [ ] **Step 2: Run tests and verify they fail**
+- [x] **Step 2: Run tests and verify they fail**
 
 Run:
 
@@ -611,7 +621,7 @@ mvn test -Dtest=ParagraphTextChunkerTest
 
 Expected: compilation fails because chunker classes do not exist.
 
-- [ ] **Step 3: Create `TextChunk` record**
+- [x] **Step 3: Create `TextChunk` record**
 
 Create `backend/src/main/java/com/example/aiticket/knowledge/domain/TextChunk.java`:
 
@@ -626,12 +636,11 @@ public record TextChunk(int chunkIndex, String content) {
         if (content == null || content.isBlank()) {
             throw new IllegalArgumentException("content must not be blank");
         }
-        content = content.trim();
     }
 }
 ```
 
-- [ ] **Step 4: Create chunker interface**
+- [x] **Step 4: Create chunker interface**
 
 Create `backend/src/main/java/com/example/aiticket/knowledge/chunk/TextChunker.java`:
 
@@ -647,7 +656,7 @@ public interface TextChunker {
 }
 ```
 
-- [ ] **Step 5: Implement paragraph-first chunker**
+- [x] **Step 5: Implement paragraph-first chunker**
 
 Create `backend/src/main/java/com/example/aiticket/knowledge/chunk/ParagraphTextChunker.java`:
 
@@ -685,14 +694,13 @@ public class ParagraphTextChunker implements TextChunker {
 
         List<String> parts = new ArrayList<>();
         for (String paragraph : text.replace("\r\n", "\n").split("\\n\\s*\\n")) {
-            String normalized = paragraph.trim();
-            if (normalized.isBlank()) {
+            if (paragraph.isBlank()) {
                 continue;
             }
-            if (normalized.length() <= maxChars) {
-                parts.add(normalized);
+            if (paragraph.length() <= maxChars) {
+                parts.add(paragraph);
             } else {
-                parts.addAll(splitLongParagraph(normalized));
+                parts.addAll(splitLongParagraph(paragraph));
             }
         }
 
@@ -709,7 +717,10 @@ public class ParagraphTextChunker implements TextChunker {
         int start = 0;
         while (start < paragraph.length()) {
             int end = Math.min(start + maxChars, paragraph.length());
-            parts.add(paragraph.substring(start, end).trim());
+            String chunk = paragraph.substring(start, end);
+            if (!chunk.isBlank()) {
+                parts.add(chunk);
+            }
             if (end == paragraph.length()) {
                 break;
             }
@@ -720,7 +731,7 @@ public class ParagraphTextChunker implements TextChunker {
 }
 ```
 
-- [ ] **Step 6: Register chunker bean**
+- [x] **Step 6: Register chunker bean**
 
 Modify `backend/src/main/java/com/example/aiticket/knowledge/config/KnowledgeModuleConfig.java`:
 
@@ -747,7 +758,7 @@ public class KnowledgeModuleConfig {
 }
 ```
 
-- [ ] **Step 7: Run focused tests**
+- [x] **Step 7: Run focused tests**
 
 Run:
 
