@@ -323,7 +323,7 @@ git add backend/src/main/java/com/example/aiticket/ticket backend/src/main/resou
 git commit -m "feat: add ticket category management api"
 ```
 
-## Task 4: User and Role Administration API
+## Task 4: User and Role Administration API ⭐
 
 **Files:**
 - Create: `backend/src/main/java/com/example/aiticket/system/SystemAdminMapper.java`
@@ -335,11 +335,11 @@ git commit -m "feat: add ticket category management api"
 - Test: `backend/src/test/java/com/example/aiticket/system/SystemAdminServiceTest.java`
 - Test: `backend/src/test/java/com/example/aiticket/system/web/SystemAdminControllerTest.java`
 
-- [ ] **Step 1: Write mapper XML and service tests**
+- [x] **Step 1: Write mapper XML and service tests**
 
 Assert XML declares `listUsers`, `listRoles`, `listPermissions`, `listUserRoleIds`, `deleteUserRoles`, `insertUserRole`, and `updateUserStatus`. Service tests cover list users, list roles, disable/enable user, and replace user roles.
 
-- [ ] **Step 2: Run focused tests to verify RED**
+- [x] **Step 2: Run focused tests to verify RED**
 
 ```bash
 cd backend
@@ -348,7 +348,7 @@ JAVA_HOME=/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home PATH=/o
 
 Expected: fail because system admin mapper/service do not exist.
 
-- [ ] **Step 3: Implement mapper and service**
+- [x] **Step 3: Implement mapper and service**
 
 Use existing RBAC tables. Do not create passwords in this task. Implement:
 
@@ -362,7 +362,7 @@ void replaceUserRoles(Long userId, List<Long> roleIds);
 
 Normalize `limit` with default `100` and max `200`. Accept only `ACTIVE` and `DISABLED` status values.
 
-- [ ] **Step 4: Write controller tests**
+- [x] **Step 4: Write controller tests**
 
 Assert permissions:
 
@@ -375,18 +375,18 @@ GET  /api/admin/roles                     system:role:manage
 GET  /api/admin/permissions               system:role:manage
 ```
 
-- [ ] **Step 5: Implement controller and response records**
+- [x] **Step 5: Implement controller and response records**
 
 Return `ApiResponse` wrappers and avoid exposing password hashes or token versions in any response.
 
-- [ ] **Step 6: Run focused Task 4 tests**
+- [x] **Step 6: Run focused Task 4 tests**
 
 ```bash
 cd backend
 JAVA_HOME=/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home PATH=/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home/bin:$PATH mvn -Dmaven.repo.local=/Users/xianghuaifeng/Documents/毕业设计/.worktrees/knowledge-live-verification/.m2repo -Dtest=SystemAdminMapperXmlTest,SystemAdminServiceTest,SystemAdminControllerTest test
 ```
 
-- [ ] **Step 7: Commit Task 4**
+- [x] **Step 7: Commit Task 4**
 
 ```bash
 git add backend/src/main/java/com/example/aiticket/system backend/src/main/resources/mapper/SystemAdminMapper.xml backend/src/test/java/com/example/aiticket/system docs/superpowers/plans/2026-06-20-phase-6-admin-dashboard-implementation-plan.md

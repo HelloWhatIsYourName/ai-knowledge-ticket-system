@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.aiticket.system.SystemAdminMapper">
+    <select id="listUsers" resultType="com.example.aiticket.system.SystemUserSummary">
+        SELECT id,
+               username,
+               display_name,
+               status
+        FROM sys_user
+        ORDER BY id ASC
+        FETCH FIRST #{limit} ROWS ONLY
+    </select>
+
+    <select id="listRoles" resultType="com.example.aiticket.system.SystemRoleSummary">
+        SELECT id,
+               role_code,
+               role_name,
+               data_scope,
+               status,
+               sort_order
+        FROM sys_role
+        ORDER BY sort_order ASC, id ASC
+    </select>
+
+    <select id="listPermissions" resultType="com.example.aiticket.system.SystemPermissionSummary">
+        SELECT id,
+               permission_code,
+               permission_name,
+               module
+        FROM sys_permission
+        ORDER BY module ASC, permission_code ASC
+    </select>
+
+    <select id="listUserRoleIds" resultType="long">
+        SELECT role_id
+        FROM sys_user_role
+        WHERE user_id = #{userId}
+        ORDER BY role_id ASC
+    </select>
+
+    <update id="updateUserStatus">
+        UPDATE sys_user
+        SET status = #{status},
+            token_version = token_version + 1,
+            updated_at = CURRENT_TIMESTAMP
+        WHERE id = #{userId}
+    </update>
+
+    <delete id="deleteUserRoles">
+        DELETE FROM sys_user_role
+        WHERE user_id = #{userId}
+    </delete>
+
+    <insert id="insertUserRole">
+        INSERT INTO sys_user_role (user_id, role_id)
+        VALUES (#{userId}, #{roleId})
+    </insert>
+</mapper>
