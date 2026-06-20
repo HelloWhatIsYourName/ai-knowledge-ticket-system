@@ -96,6 +96,34 @@ class DocumentationCoverageTest {
         assertThat(projectPlan).doesNotContain("下一步推进剩余前端业务页");
     }
 
+    @Test
+    void liveRehearsalAuditRecordsBlockedPrerequisitesWithoutPrintingSecrets() throws Exception {
+        Path reportPath = Path.of("../docs/demo/v1-live-rehearsal-audit.md");
+        Path scriptPath = Path.of("../tools/smoke/phase21-rehearsal-audit.sh");
+        assertThat(reportPath).exists();
+        assertThat(scriptPath).exists();
+
+        String report = Files.readString(reportPath);
+        assertThat(report).contains("Docker services");
+        assertThat(report).contains("Oracle 23ai");
+        assertThat(report).contains("Redis");
+        assertThat(report).contains("Backend");
+        assertThat(report).contains("Frontend");
+        assertThat(report).contains("AI_EMBEDDING_API_KEY");
+        assertThat(report).contains("AI_CHAT_API_KEY");
+        assertThat(report).contains("BLOCKED");
+        assertThat(report).contains("token:redacted");
+
+        String script = Files.readString(scriptPath);
+        assertThat(script).contains("docker compose ps");
+        assertThat(script).contains("/api/auth/me");
+        assertThat(script).contains("127.0.0.1:5174");
+        assertThat(script).contains("phase19-demo-preflight.sh");
+        assertThat(script).contains("token:redacted");
+        assertThat(script).doesNotContain("echo \"$AI_CHAT_API_KEY\"");
+        assertThat(script).doesNotContain("echo \"$AI_EMBEDDING_API_KEY\"");
+    }
+
     private void assertDocumentContainsMajorModules(Path path) throws Exception {
         assertThat(path).exists();
         String document = Files.readString(path);

@@ -37,6 +37,14 @@ BASE_URL=http://127.0.0.1:8080 tools/smoke/phase19-demo-preflight.sh
 
 This checks login, `/api/auth/me`, knowledge search, normal RAG ask, SSE RAG stream, and admin overview without creating new tickets.
 
+If the live rehearsal cannot start, run the prerequisite audit first:
+
+```bash
+tools/smoke/phase21-rehearsal-audit.sh
+```
+
+Record the result in `docs/demo/v1-live-rehearsal-audit.md`. The audit prints `token:redacted`, checks Docker services, backend/frontend reachability, and provider-key presence without exposing secret values.
+
 Start the frontend in another terminal:
 
 ```bash
