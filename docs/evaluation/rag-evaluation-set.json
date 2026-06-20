@@ -1,0 +1,162 @@
+[
+  {
+    "id": "RAG-001",
+    "category": "账号与登录",
+    "question": "忘记密码后应该如何重置？",
+    "expectedKeywords": ["忘记密码", "身份验证", "重置"],
+    "expectedSourceHint": "账号登录 FAQ 或 IT 支持手册",
+    "shouldTransfer": false
+  },
+  {
+    "id": "RAG-002",
+    "category": "账号与登录",
+    "question": "连续输错密码导致账号锁定怎么办？",
+    "expectedKeywords": ["账号锁定", "等待", "管理员解锁"],
+    "expectedSourceHint": "账号安全策略",
+    "shouldTransfer": false
+  },
+  {
+    "id": "RAG-003",
+    "category": "账号与登录",
+    "question": "我离职同事的账号还能临时借用吗？",
+    "expectedKeywords": ["账号借用", "禁止", "权限安全"],
+    "expectedSourceHint": "账号安全制度",
+    "shouldTransfer": false
+  },
+  {
+    "id": "RAG-004",
+    "category": "权限申请",
+    "question": "如何申请 CRM 系统的客户资料导出权限？",
+    "expectedKeywords": ["CRM", "导出权限", "审批"],
+    "expectedSourceHint": "系统权限申请流程",
+    "shouldTransfer": false
+  },
+  {
+    "id": "RAG-005",
+    "category": "权限申请",
+    "question": "我的生产环境权限今天必须开通，可以跳过审批吗？",
+    "expectedKeywords": ["生产环境", "审批", "不可跳过"],
+    "expectedSourceHint": "生产权限管理规范",
+    "shouldTransfer": false
+  },
+  {
+    "id": "RAG-006",
+    "category": "网络与 VPN",
+    "question": "出差时 VPN 连接不上应该先检查什么？",
+    "expectedKeywords": ["VPN", "网络", "客户端", "账号状态"],
+    "expectedSourceHint": "VPN 使用指南",
+    "shouldTransfer": false
+  },
+  {
+    "id": "RAG-007",
+    "category": "网络与 VPN",
+    "question": "办公室 Wi-Fi 能连上但访问不了内部系统怎么办？",
+    "expectedKeywords": ["Wi-Fi", "内部系统", "DNS", "网络策略"],
+    "expectedSourceHint": "办公网络排障手册",
+    "shouldTransfer": false
+  },
+  {
+    "id": "RAG-008",
+    "category": "设备支持",
+    "question": "新员工电脑申请需要哪些信息？",
+    "expectedKeywords": ["电脑申请", "员工信息", "审批人"],
+    "expectedSourceHint": "办公设备申请流程",
+    "shouldTransfer": false
+  },
+  {
+    "id": "RAG-009",
+    "category": "设备支持",
+    "question": "电脑蓝屏后日志文件应该发给谁？",
+    "expectedKeywords": ["蓝屏", "日志", "IT 支持"],
+    "expectedSourceHint": "终端故障处理指南",
+    "shouldTransfer": false
+  },
+  {
+    "id": "RAG-010",
+    "category": "设备支持",
+    "question": "公司能报销个人购买的机械键盘吗？",
+    "expectedKeywords": ["个人外设", "报销", "审批"],
+    "expectedSourceHint": "办公设备采购与报销规范",
+    "shouldTransfer": false
+  },
+  {
+    "id": "RAG-011",
+    "category": "报销与财务",
+    "question": "差旅发票抬头写错了还能报销吗？",
+    "expectedKeywords": ["发票抬头", "差旅", "重开"],
+    "expectedSourceHint": "差旅报销制度",
+    "shouldTransfer": false
+  },
+  {
+    "id": "RAG-012",
+    "category": "报销与财务",
+    "question": "超过 30 天的交通费还能提交报销吗？",
+    "expectedKeywords": ["30 天", "交通费", "逾期"],
+    "expectedSourceHint": "费用报销时效规则",
+    "shouldTransfer": false
+  },
+  {
+    "id": "RAG-013",
+    "category": "报销与财务",
+    "question": "客户招待费没有事前审批怎么处理？",
+    "expectedKeywords": ["招待费", "事前审批", "补充说明"],
+    "expectedSourceHint": "业务招待费管理办法",
+    "shouldTransfer": false
+  },
+  {
+    "id": "RAG-014",
+    "category": "办公流程",
+    "question": "请年假需要提前几天提交申请？",
+    "expectedKeywords": ["年假", "提前", "申请"],
+    "expectedSourceHint": "考勤休假制度",
+    "shouldTransfer": false
+  },
+  {
+    "id": "RAG-015",
+    "category": "办公流程",
+    "question": "会议室投屏设备无法连接应该怎么报修？",
+    "expectedKeywords": ["会议室", "投屏", "报修"],
+    "expectedSourceHint": "会议室设备使用说明",
+    "shouldTransfer": false
+  },
+  {
+    "id": "RAG-016",
+    "category": "未知或需人工",
+    "question": "帮我查一下王经理今天下午在哪里开会。",
+    "expectedKeywords": ["个人行程", "隐私", "无法确认"],
+    "expectedSourceHint": "知识库不应包含个人实时行程",
+    "shouldTransfer": true
+  },
+  {
+    "id": "RAG-017",
+    "category": "未知或需人工",
+    "question": "客户说合同金额要临时改成 88 万，我能直接答应吗？",
+    "expectedKeywords": ["合同金额", "审批", "人工确认"],
+    "expectedSourceHint": "合同审批和销售授权制度",
+    "shouldTransfer": true
+  },
+  {
+    "id": "RAG-018",
+    "category": "未知或需人工",
+    "question": "我的工资这个月为什么少了 1200 元？",
+    "expectedKeywords": ["工资", "个人薪酬", "人工核查"],
+    "expectedSourceHint": "薪酬问题需要 HR 或财务人工核查",
+    "shouldTransfer": true
+  },
+  {
+    "id": "RAG-019",
+    "category": "未知或需人工",
+    "question": "生产数据库刚刚被误删了一张表，现在怎么恢复？",
+    "expectedKeywords": ["生产数据库", "误删", "应急处理"],
+    "expectedSourceHint": "生产事故应急预案",
+    "shouldTransfer": true
+  },
+  {
+    "id": "RAG-020",
+    "category": "未知或需人工",
+    "question": "帮我预测下个月公司会不会裁员。",
+    "expectedKeywords": ["无法确认", "敏感信息", "不编造"],
+    "expectedSourceHint": "知识库不应回答未公开人事预测",
+    "shouldTransfer": true
+  }
+]

@@ -203,14 +203,14 @@ git add tools/smoke/phase7-backend-smoke.sh backend/src/test/java/com/example/ai
 git commit -m "test: add phase 7 backend smoke script"
 ```
 
-## Task 2: RAG Evaluation Dataset
+## Task 2: RAG Evaluation Dataset ⭐
 
 **Files:**
 - Create: `docs/evaluation/rag-evaluation-set.json`
 - Create: `docs/evaluation/rag-evaluation-set.md`
 - Create: `backend/src/test/java/com/example/aiticket/docs/RagEvaluationSetTest.java`
 
-- [ ] **Step 1: Write the failing dataset structure test**
+- [x] **Step 1: Write the failing dataset structure test**
 
 Create `RagEvaluationSetTest` that reads `../docs/evaluation/rag-evaluation-set.json` and asserts:
 
@@ -221,7 +221,7 @@ at least 5 cases have shouldTransfer=true
 at least 5 distinct categories exist
 ```
 
-- [ ] **Step 2: Run the test to verify RED**
+- [x] **Step 2: Run the test to verify RED**
 
 ```bash
 cd backend
@@ -230,7 +230,7 @@ JAVA_HOME=/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home PATH=/o
 
 Expected: fail because the dataset does not exist.
 
-- [ ] **Step 3: Create the JSON evaluation set**
+- [x] **Step 3: Create the JSON evaluation set**
 
 Create 20 Chinese enterprise-service questions across password/account, reimbursement, device, network, permission, and unknown/out-of-scope categories. Each object must include:
 
@@ -245,7 +245,7 @@ Create 20 Chinese enterprise-service questions across password/account, reimburs
 }
 ```
 
-- [ ] **Step 4: Create the Markdown evaluation guide**
+- [x] **Step 4: Create the Markdown evaluation guide**
 
 Create `docs/evaluation/rag-evaluation-set.md` documenting:
 
@@ -256,14 +256,14 @@ manual scoring rules for retrieval hit, answer usefulness, and mistaken transfer
 how to report aggregate metrics
 ```
 
-- [ ] **Step 5: Run focused dataset test to verify GREEN**
+- [x] **Step 5: Run focused dataset test to verify GREEN**
 
 ```bash
 cd backend
 JAVA_HOME=/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home PATH=/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home/bin:$PATH mvn -Dmaven.repo.local=/Users/xianghuaifeng/Documents/毕业设计/.worktrees/knowledge-live-verification/.m2repo -Dtest=RagEvaluationSetTest test
 ```
 
-- [ ] **Step 6: Commit Task 2**
+- [x] **Step 6: Commit Task 2**
 
 ```bash
 git add docs/evaluation backend/src/test/java/com/example/aiticket/docs/RagEvaluationSetTest.java docs/superpowers/plans/2026-06-20-phase-7-quality-and-thesis-materials-implementation-plan.md
