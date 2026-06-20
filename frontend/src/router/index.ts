@@ -1,8 +1,5 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
-
-const HomePlaceholder = {
-  template: '<section>Public homepage</section>'
-}
+import HomeView from '../views/HomeView.vue'
 
 const LoginPlaceholder = {
   template: '<section>Login</section>'
@@ -16,7 +13,7 @@ export const routes: RouteRecordRaw[] = [
   {
     path: '/',
     name: 'home',
-    component: HomePlaceholder
+    component: HomeView
   },
   {
     path: '/login',

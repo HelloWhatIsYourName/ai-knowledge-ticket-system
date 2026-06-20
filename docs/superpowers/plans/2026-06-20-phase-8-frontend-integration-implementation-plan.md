@@ -141,7 +141,7 @@ git add frontend docs/superpowers/plans/2026-06-20-phase-8-frontend-integration-
 git commit -m "feat: scaffold frontend application"
 ```
 
-## Task 2: Public Homepage and Motion Baseline
+## Task 2: Public Homepage and Motion Baseline ⭐
 
 **Files:**
 - Create: `frontend/src/views/HomeView.vue`
@@ -155,7 +155,7 @@ git commit -m "feat: scaffold frontend application"
 - Test: `frontend/src/views/HomeView.spec.ts`
 - Test: `frontend/src/components/home/HomeNarrative.spec.ts`
 
-- [ ] **Step 1: Write homepage render test**
+- [x] **Step 1: Write homepage render test**
 
 Create `frontend/src/views/HomeView.spec.ts`:
 
@@ -182,7 +182,7 @@ describe('HomeView', () => {
 })
 ```
 
-- [ ] **Step 2: Write motion safety test**
+- [x] **Step 2: Write motion safety test**
 
 Create `frontend/src/components/home/HomeNarrative.spec.ts`:
 
@@ -202,7 +202,7 @@ describe('HomeNarrative', () => {
 })
 ```
 
-- [ ] **Step 3: Run homepage tests to verify RED**
+- [x] **Step 3: Run homepage tests to verify RED**
 
 ```bash
 cd frontend
@@ -211,7 +211,7 @@ npm run test -- --run src/views/HomeView.spec.ts src/components/home/HomeNarrati
 
 Expected: fail until homepage components exist.
 
-- [ ] **Step 4: Implement homepage components**
+- [x] **Step 4: Implement homepage components**
 
 Create a white premium homepage with:
 
@@ -223,11 +223,11 @@ Create a white premium homepage with:
 - Narrative panels: 用户问题, 知识检索, AI 回答, 转入工单, 管理统计.
 - Capability table from the design spec.
 
-- [ ] **Step 5: Add restrained motion CSS and GSAP hook**
+- [x] **Step 5: Add restrained motion CSS and reveal hook**
 
-Use CSS classes for opacity and transform transitions. If GSAP is installed, isolate ScrollTrigger setup inside `HomeNarrative.vue` with `onMounted` and `onUnmounted`. The reduced-motion branch must leave all content visible.
+Use CSS classes for opacity and transform transitions. Use `IntersectionObserver` inside `HomeNarrative.vue` with `onMounted` and `onBeforeUnmount` for lightweight reveal behavior. The reduced-motion branch must leave all content visible.
 
-- [ ] **Step 6: Run homepage tests and build**
+- [x] **Step 6: Run homepage tests and build**
 
 ```bash
 cd frontend
@@ -235,7 +235,7 @@ npm run test
 npm run build
 ```
 
-- [ ] **Step 7: Commit Task 2**
+- [x] **Step 7: Commit Task 2**
 
 ```bash
 git add frontend docs/superpowers/plans/2026-06-20-phase-8-frontend-integration-implementation-plan.md docs/superpowers/specs/2026-06-20-public-homepage-product-shell-design.md
