@@ -101,7 +101,10 @@ Show:
 
 1. RAG returns an answer grounded in the knowledge document.
 2. Response includes 引用来源 cards.
-3. The answer does not expose raw vector fields.
+3. The answer renders progressively through the SSE stream.
+4. The answer does not expose raw vector fields.
+
+The frontend uses `/api/ai/chat/stream` for progressive answer rendering. If streaming fails in the browser or network path, it automatically falls back to the normal `/api/ai/chat/ask` response so the demo can continue.
 
 For thesis evaluation, compare this question against `docs/evaluation/rag-evaluation-set.json` and record 检索命中, 回答有用率, and whether transfer behavior is correct.
 

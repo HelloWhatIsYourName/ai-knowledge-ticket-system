@@ -5,8 +5,10 @@ import ErrorState from '../../components/common/ErrorState.vue'
 import LoadingState from '../../components/common/LoadingState.vue'
 import {
   askQuestion,
+  askQuestionStream,
   listSessionMessages,
   listSessions,
+  type AskQuestionRequest,
   type AiMessage,
   type AiSession,
   type RagAnswerResponse
@@ -88,23 +90,53 @@ async function submitQuestion() {
   transferMessage.value = ''
 
   try {
-    const result = await askQuestion({
+    const request: AskQuestionRequest = {
       question: normalizedQuestion,
       sessionId: selectedSessionId.value,
       topK: topK.value
-    })
+    }
+    const result = await askQuestionWithStreamFallback(request)
 
-    answer.value = result
-    selectedSessionId.value = result.sessionId
-    ticketTitle.value = normalizedQuestion.slice(0, 80)
-    ticketDescription.value = `${normalizedQuestion}\n\nAI 回答：${result.answer}`
-    ticketPriority.value = result.transferSuggested ? 'HIGH' : 'MEDIUM'
+    applyAnswer(result, normalizedQuestion)
     await refreshSessions()
   } catch {
     error.value = '问答请求失败，请稍后重试。'
   } finally {
     asking.value = false
   }
+}
+
+async function askQuestionWithStreamFallback(request: AskQuestionRequest): Promise<RagAnswerResponse> {
+  let streamedAnswer = ''
+
+  try {
+    return await askQuestionStream(request, {
+      onToken: (token) => {
+        streamedAnswer += token
+        answer.value = {
+          sessionId: selectedSessionId.value ?? 0,
+          userMessageId: 0,
+          assistantMessageId: 0,
+          answer: streamedAnswer,
+          canAnswer: true,
+          confidence: 0,
+          transferSuggested: false,
+          transferReason: null,
+          citations: []
+        }
+      }
+    })
+  } catch {
+    return askQuestion(request)
+  }
+}
+
+function applyAnswer(result: RagAnswerResponse, normalizedQuestion: string) {
+  answer.value = result
+  selectedSessionId.value = result.sessionId
+  ticketTitle.value = normalizedQuestion.slice(0, 80)
+  ticketDescription.value = `${normalizedQuestion}\n\nAI 回答：${result.answer}`
+  ticketPriority.value = result.transferSuggested ? 'HIGH' : 'MEDIUM'
 }
 
 async function refreshSessions() {
