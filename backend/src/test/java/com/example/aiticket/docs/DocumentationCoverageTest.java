@@ -35,6 +35,25 @@ class DocumentationCoverageTest {
     }
 
     @Test
+    void phase30FrontendDevSmokeCoversProxyLoginAndCoreRoutesWithoutPrintingTokens() throws Exception {
+        Path scriptPath = Path.of("../tools/smoke/phase30-frontend-dev-smoke.sh");
+        assertThat(scriptPath).exists();
+        String script = Files.readString(scriptPath);
+
+        assertThat(script).contains("FRONTEND_BASE_URL");
+        assertThat(script).contains("http://127.0.0.1:5174");
+        assertThat(script).contains("/api/auth/login");
+        assertThat(script).contains("/api/auth/me");
+        assertThat(script).contains("/login");
+        assertThat(script).contains("/app");
+        assertThat(script).contains("/app/ai/chat");
+        assertThat(script).contains("/app/tickets/my");
+        assertThat(script).contains("/app/admin/dashboard");
+        assertThat(script).contains("token:redacted");
+        assertThat(script).doesNotContain("echo \"$ADMIN_TOKEN\"");
+    }
+
+    @Test
     void acceptanceAndDemoDocsCoverMajorFirstVersionModules() throws Exception {
         assertDocumentContainsMajorModules(Path.of("../docs/acceptance/v1-acceptance-checklist.md"));
         assertDocumentContainsMajorModules(Path.of("../docs/demo/v1-demo-runbook.md"));
