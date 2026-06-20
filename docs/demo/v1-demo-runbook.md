@@ -2,6 +2,8 @@
 
 This runbook prepares a 10-15 minute defense demo for the AI knowledge-base ticket system. It assumes the backend, frontend, Oracle 23ai, Redis, and AI provider or mock provider are available.
 
+Before a recorded rehearsal or final defense, use `docs/demo/v1-live-rehearsal-checklist.md` as the operational checklist and record live RAG metrics in `docs/evaluation/rag-live-evaluation-report.md`.
+
 ## 1. Environment Startup
 
 Start dependencies and backend:
@@ -26,6 +28,14 @@ BASE_URL=http://127.0.0.1:8080 tools/smoke/phase7-backend-smoke.sh
 ```
 
 The script prints `token:redacted` and must not expose JWT values.
+
+For the final live-provider rehearsal, run the lighter preflight check after the demo corpus has been loaded:
+
+```bash
+BASE_URL=http://127.0.0.1:8080 tools/smoke/phase19-demo-preflight.sh
+```
+
+This checks login, `/api/auth/me`, knowledge search, normal RAG ask, SSE RAG stream, and admin overview without creating new tickets.
 
 Start the frontend in another terminal:
 
@@ -106,7 +116,7 @@ Show:
 
 The frontend uses `/api/ai/chat/stream` for progressive answer rendering. If streaming fails in the browser or network path, it automatically falls back to the normal `/api/ai/chat/ask` response so the demo can continue.
 
-For thesis evaluation, compare this question against `docs/evaluation/rag-evaluation-set.json` and record 检索命中, 回答有用率, and whether transfer behavior is correct.
+For thesis evaluation, compare this question against `docs/evaluation/rag-evaluation-set.json` and record 检索命中, 回答有用率, and whether transfer behavior is correct in `docs/evaluation/rag-live-evaluation-report.md`.
 
 ## 5. Manual Transfer to Ticket
 
