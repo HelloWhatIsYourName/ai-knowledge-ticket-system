@@ -412,6 +412,61 @@ git add docs/spikes/phase-8-frontend-integration.md docs/superpowers/plans/2026-
 git commit -m "docs: verify phase 8 frontend integration"
 ```
 
+## Task 6: Reference Homepage Component Migration ⭐
+
+**Files:**
+- Modify: `frontend/src/views/HomeView.vue`
+- Modify: `frontend/src/components/home/HomeHero.vue`
+- Modify: `frontend/src/components/home/HomeNarrative.vue`
+- Modify: `frontend/src/components/home/HomeCapabilityTable.vue`
+- Create: `frontend/src/components/home/HomeScenarioDropdowns.vue`
+- Modify: `frontend/src/styles/main.css`
+- Modify: `frontend/src/views/HomeView.spec.ts`
+- Modify: `frontend/src/test/setup.ts`
+- Create: `frontend/public/home-assets/*.jpg`
+
+- [x] **Step 1: Extract reusable reference structure**
+
+Review the provided `示例网站.html` and downloaded reference `style.css`, `vendor.min.js`, and `app.min.js`. Reuse the component class structure and interaction model for:
+
+```text
+component--herosolutions
+component--gallerysticky
+component--tablethreecols
+component--dropdownssticky
+```
+
+- [x] **Step 2: Write failing homepage structure test**
+
+Extend `HomeView.spec.ts` so the homepage must render the migrated component data attributes, four gallery images, and the user scenario section.
+
+- [x] **Step 3: Migrate homepage components**
+
+Replace the rough card-based homepage with the reference component skeleton:
+
+- Hero: full-screen `herosolutions` layout with large title, left narrative, image field, and bottom metric/details strip.
+- Gallery: `gallerysticky small` asymmetric four-image section with GSAP + ScrollTrigger entrance.
+- Capability matrix: `tablethreecols` row/cell layout instead of generic cards.
+- Scenarios: `dropdownssticky` accordion using GSAP height animation and Vue lifecycle cleanup.
+
+- [x] **Step 4: Reuse licensed visual assets**
+
+Download the reference gallery images into `frontend/public/home-assets/` and reference them locally from Vue components.
+
+- [x] **Step 5: Verify tests and build**
+
+```bash
+cd frontend
+npm run test
+npm run build
+```
+
+Result: frontend test suite passed (`8` files, `10` tests) and production build completed.
+
+- [x] **Step 6: Manual preview note**
+
+Started Vite preview at `http://127.0.0.1:5174/` because `5173` was already occupied. The local server responded successfully. Automated screenshot capture was attempted but the environment returned `could not create image from display`, so screenshot evidence is unavailable in this run.
+
 ## Current Execution Note
 
 Phase 8 starts after Phase 7 backend evidence and thesis materials are complete. This phase intentionally delivers a public homepage plus a narrow but real product slice first: login, permission-aware app shell, and admin dashboard. Keep the homepage visually premium but credible, and keep logged-in product pages quiet and operational.
