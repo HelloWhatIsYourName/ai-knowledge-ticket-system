@@ -365,7 +365,7 @@ git add frontend docs/superpowers/plans/2026-06-20-phase-8-frontend-integration-
 git commit -m "feat: add admin dashboard frontend"
 ```
 
-## Task 5: Phase 8 Verification and Progress Marking
+## Task 5: Phase 8 Verification and Progress Marking ⭐
 
 **Files:**
 - Create: `docs/spikes/phase-8-frontend-integration.md`
@@ -373,7 +373,7 @@ git commit -m "feat: add admin dashboard frontend"
 - Modify: `docs/superpowers/specs/2026-06-19-ai-knowledge-ticket-v1-project-plan.md`
 - Modify: `沟通材料/2026-06-19-ai-knowledge-ticket-v1-project-plan.md`
 
-- [ ] **Step 1: Run frontend tests and build**
+- [x] **Step 1: Run frontend tests and build**
 
 ```bash
 cd frontend
@@ -381,14 +381,14 @@ npm run test
 npm run build
 ```
 
-- [ ] **Step 2: Run backend tests**
+- [x] **Step 2: Run backend tests**
 
 ```bash
 cd backend
 JAVA_HOME=/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home PATH=/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home/bin:$PATH mvn -Dmaven.repo.local=/Users/xianghuaifeng/Documents/毕业设计/.worktrees/knowledge-live-verification/.m2repo test
 ```
 
-- [ ] **Step 3: Start frontend dev server for manual preview**
+- [x] **Step 3: Start frontend dev server for manual preview**
 
 ```bash
 cd frontend
@@ -397,15 +397,15 @@ npm run dev -- --port 5173
 
 Use browser verification or screenshots for the public homepage, login shell, and dashboard layout if the backend is available. Check desktop and mobile viewports. Confirm homepage animation still presents all content when reduced motion is enabled.
 
-- [ ] **Step 4: Write Phase 8 spike report**
+- [x] **Step 4: Write Phase 8 spike report**
 
 Document test/build results, frontend routes, homepage motion checks, backend API contracts consumed, and remaining pages.
 
-- [ ] **Step 5: Update project progress**
+- [x] **Step 5: Update project progress**
 
 Mark frontend integration as started with public homepage, login/RBAC shell, and admin dashboard slice completed; note RAG chat and ticket workflow pages as next frontend slices.
 
-- [ ] **Step 6: Commit Task 5**
+- [x] **Step 6: Commit Task 5**
 
 ```bash
 git add docs/spikes/phase-8-frontend-integration.md docs/superpowers/plans/2026-06-20-phase-8-frontend-integration-implementation-plan.md docs/superpowers/specs/2026-06-19-ai-knowledge-ticket-v1-project-plan.md 沟通材料/2026-06-19-ai-knowledge-ticket-v1-project-plan.md
