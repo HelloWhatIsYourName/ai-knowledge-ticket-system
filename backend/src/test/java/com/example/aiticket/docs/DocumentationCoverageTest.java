@@ -54,6 +54,26 @@ class DocumentationCoverageTest {
     }
 
     @Test
+    void phase31AcceptanceEvidenceScriptCollectsRepeatableChecksWithoutPrintingSecrets() throws Exception {
+        Path scriptPath = Path.of("../tools/smoke/phase31-acceptance-evidence.sh");
+        assertThat(scriptPath).exists();
+        String script = Files.readString(scriptPath);
+
+        assertThat(script).contains("REPORT_PATH");
+        assertThat(script).contains("phase7-backend-smoke.sh");
+        assertThat(script).contains("phase30-frontend-dev-smoke.sh");
+        assertThat(script).contains("npm run test");
+        assertThat(script).contains("npm run build");
+        assertThat(script).contains("mvn -Dtest=DocumentationCoverageTest test");
+        assertThat(script).contains("token:redacted");
+        assertThat(script).contains("redact_log");
+        assertThat(script).doesNotContain("echo \"$ADMIN_TOKEN\"");
+        assertThat(script).doesNotContain("echo \"$USER_TOKEN\"");
+        assertThat(script).doesNotContain("echo \"$AI_CHAT_API_KEY\"");
+        assertThat(script).doesNotContain("echo \"$AI_EMBEDDING_API_KEY\"");
+    }
+
+    @Test
     void acceptanceAndDemoDocsCoverMajorFirstVersionModules() throws Exception {
         assertDocumentContainsMajorModules(Path.of("../docs/acceptance/v1-acceptance-checklist.md"));
         assertDocumentContainsMajorModules(Path.of("../docs/demo/v1-demo-runbook.md"));
