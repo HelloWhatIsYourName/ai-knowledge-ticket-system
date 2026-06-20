@@ -31,6 +31,16 @@ export const routes: RouteRecordRaw[] = [
         component: () => import('../views/admin/AdminDashboardView.vue')
       },
       {
+        path: 'ai/chat',
+        name: 'rag-chat',
+        component: () => import('../views/ai/RagChatView.vue')
+      },
+      {
+        path: 'tickets/my',
+        name: 'my-tickets',
+        component: () => import('../views/tickets/TicketListView.vue')
+      },
+      {
         path: ':pathMatch(.*)*',
         name: 'app-placeholder',
         component: PlaceholderView

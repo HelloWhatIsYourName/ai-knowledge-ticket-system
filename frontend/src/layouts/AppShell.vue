@@ -7,6 +7,12 @@ const auth = useAuthStore()
 const router = useRouter()
 
 const displayName = computed(() => auth.user?.displayName || auth.user?.username || '未登录用户')
+const fallbackMenus = [
+  { code: 'ai-chat', name: 'AI 问答', path: '/app/ai/chat' },
+  { code: 'my-tickets', name: '我的工单', path: '/app/tickets/my' },
+  { code: 'admin-dashboard', name: '管理概览', path: '/app/admin/dashboard' }
+]
+const menus = computed(() => (auth.menus.length > 0 ? auth.menus : fallbackMenus))
 
 function logout() {
   auth.logout()
@@ -19,7 +25,7 @@ function logout() {
     <aside class="app-sidebar" aria-label="Application navigation">
       <RouterLink class="app-shell-brand" to="/">AI Knowledge Ticket</RouterLink>
       <nav class="app-shell-menu">
-        <RouterLink v-for="menu in auth.menus" :key="menu.code || menu.path" :to="menu.path">
+        <RouterLink v-for="menu in menus" :key="menu.code || menu.path" :to="menu.path">
           {{ menu.name }}
         </RouterLink>
       </nav>
