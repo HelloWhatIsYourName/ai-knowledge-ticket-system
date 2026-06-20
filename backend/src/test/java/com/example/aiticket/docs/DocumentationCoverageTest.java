@@ -1,5 +1,7 @@
 package com.example.aiticket.docs;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Files;
@@ -8,6 +10,8 @@ import java.nio.file.Path;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class DocumentationCoverageTest {
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
     @Test
     void phase7SmokeScriptCoversCoreBackendEndpointsWithoutPrintingTokens() throws Exception {
         Path scriptPath = Path.of("../tools/smoke/phase7-backend-smoke.sh");
@@ -125,6 +129,54 @@ class DocumentationCoverageTest {
         assertThat(script).contains("token:redacted");
         assertThat(script).doesNotContain("echo \"$AI_CHAT_API_KEY\"");
         assertThat(script).doesNotContain("echo \"$AI_EMBEDDING_API_KEY\"");
+    }
+
+    @Test
+    void phase23DemoCorpusAndRagEvaluationScriptsAreRepeatableAndSecretSafe() throws Exception {
+        Path loadScriptPath = Path.of("../tools/smoke/phase23-load-demo-corpus.sh");
+        Path evaluationScriptPath = Path.of("../tools/smoke/phase23-run-rag-evaluation.sh");
+        Path reportPath = Path.of("../docs/evaluation/rag-live-evaluation-report.md");
+        Path datasetPath = Path.of("../docs/evaluation/rag-evaluation-set.json");
+
+        assertThat(loadScriptPath).exists();
+        assertThat(evaluationScriptPath).exists();
+        assertThat(reportPath).exists();
+        assertThat(datasetPath).exists();
+
+        String loadScript = Files.readString(loadScriptPath);
+        assertThat(loadScript).contains("docs/demo/v1-demo-corpus.json");
+        assertThat(loadScript).contains("/api/auth/login");
+        assertThat(loadScript).contains("/api/kb/documents/text");
+        assertThat(loadScript).contains("categoryId");
+        assertThat(loadScript).contains("token:redacted");
+        assertThat(loadScript).doesNotContain("echo \"$ADMIN_TOKEN\"");
+        assertThat(loadScript).doesNotContain("echo \"$AI_CHAT_API_KEY\"");
+        assertThat(loadScript).doesNotContain("echo \"$AI_EMBEDDING_API_KEY\"");
+
+        String evaluationScript = Files.readString(evaluationScriptPath);
+        assertThat(evaluationScript).contains("docs/evaluation/rag-evaluation-set.json");
+        assertThat(evaluationScript).contains("/api/auth/login");
+        assertThat(evaluationScript).contains("/api/ai/chat/ask");
+        assertThat(evaluationScript).contains("RESULTS_PATH");
+        assertThat(evaluationScript).contains("retrievalHitRate");
+        assertThat(evaluationScript).contains("answerUsefulRate");
+        assertThat(evaluationScript).contains("wrongTransferRate");
+        assertThat(evaluationScript).contains("missedTransferRate");
+        assertThat(evaluationScript).contains("node --input-type=commonjs <<'NODE'");
+        assertThat(evaluationScript).contains("main().catch");
+        assertThat(evaluationScript).contains("token:redacted");
+        assertThat(evaluationScript).doesNotContain("echo \"$USER_TOKEN\"");
+        assertThat(evaluationScript).doesNotContain("echo \"$AI_CHAT_API_KEY\"");
+        assertThat(evaluationScript).doesNotContain("echo \"$AI_EMBEDDING_API_KEY\"");
+
+        String report = Files.readString(reportPath);
+        assertThat(report).contains("tools/smoke/phase23-load-demo-corpus.sh");
+        assertThat(report).contains("tools/smoke/phase23-run-rag-evaluation.sh");
+        JsonNode cases = objectMapper.readTree(Files.readString(datasetPath));
+        for (JsonNode evaluationCase : cases) {
+            assertThat(report).contains(evaluationCase.path("id").asText());
+            assertThat(report).contains(evaluationCase.path("question").asText());
+        }
     }
 
     private void assertDocumentContainsMajorModules(Path path) throws Exception {
