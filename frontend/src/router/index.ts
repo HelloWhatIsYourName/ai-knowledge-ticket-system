@@ -31,6 +31,11 @@ export const routes: RouteRecordRaw[] = [
         component: () => import('../views/admin/AdminDashboardView.vue')
       },
       {
+        path: 'system',
+        name: 'system-admin',
+        component: () => import('../views/system/SystemAdminView.vue')
+      },
+      {
         path: 'ai/chat',
         name: 'rag-chat',
         component: () => import('../views/ai/RagChatView.vue')

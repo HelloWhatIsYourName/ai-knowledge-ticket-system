@@ -11,7 +11,8 @@ const fallbackMenus = [
   { code: 'ai-chat', name: 'AI 问答', path: '/app/ai/chat' },
   { code: 'knowledge-base', name: '知识库', path: '/app/knowledge' },
   { code: 'my-tickets', name: '我的工单', path: '/app/tickets/my' },
-  { code: 'admin-dashboard', name: '管理概览', path: '/app/admin/dashboard' }
+  { code: 'admin-dashboard', name: '管理概览', path: '/app/admin/dashboard' },
+  { code: 'system-admin', name: '系统管理', path: '/app/system' }
 ]
 const menus = computed(() => (auth.menus.length > 0 ? auth.menus : fallbackMenus))
 

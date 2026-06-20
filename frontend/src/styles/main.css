@@ -1869,6 +1869,139 @@ select {
   gap: 12px;
 }
 
+.system-admin-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 380px);
+  gap: 18px;
+  align-items: start;
+}
+
+.system-admin-side {
+  display: grid;
+  gap: 18px;
+}
+
+.system-panel {
+  display: grid;
+  gap: 14px;
+  padding: 20px;
+  border: 1px solid var(--home-line);
+  border-radius: 16px;
+  background: #ffffff;
+}
+
+.system-user-row {
+  display: grid;
+  grid-template-columns: minmax(170px, 1fr) minmax(160px, 1fr) 110px 86px;
+  gap: 14px;
+  align-items: center;
+  padding: 14px;
+  border: 1px solid var(--home-line);
+  border-radius: 12px;
+  background: #fbfdfe;
+  cursor: pointer;
+}
+
+.system-user-row.is-selected,
+.system-user-row:hover {
+  border-color: #b7d2d0;
+  background: #f5fbfa;
+}
+
+.system-user-row strong,
+.system-user-row span,
+.system-role-item strong,
+.system-role-item span {
+  display: block;
+}
+
+.system-user-row > div > span,
+.system-role-item span,
+.system-copy {
+  color: var(--home-muted);
+  font-size: 13px;
+}
+
+.system-user-roles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.system-user-roles mark,
+.system-status,
+.permission-module span {
+  padding: 4px 8px;
+  border-radius: 999px;
+  color: var(--home-accent-strong);
+  background: #dff0ee;
+  font-size: 12px;
+  font-weight: 760;
+}
+
+.system-user-row button,
+.role-assignment-form button {
+  min-height: 38px;
+  border: 0;
+  border-radius: 999px;
+  color: #ffffff;
+  background: var(--home-accent-strong);
+  cursor: pointer;
+}
+
+.system-user-row button:disabled,
+.role-assignment-form button:disabled {
+  cursor: not-allowed;
+  opacity: 0.56;
+}
+
+.role-assignment-form {
+  display: grid;
+  gap: 10px;
+}
+
+.role-check-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid var(--home-line);
+  border-radius: 10px;
+}
+
+.role-check-row input {
+  width: 18px;
+  height: 18px;
+}
+
+.role-check-row small {
+  display: block;
+  margin-top: 3px;
+  color: var(--home-muted);
+}
+
+.system-role-item,
+.permission-module {
+  display: grid;
+  gap: 6px;
+  padding: 12px;
+  border: 1px solid var(--home-line);
+  border-radius: 12px;
+  background: #fbfdfe;
+}
+
+.permission-module h4 {
+  margin: 0;
+}
+
+.permission-module {
+  align-items: start;
+}
+
+.permission-module span {
+  width: fit-content;
+}
+
 @media (max-width: 1180px) {
   .rag-layout {
     grid-template-columns: 220px minmax(0, 1fr);
@@ -1888,6 +2021,10 @@ select {
   }
 
   .knowledge-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .system-admin-layout {
     grid-template-columns: 1fr;
   }
 }
