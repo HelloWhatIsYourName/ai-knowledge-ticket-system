@@ -20,6 +20,8 @@ describe('HomeView', () => {
     expect(wrapper.find('[data-component="gallerysticky"]').exists()).toBe(true)
     expect(wrapper.find('[data-component="tablethreecols"]').exists()).toBe(true)
     expect(wrapper.find('[data-component="dropdownssticky"]').exists()).toBe(true)
+    expect(wrapper.find('[data-motion="red-hero"]').exists()).toBe(true)
+    expect(wrapper.find('.home-red-visual').exists()).toBe(true)
     expect(wrapper.findAll('.component--gallerysticky .image img')).toHaveLength(4)
     expect(wrapper.text()).toContain('用户场景')
   })

@@ -467,6 +467,10 @@ Result: frontend test suite passed (`8` files, `10` tests) and production build 
 
 Started Vite preview at `http://127.0.0.1:5174/` because `5173` was already occupied. The local server responded successfully. Automated screenshot capture was attempted but the environment returned `could not create image from display`, so screenshot evidence is unavailable in this run.
 
+- [x] **Step 7: Restore reference red opening motion**
+
+Restore the reference page's memorable red first-screen direction by replacing the temporary hero photo with a local red animated `#herosolutions-svg` visual. Use GSAP in `HomeHero.vue` for initial scale/rotation/line reveal and low-frequency transform-only motion. Keep reduced-motion support and the original `component--herosolutions` skeleton.
+
 ## Current Execution Note
 
 Phase 8 starts after Phase 7 backend evidence and thesis materials are complete. This phase intentionally delivers a public homepage plus a narrow but real product slice first: login, permission-aware app shell, and admin dashboard. Keep the homepage visually premium but credible, and keep logged-in product pages quiet and operational.

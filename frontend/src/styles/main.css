@@ -58,7 +58,7 @@ select {
   --tm-medium: #d5d5d5;
   --tm-lighter: #f2f2f2;
   --tm-lightest: #f7f7f7;
-  --tm-accent: #0f766e;
+  --tm-accent: #e41613;
 }
 
 .home-page a {
@@ -244,6 +244,7 @@ select {
 
 .component--herosolutions .title.--3xlarge {
   position: absolute;
+  z-index: 3;
   top: 50%;
   left: 27.917vw;
   width: 45vw;
@@ -262,6 +263,7 @@ select {
 
 .component--herosolutions .text-block-left {
   position: absolute;
+  z-index: 4;
   right: auto;
   bottom: 6.25vw;
   left: 0;
@@ -285,7 +287,7 @@ select {
   width: 70vw;
   margin-right: 0;
   margin-left: auto;
-  filter: saturate(0.82) contrast(1.04);
+  filter: none;
 }
 
 .component--herosolutions .image::after {
@@ -293,12 +295,97 @@ select {
   inset: 0;
   content: "";
   background:
-    linear-gradient(90deg, rgb(255 255 255 / 0.74), transparent 32%),
-    linear-gradient(180deg, rgb(255 255 255 / 0.2), transparent 48%);
+    linear-gradient(90deg, rgb(255 255 255 / 0.95), rgb(255 255 255 / 0.3) 22%, transparent 42%),
+    linear-gradient(180deg, rgb(255 255 255 / 0.25), transparent 42%);
+}
+
+.home-red-visual {
+  isolation: isolate;
+  background:
+    linear-gradient(135deg, #f05b55 0%, #e41613 42%, #9f0604 100%);
+}
+
+.home-red-visual::before {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  content: "";
+  background:
+    repeating-linear-gradient(112deg, rgb(255 255 255 / 0.18) 0 1px, transparent 1px 18px);
+  mix-blend-mode: screen;
+  opacity: 0.42;
+}
+
+.home-red-plane {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  background: #e41613;
+  will-change: transform, opacity;
+}
+
+.home-red-plane.is-primary {
+  top: 13vh;
+  left: 16vw;
+  width: 42vw;
+  height: 62vh;
+  clip-path: polygon(8% 0, 100% 14%, 82% 100%, 0 76%);
+  background: #e41613;
+  box-shadow: 0 38px 120px rgb(78 0 0 / 0.22);
+}
+
+.home-red-plane.is-secondary {
+  right: 5vw;
+  bottom: 8vh;
+  width: 30vw;
+  height: 42vh;
+  clip-path: polygon(18% 0, 100% 6%, 80% 96%, 0 82%);
+  background: #bd0b08;
+  opacity: 0.72;
+}
+
+.home-red-plane.is-tertiary {
+  top: 0;
+  right: 0;
+  width: 22vw;
+  height: 100%;
+  clip-path: polygon(38% 0, 100% 0, 100% 100%, 0 100%);
+  background: #ff6c63;
+  opacity: 0.58;
+}
+
+.home-red-line {
+  position: absolute;
+  z-index: 3;
+  left: 12vw;
+  width: 46vw;
+  height: 1px;
+  background: rgb(255 255 255 / 0.64);
+  transform-origin: left center;
+}
+
+.home-red-line.line-a {
+  top: 28vh;
+  rotate: -11deg;
+}
+
+.home-red-line.line-b {
+  top: 52vh;
+  left: 22vw;
+  rotate: -2deg;
+  opacity: 0.74;
+}
+
+.home-red-line.line-c {
+  top: 72vh;
+  left: 8vw;
+  rotate: 8deg;
+  opacity: 0.42;
 }
 
 .component--herosolutions .details {
   position: absolute;
+  z-index: 5;
   bottom: 0;
   left: 0;
   display: flex;
@@ -662,6 +749,29 @@ select {
   .component--herosolutions .image {
     width: 100%;
     height: min(122.222vw, 485px);
+  }
+
+  .home-red-plane.is-primary {
+    top: min(18vw, 72px);
+    left: 17vw;
+    width: 62vw;
+    height: min(78vw, 310px);
+  }
+
+  .home-red-plane.is-secondary {
+    right: 0;
+    bottom: min(6vw, 24px);
+    width: 48vw;
+    height: min(58vw, 230px);
+  }
+
+  .home-red-plane.is-tertiary {
+    width: 32vw;
+  }
+
+  .home-red-line {
+    left: 8vw;
+    width: 72vw;
   }
 
   .component--herosolutions .text-block-left {
