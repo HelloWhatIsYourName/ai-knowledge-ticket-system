@@ -1,0 +1,45 @@
+<script setup lang="ts">
+import { computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { useAuthStore } from '../stores/auth'
+
+const auth = useAuthStore()
+const router = useRouter()
+
+const displayName = computed(() => auth.user?.displayName || auth.user?.username || '未登录用户')
+
+function logout() {
+  auth.logout()
+  router.push('/login')
+}
+</script>
+
+<template>
+  <div class="app-shell">
+    <aside class="app-sidebar" aria-label="Application navigation">
+      <RouterLink class="app-shell-brand" to="/">AI Knowledge Ticket</RouterLink>
+      <nav class="app-shell-menu">
+        <RouterLink v-for="menu in auth.menus" :key="menu.code || menu.path" :to="menu.path">
+          {{ menu.name }}
+        </RouterLink>
+      </nav>
+    </aside>
+
+    <section class="app-workspace">
+      <header class="app-topbar">
+        <div>
+          <p class="app-topbar-label">Workspace</p>
+          <h2>服务工作台</h2>
+        </div>
+        <div class="app-user">
+          <span>{{ displayName }}</span>
+          <button type="button" @click="logout">退出</button>
+        </div>
+      </header>
+
+      <main class="app-content">
+        <RouterView />
+      </main>
+    </section>
+  </div>
+</template>

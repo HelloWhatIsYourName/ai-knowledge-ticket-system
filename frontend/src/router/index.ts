@@ -1,13 +1,8 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
+import AppShell from '../layouts/AppShell.vue'
+import LoginView from '../views/LoginView.vue'
 import HomeView from '../views/HomeView.vue'
-
-const LoginPlaceholder = {
-  template: '<section>Login</section>'
-}
-
-const AppPlaceholder = {
-  template: '<section>Product workspace</section>'
-}
+import PlaceholderView from '../views/PlaceholderView.vue'
 
 export const routes: RouteRecordRaw[] = [
   {
@@ -18,12 +13,29 @@ export const routes: RouteRecordRaw[] = [
   {
     path: '/login',
     name: 'login',
-    component: LoginPlaceholder
+    component: LoginView
   },
   {
     path: '/app',
     name: 'app',
-    component: AppPlaceholder
+    component: AppShell,
+    children: [
+      {
+        path: '',
+        name: 'app-home',
+        component: PlaceholderView
+      },
+      {
+        path: 'admin/dashboard',
+        name: 'admin-dashboard',
+        component: PlaceholderView
+      },
+      {
+        path: ':pathMatch(.*)*',
+        name: 'app-placeholder',
+        component: PlaceholderView
+      }
+    ]
   }
 ]
 

@@ -242,7 +242,7 @@ git add frontend docs/superpowers/plans/2026-06-20-phase-8-frontend-integration-
 git commit -m "feat: add public homepage"
 ```
 
-## Task 3: Auth API, Store, and RBAC Navigation
+## Task 3: Auth API, Store, and RBAC Navigation ⭐
 
 **Files:**
 - Create: `frontend/src/api/http.ts`
@@ -255,30 +255,30 @@ git commit -m "feat: add public homepage"
 - Test: `frontend/src/stores/auth.spec.ts`
 - Test: `frontend/src/layouts/AppShell.spec.ts`
 
-- [ ] **Step 1: Write auth store tests**
+- [x] **Step 1: Write auth store tests**
 
 Assert login stores token, user, roles, permissions, and menus from the backend `ApiResponse<LoginResponse>` shape. Assert logout clears state.
 
-- [ ] **Step 2: Write navigation test**
+- [x] **Step 2: Write navigation test**
 
 Mount `AppShell` with fake menus and assert menu labels render from `auth.menus`, not hard-coded duplicates.
 
-- [ ] **Step 3: Run tests to verify RED**
+- [x] **Step 3: Run tests to verify RED**
 
 ```bash
 cd frontend
 npm run test -- --run src/stores/auth.spec.ts src/layouts/AppShell.spec.ts
 ```
 
-- [ ] **Step 4: Implement API client and auth store**
+- [x] **Step 4: Implement API client and auth store**
 
 Use Axios with `VITE_API_BASE_URL` defaulting to `/api`. Add request interceptor that attaches `Authorization: Bearer <token>` when present.
 
-- [ ] **Step 5: Implement login view and app shell**
+- [x] **Step 5: Implement login view and app shell**
 
-Use Element Plus form components. Login view posts username/password, stores token, and routes to the first visible menu or admin dashboard. App shell renders a quiet operational layout with sidebar navigation, user summary, and router content.
+Use accessible native form controls for the first login slice to avoid pulling Element Plus into the initial bundle before a feature view needs it. Login view posts username/password, stores token, and routes to the first visible menu or admin dashboard. App shell renders a quiet operational layout with sidebar navigation, user summary, and router content.
 
-- [ ] **Step 6: Run tests and build**
+- [x] **Step 6: Run tests and build**
 
 ```bash
 cd frontend
@@ -286,7 +286,7 @@ npm run test
 npm run build
 ```
 
-- [ ] **Step 7: Commit Task 3**
+- [x] **Step 7: Commit Task 3**
 
 ```bash
 git add frontend docs/superpowers/plans/2026-06-20-phase-8-frontend-integration-implementation-plan.md
