@@ -26,4 +26,22 @@ class DocumentationCoverageTest {
         assertThat(script).doesNotContain("echo \"$ADMIN_TOKEN\"");
         assertThat(script).doesNotContain("echo \"$USER_TOKEN\"");
     }
+
+    @Test
+    void acceptanceAndDemoDocsCoverMajorFirstVersionModules() throws Exception {
+        assertDocumentContainsMajorModules(Path.of("../docs/acceptance/v1-acceptance-checklist.md"));
+        assertDocumentContainsMajorModules(Path.of("../docs/demo/v1-demo-runbook.md"));
+    }
+
+    private void assertDocumentContainsMajorModules(Path path) throws Exception {
+        assertThat(path).exists();
+        String document = Files.readString(path);
+
+        assertThat(document).contains("RBAC");
+        assertThat(document).contains("知识库");
+        assertThat(document).contains("RAG");
+        assertThat(document).contains("工单");
+        assertThat(document).contains("统计");
+        assertThat(document).contains("Redis");
+    }
 }

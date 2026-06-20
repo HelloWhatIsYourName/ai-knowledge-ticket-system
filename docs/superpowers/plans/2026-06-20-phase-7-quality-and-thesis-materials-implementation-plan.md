@@ -270,14 +270,14 @@ git add docs/evaluation backend/src/test/java/com/example/aiticket/docs/RagEvalu
 git commit -m "docs: add rag evaluation set"
 ```
 
-## Task 3: Acceptance Matrix and Demo Runbook
+## Task 3: Acceptance Matrix and Demo Runbook ⭐
 
 **Files:**
 - Create: `docs/acceptance/v1-acceptance-checklist.md`
 - Create: `docs/demo/v1-demo-runbook.md`
 - Modify: `backend/src/test/java/com/example/aiticket/docs/DocumentationCoverageTest.java`
 
-- [ ] **Step 1: Extend documentation coverage test**
+- [x] **Step 1: Extend documentation coverage test**
 
 Add assertions that these files exist and contain all major module names:
 
@@ -292,7 +292,7 @@ RAG
 Redis
 ```
 
-- [ ] **Step 2: Run the test to verify RED**
+- [x] **Step 2: Run the test to verify RED**
 
 ```bash
 cd backend
@@ -301,7 +301,7 @@ JAVA_HOME=/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home PATH=/o
 
 Expected: fail because acceptance and demo docs do not exist.
 
-- [ ] **Step 3: Create the acceptance checklist**
+- [x] **Step 3: Create the acceptance checklist**
 
 Create `docs/acceptance/v1-acceptance-checklist.md` with a table mapping the 14 acceptance criteria from the project plan to:
 
@@ -312,7 +312,7 @@ live smoke or manual demo evidence
 remaining frontend/deferred note
 ```
 
-- [ ] **Step 4: Create the demo runbook**
+- [x] **Step 4: Create the demo runbook**
 
 Create `docs/demo/v1-demo-runbook.md` with a 10-15 minute demo sequence:
 
@@ -328,14 +328,14 @@ admin statistics overview
 RBAC denial checks
 ```
 
-- [ ] **Step 5: Run focused documentation test to verify GREEN**
+- [x] **Step 5: Run focused documentation test to verify GREEN**
 
 ```bash
 cd backend
 JAVA_HOME=/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home PATH=/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home/bin:$PATH mvn -Dmaven.repo.local=/Users/xianghuaifeng/Documents/毕业设计/.worktrees/knowledge-live-verification/.m2repo -Dtest=DocumentationCoverageTest test
 ```
 
-- [ ] **Step 6: Commit Task 3**
+- [x] **Step 6: Commit Task 3**
 
 ```bash
 git add docs/acceptance docs/demo backend/src/test/java/com/example/aiticket/docs/DocumentationCoverageTest.java docs/superpowers/plans/2026-06-20-phase-7-quality-and-thesis-materials-implementation-plan.md
