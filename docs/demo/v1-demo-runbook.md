@@ -79,7 +79,9 @@ Expected result:
 parseStatus = PARSED
 ```
 
-In the frontend, open `/app/knowledge`, create the text document, then run 检索测试 with:
+For the full demo, use the corpus in `docs/demo/v1-demo-corpus.json`. Each item can be entered through `/app/knowledge` using `title`, `categoryId`, and `content`. The companion guide is `docs/demo/v1-demo-corpus.md`.
+
+For the shortest path, open `/app/knowledge`, create the password reset document above, then run 检索测试 with:
 
 ```text
 忘记密码后应该如何重置？
