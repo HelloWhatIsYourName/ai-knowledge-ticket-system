@@ -24,7 +24,16 @@ describe('TicketListView', () => {
       }
     ])
 
-    const wrapper = mount(TicketListView)
+    const wrapper = mount(TicketListView, {
+      global: {
+        stubs: {
+          RouterLink: {
+            props: ['to'],
+            template: '<a :href="to"><slot /></a>'
+          }
+        }
+      }
+    })
     await flushPromises()
 
     expect(wrapper.text()).toContain('我的工单')
@@ -33,5 +42,6 @@ describe('TicketListView', () => {
     expect(wrapper.text()).toContain('待处理')
     expect(wrapper.text()).toContain('高')
     expect(wrapper.text()).toContain('AI 置信度低，需要人工处理')
+    expect(wrapper.find('a[href="/app/tickets/1"]').exists()).toBe(true)
   })
 })

@@ -78,6 +78,14 @@ export interface CreateTicketCommentRequest {
   content: string
 }
 
+export interface TicketActionRequest {
+  comment?: string
+}
+
+export interface AssignTicketRequest extends TicketActionRequest {
+  assigneeId: number
+}
+
 export async function listTicketCategories(includeDisabled = false): Promise<TicketCategory[]> {
   const response = await http.get<ApiResponse<TicketCategory[]>>('/ticket-categories', {
     params: { includeDisabled }
@@ -121,6 +129,42 @@ export async function createTicketComment(
   request: CreateTicketCommentRequest
 ): Promise<TicketComment> {
   const response = await http.post<ApiResponse<TicketComment>>(`/tickets/${ticketId}/comments`, request)
+
+  return unwrapData(response.data)
+}
+
+export async function assignTicket(ticketId: number, request: AssignTicketRequest): Promise<TicketSummary> {
+  const response = await http.post<ApiResponse<TicketSummary>>(`/tickets/${ticketId}/assign`, request)
+
+  return unwrapData(response.data)
+}
+
+export async function startTicket(ticketId: number, comment?: string): Promise<TicketSummary> {
+  const response = await http.post<ApiResponse<TicketSummary>>(`/tickets/${ticketId}/start`, { comment })
+
+  return unwrapData(response.data)
+}
+
+export async function resolveTicket(ticketId: number, comment?: string): Promise<TicketSummary> {
+  const response = await http.post<ApiResponse<TicketSummary>>(`/tickets/${ticketId}/resolve`, { comment })
+
+  return unwrapData(response.data)
+}
+
+export async function reopenTicket(ticketId: number, comment?: string): Promise<TicketSummary> {
+  const response = await http.post<ApiResponse<TicketSummary>>(`/tickets/${ticketId}/reopen`, { comment })
+
+  return unwrapData(response.data)
+}
+
+export async function confirmCloseTicket(ticketId: number, comment?: string): Promise<TicketSummary> {
+  const response = await http.post<ApiResponse<TicketSummary>>(`/tickets/${ticketId}/confirm-close`, { comment })
+
+  return unwrapData(response.data)
+}
+
+export async function closeTicket(ticketId: number, comment?: string): Promise<TicketSummary> {
+  const response = await http.post<ApiResponse<TicketSummary>>(`/tickets/${ticketId}/close`, { comment })
 
   return unwrapData(response.data)
 }

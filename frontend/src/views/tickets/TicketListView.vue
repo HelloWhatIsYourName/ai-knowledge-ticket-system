@@ -78,7 +78,7 @@ onMounted(async () => {
         <span>创建时间</span>
       </div>
       <article v-for="ticket in tickets" :key="ticket.id" class="ticket-row">
-        <span class="ticket-no">{{ ticket.ticketNo }}</span>
+        <RouterLink class="ticket-no" :to="`/app/tickets/${ticket.id}`">{{ ticket.ticketNo }}</RouterLink>
         <span>
           <strong>{{ ticket.title }}</strong>
           <small>{{ ticket.transferReason || '暂无转人工原因' }}</small>

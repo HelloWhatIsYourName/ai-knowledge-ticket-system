@@ -1,10 +1,15 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { http } from './http'
 import {
+  createTicketComment,
   createTicketFromAiSession,
+  getTicket,
   listAssignedTickets,
   listMyTickets,
-  listTicketCategories
+  listTicketComments,
+  listTicketCategories,
+  resolveTicket,
+  startTicket
 } from './tickets'
 
 vi.mock('./http', async () => {
@@ -87,5 +92,62 @@ describe('tickets api', () => {
     await expect(listAssignedTickets()).resolves.toHaveLength(1)
     expect(getMock).toHaveBeenNthCalledWith(1, '/tickets/my')
     expect(getMock).toHaveBeenNthCalledWith(2, '/tickets/assigned')
+  })
+
+  it('loads ticket detail and comments', async () => {
+    getMock
+      .mockResolvedValueOnce({
+        data: {
+          success: true,
+          data: { id: 8, ticketNo: 'TK-8', title: '无法登录', status: 'PENDING', flowLogs: [] },
+          message: 'ok'
+        }
+      })
+      .mockResolvedValueOnce({
+        data: {
+          success: true,
+          data: [{ id: 3, ticketId: 8, commentType: 'REPLY', content: '已收到', internal: false }],
+          message: 'ok'
+        }
+      })
+
+    await expect(getTicket(8)).resolves.toMatchObject({ ticketNo: 'TK-8' })
+    await expect(listTicketComments(8)).resolves.toHaveLength(1)
+    expect(getMock).toHaveBeenNthCalledWith(1, '/tickets/8')
+    expect(getMock).toHaveBeenNthCalledWith(2, '/tickets/8/comments')
+  })
+
+  it('creates comments and moves ticket workflow status', async () => {
+    postMock
+      .mockResolvedValueOnce({
+        data: {
+          success: true,
+          data: { id: 5, ticketId: 8, commentType: 'REPLY', content: '已收到', internal: false },
+          message: 'ok'
+        }
+      })
+      .mockResolvedValueOnce({
+        data: {
+          success: true,
+          data: { id: 8, ticketNo: 'TK-8', status: 'PROCESSING' },
+          message: 'ok'
+        }
+      })
+      .mockResolvedValueOnce({
+        data: {
+          success: true,
+          data: { id: 8, ticketNo: 'TK-8', status: 'RESOLVED' },
+          message: 'ok'
+        }
+      })
+
+    await expect(createTicketComment(8, { commentType: 'REPLY', content: '已收到' })).resolves.toMatchObject({
+      content: '已收到'
+    })
+    await expect(startTicket(8, '开始处理')).resolves.toMatchObject({ status: 'PROCESSING' })
+    await expect(resolveTicket(8, '已解决')).resolves.toMatchObject({ status: 'RESOLVED' })
+    expect(postMock).toHaveBeenNthCalledWith(1, '/tickets/8/comments', { commentType: 'REPLY', content: '已收到' })
+    expect(postMock).toHaveBeenNthCalledWith(2, '/tickets/8/start', { comment: '开始处理' })
+    expect(postMock).toHaveBeenNthCalledWith(3, '/tickets/8/resolve', { comment: '已解决' })
   })
 })
