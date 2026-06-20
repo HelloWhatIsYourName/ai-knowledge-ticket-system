@@ -36,6 +36,11 @@ export const routes: RouteRecordRaw[] = [
         component: () => import('../views/ai/RagChatView.vue')
       },
       {
+        path: 'knowledge',
+        name: 'knowledge-base',
+        component: () => import('../views/knowledge/KnowledgeBaseView.vue')
+      },
+      {
         path: 'tickets/my',
         name: 'my-tickets',
         component: () => import('../views/tickets/TicketListView.vue')

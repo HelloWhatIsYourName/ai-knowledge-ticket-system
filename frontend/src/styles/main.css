@@ -1734,6 +1734,141 @@ select {
   line-height: 1.5;
 }
 
+.knowledge-layout {
+  display: grid;
+  grid-template-columns: minmax(240px, 320px) minmax(280px, 1fr) minmax(280px, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.knowledge-panel {
+  display: grid;
+  gap: 16px;
+  padding: 20px;
+  border: 1px solid var(--home-line);
+  border-radius: 16px;
+  background: #ffffff;
+}
+
+.knowledge-document-item,
+.knowledge-result-item {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid var(--home-line);
+  border-radius: 12px;
+  background: #fbfdfe;
+}
+
+.knowledge-document-item > div,
+.knowledge-result-item > div {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.knowledge-document-item h4,
+.knowledge-result-item h4,
+.knowledge-document-item p,
+.knowledge-result-item p {
+  margin: 0;
+}
+
+.knowledge-document-item h4,
+.knowledge-result-item h4 {
+  font-size: 15px;
+}
+
+.knowledge-document-item span,
+.knowledge-result-item span {
+  flex: 0 0 auto;
+  padding: 4px 8px;
+  border-radius: 999px;
+  color: var(--home-accent-strong);
+  background: #dff0ee;
+  font-size: 12px;
+  font-weight: 760;
+}
+
+.knowledge-document-item dl {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin: 0;
+}
+
+.knowledge-document-item dt {
+  color: var(--home-muted);
+  font-size: 12px;
+  font-weight: 760;
+}
+
+.knowledge-document-item dd {
+  margin: 3px 0 0;
+  color: #334155;
+}
+
+.knowledge-document-item p,
+.knowledge-result-item p {
+  color: #475569;
+  line-height: 1.6;
+}
+
+.knowledge-form {
+  display: grid;
+  gap: 12px;
+}
+
+.knowledge-form label {
+  display: grid;
+  gap: 8px;
+  color: #334155;
+  font-size: 14px;
+  font-weight: 720;
+}
+
+.knowledge-form input,
+.knowledge-form textarea,
+.knowledge-form select {
+  width: 100%;
+  border: 1px solid var(--home-line);
+  border-radius: 10px;
+  background: #ffffff;
+  color: var(--home-text);
+}
+
+.knowledge-form input,
+.knowledge-form select {
+  min-height: 42px;
+  padding: 0 12px;
+}
+
+.knowledge-form textarea {
+  padding: 12px 14px;
+  resize: vertical;
+}
+
+.knowledge-form button {
+  min-height: 42px;
+  border: 0;
+  border-radius: 999px;
+  color: #ffffff;
+  background: var(--home-accent-strong);
+  cursor: pointer;
+}
+
+.knowledge-form button:disabled {
+  cursor: not-allowed;
+  opacity: 0.56;
+}
+
+.knowledge-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
 @media (max-width: 1180px) {
   .rag-layout {
     grid-template-columns: 220px minmax(0, 1fr);
@@ -1750,6 +1885,10 @@ select {
 
   .ticket-detail-side {
     position: static;
+  }
+
+  .knowledge-layout {
+    grid-template-columns: 1fr;
   }
 }
 
