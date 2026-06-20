@@ -28,7 +28,7 @@ export const routes: RouteRecordRaw[] = [
       {
         path: 'admin/dashboard',
         name: 'admin-dashboard',
-        component: PlaceholderView
+        component: () => import('../views/admin/AdminDashboardView.vue')
       },
       {
         path: ':pathMatch(.*)*',

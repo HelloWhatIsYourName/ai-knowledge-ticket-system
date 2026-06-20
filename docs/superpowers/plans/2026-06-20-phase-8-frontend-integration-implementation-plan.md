@@ -293,7 +293,7 @@ git add frontend docs/superpowers/plans/2026-06-20-phase-8-frontend-integration-
 git commit -m "feat: add frontend auth shell"
 ```
 
-## Task 4: Admin Statistics Dashboard
+## Task 4: Admin Statistics Dashboard ⭐
 
 **Files:**
 - Create: `frontend/src/api/adminStatistics.ts`
@@ -304,7 +304,7 @@ git commit -m "feat: add frontend auth shell"
 - Test: `frontend/src/api/adminStatistics.spec.ts`
 - Test: `frontend/src/views/admin/AdminDashboardView.spec.ts`
 
-- [ ] **Step 1: Write API mapping tests**
+- [x] **Step 1: Write API mapping tests**
 
 Assert the admin statistics client calls:
 
@@ -316,7 +316,7 @@ GET /admin/statistics/hot-questions
 
 and unwraps `ApiResponse.data`.
 
-- [ ] **Step 2: Write dashboard render test**
+- [x] **Step 2: Write dashboard render test**
 
 Mount dashboard with mocked API responses and assert these labels render:
 
@@ -329,14 +329,14 @@ Mount dashboard with mocked API responses and assert these labels render:
 分类分布
 ```
 
-- [ ] **Step 3: Run tests to verify RED**
+- [x] **Step 3: Run tests to verify RED**
 
 ```bash
 cd frontend
 npm run test -- --run src/api/adminStatistics.spec.ts src/views/admin/AdminDashboardView.spec.ts
 ```
 
-- [ ] **Step 4: Implement statistics client**
+- [x] **Step 4: Implement statistics client**
 
 Create typed methods:
 
@@ -346,11 +346,11 @@ getTicketCategoryStats(limit?: number)
 getHotQuestions(limit?: number)
 ```
 
-- [ ] **Step 5: Implement dashboard view**
+- [x] **Step 5: Implement dashboard view**
 
-Use Element Plus statistic/cards and ECharts for category and hot question charts. Include loading, empty, and error states.
+Use quiet statistic panels and compact lists for category and hot question summaries. Keep the dashboard route lazy-loaded and avoid ECharts in this first slice so the public homepage bundle remains small. Include loading, empty, and error states.
 
-- [ ] **Step 6: Run tests and build**
+- [x] **Step 6: Run tests and build**
 
 ```bash
 cd frontend
@@ -358,7 +358,7 @@ npm run test
 npm run build
 ```
 
-- [ ] **Step 7: Commit Task 4**
+- [x] **Step 7: Commit Task 4**
 
 ```bash
 git add frontend docs/superpowers/plans/2026-06-20-phase-8-frontend-integration-implementation-plan.md

@@ -663,6 +663,126 @@ select {
   color: var(--home-muted);
 }
 
+.state-panel {
+  display: grid;
+  gap: 12px;
+  padding: 22px;
+  border: 1px solid var(--home-line);
+  border-radius: 14px;
+  background: #ffffff;
+  color: var(--home-muted);
+}
+
+.state-panel.error {
+  color: #991b1b;
+  background: #fee2e2;
+}
+
+.state-panel.empty {
+  background: #f8fafc;
+}
+
+.state-skeleton {
+  display: block;
+  width: min(100%, 420px);
+  height: 18px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #e2e8f0, #f8fafc, #e2e8f0);
+}
+
+.state-skeleton.short {
+  width: min(60%, 260px);
+}
+
+.admin-dashboard {
+  display: grid;
+  gap: 22px;
+}
+
+.dashboard-header p {
+  margin: 0 0 4px;
+  color: var(--home-muted);
+  font-size: 13px;
+}
+
+.dashboard-header h3 {
+  margin: 0;
+  font-size: 28px;
+}
+
+.dashboard-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.dashboard-stat,
+.dashboard-panel {
+  border: 1px solid var(--home-line);
+  border-radius: 16px;
+  background: #ffffff;
+}
+
+.dashboard-stat {
+  display: grid;
+  gap: 12px;
+  min-height: 126px;
+  padding: 22px;
+}
+
+.dashboard-stat span {
+  color: var(--home-muted);
+  font-weight: 700;
+}
+
+.dashboard-stat strong {
+  font-size: 32px;
+}
+
+.dashboard-panels {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.dashboard-panel {
+  padding: 22px;
+}
+
+.dashboard-panel h4 {
+  margin: 0 0 16px;
+  font-size: 20px;
+}
+
+.dashboard-list {
+  display: grid;
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.dashboard-list li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 18px;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #edf2f4;
+}
+
+.dashboard-list li:last-child {
+  border-bottom: 0;
+}
+
+.dashboard-list span {
+  color: #334155;
+}
+
+.dashboard-list strong {
+  color: var(--home-accent-strong);
+}
+
 @media (max-width: 860px) {
   .app-shell {
     grid-template-columns: 1fr;
@@ -681,5 +801,10 @@ select {
 
   .app-content {
     padding: 18px;
+  }
+
+  .dashboard-stat-grid,
+  .dashboard-panels {
+    grid-template-columns: 1fr;
   }
 }
