@@ -20,4 +20,21 @@ class AdminStatisticsMapperXmlTest {
         assertThat(mapper).contains("FROM ticket");
         assertThat(mapper).contains("FROM ai_message");
     }
+
+    @Test
+    void overviewUsesCitationSimilarityInsteadOfMissingMessageColumn() throws Exception {
+        String mapper = Files.readString(Path.of("src/main/resources/mapper/AdminStatisticsMapper.xml"));
+
+        assertThat(mapper).doesNotContain("max_similarity");
+        assertThat(mapper).contains("ai_message_citation");
+        assertThat(mapper).contains("similarity");
+    }
+
+    @Test
+    void hotQuestionsConvertClobContentBeforeGrouping() throws Exception {
+        String mapper = Files.readString(Path.of("src/main/resources/mapper/AdminStatisticsMapper.xml"));
+
+        assertThat(mapper).contains("DBMS_LOB.SUBSTR(content");
+        assertThat(mapper).doesNotContain("GROUP BY LOWER(TRIM(content)), TRIM(content)");
+    }
 }

@@ -15,9 +15,16 @@
                     WHERE deleted = 0 AND first_resolved_at IS NOT NULL), 0) AS average_resolve_hours,
           (SELECT COUNT(*) FROM kb_document WHERE deleted = 0) AS knowledge_documents,
           (SELECT COUNT(*) FROM ai_message WHERE role = 'USER') AS ai_questions,
-          COALESCE((SELECT AVG(CASE WHEN max_similarity >= 0.70 THEN 1 ELSE 0 END)
-                    FROM ai_message
-                    WHERE role = 'ASSISTANT' AND max_similarity IS NOT NULL), 0) AS knowledge_hit_rate
+          COALESCE((SELECT AVG(CASE WHEN message_similarity >= 0.70 THEN 1 ELSE 0 END)
+                    FROM (
+                        SELECT m.id,
+                               MAX(c.similarity) AS message_similarity
+                        FROM ai_message m
+                        JOIN ai_message_citation c ON c.message_id = m.id
+                        WHERE m.role = 'ASSISTANT'
+                          AND c.similarity IS NOT NULL
+                        GROUP BY m.id
+                    )), 0) AS knowledge_hit_rate
         FROM dual
     </select>
 
@@ -34,12 +41,17 @@
     </select>
 
     <select id="selectHotQuestions" resultType="com.example.aiticket.admin.statistics.domain.HotQuestionStat">
-        SELECT TRIM(content) AS question,
+        SELECT MIN(question) AS question,
                COUNT(*) AS ask_count
-        FROM ai_message
-        WHERE role = 'USER'
-          AND content IS NOT NULL
-        GROUP BY LOWER(TRIM(content)), TRIM(content)
+        FROM (
+            SELECT TRIM(DBMS_LOB.SUBSTR(content, 1000, 1)) AS question,
+                   LOWER(TRIM(DBMS_LOB.SUBSTR(content, 1000, 1))) AS normalized_question
+            FROM ai_message
+            WHERE role = 'USER'
+              AND content IS NOT NULL
+        )
+        WHERE question IS NOT NULL
+        GROUP BY normalized_question
         ORDER BY ask_count DESC, question ASC
         FETCH FIRST #{limit} ROWS ONLY
     </select>

@@ -393,7 +393,7 @@ git add backend/src/main/java/com/example/aiticket/system backend/src/main/resou
 git commit -m "feat: add system administration api"
 ```
 
-## Task 5: Full Verification and Phase 6 Progress Marking
+## Task 5: Full Verification and Phase 6 Progress Marking ⭐
 
 **Files:**
 - Create: `docs/spikes/phase-6-admin-dashboard.md`
@@ -401,26 +401,26 @@ git commit -m "feat: add system administration api"
 - Modify: `docs/superpowers/specs/2026-06-19-ai-knowledge-ticket-v1-project-plan.md`
 - Modify: `沟通材料/2026-06-19-ai-knowledge-ticket-v1-project-plan.md`
 
-- [ ] **Step 1: Run all backend tests**
+- [x] **Step 1: Run all backend tests**
 
 ```bash
 cd backend
 JAVA_HOME=/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home PATH=/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home/bin:$PATH mvn -Dmaven.repo.local=/Users/xianghuaifeng/Documents/毕业设计/.worktrees/knowledge-live-verification/.m2repo test
 ```
 
-- [ ] **Step 2: Run local backend smoke verification**
+- [x] **Step 2: Run local backend smoke verification**
 
 Login as `admin`, call admin statistics endpoints, ticket category endpoints, and system admin endpoints. Sanitize tokens and do not print JWTs.
 
-- [ ] **Step 3: Verify RBAC**
+- [x] **Step 3: Verify RBAC**
 
 Verify unauthenticated calls return `401`. Verify ordinary `user` cannot access admin statistics or system admin endpoints and receives `403`.
 
-- [ ] **Step 4: Record spike report**
+- [x] **Step 4: Record spike report**
 
 Write `docs/spikes/phase-6-admin-dashboard.md` with commands, sanitized responses, test result, and any frontend scope intentionally deferred.
 
-- [ ] **Step 5: Final diff and plan marking**
+- [x] **Step 5: Final diff and plan marking**
 
 Run:
 
@@ -431,7 +431,7 @@ git status --short --branch
 
 Mark completed tasks with checkboxes and stars.
 
-- [ ] **Step 6: Commit Task 5**
+- [x] **Step 6: Commit Task 5**
 
 ```bash
 git add docs/spikes/phase-6-admin-dashboard.md docs/superpowers/plans/2026-06-20-phase-6-admin-dashboard-implementation-plan.md docs/superpowers/specs/2026-06-19-ai-knowledge-ticket-v1-project-plan.md 沟通材料/2026-06-19-ai-knowledge-ticket-v1-project-plan.md
