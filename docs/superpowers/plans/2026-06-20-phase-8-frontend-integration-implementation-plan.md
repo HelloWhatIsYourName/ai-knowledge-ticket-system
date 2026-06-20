@@ -51,7 +51,7 @@ docs/superpowers/specs/2026-06-19-ai-knowledge-ticket-v1-project-plan.md
 沟通材料/2026-06-19-ai-knowledge-ticket-v1-project-plan.md
 ```
 
-## Task 1: Frontend Project Scaffold
+## Task 1: Frontend Project Scaffold ⭐
 
 **Files:**
 - Create: `frontend/package.json`
@@ -68,7 +68,7 @@ docs/superpowers/specs/2026-06-19-ai-knowledge-ticket-v1-project-plan.md
 - Test: `frontend/src/App.spec.ts`
 - Test: `frontend/src/router/index.spec.ts`
 
-- [ ] **Step 1: Create package and test config**
+- [x] **Step 1: Create package and test config**
 
 Create a Vite/Vitest Vue project configuration with scripts:
 
@@ -83,7 +83,7 @@ Create a Vite/Vitest Vue project configuration with scripts:
 }
 ```
 
-- [ ] **Step 2: Write failing app and router tests**
+- [x] **Step 2: Write failing app and router tests**
 
 Create `frontend/src/App.spec.ts`:
 
@@ -112,7 +112,7 @@ describe('routes', () => {
 })
 ```
 
-- [ ] **Step 3: Run frontend tests to verify RED**
+- [x] **Step 3: Run frontend tests to verify RED**
 
 ```bash
 cd frontend
@@ -122,11 +122,11 @@ npm run test
 
 Expected: fail until `App.vue` renders the Chinese product name and `router/index.ts` exports routes.
 
-- [ ] **Step 4: Implement minimal app, router, and global style**
+- [x] **Step 4: Implement minimal app, router, and global style**
 
-Create `App.vue` with the product name and `<router-view />`. Create `main.ts` that mounts Vue, router, Pinia, and Element Plus. Create `router/index.ts` with routes for `/`, `/login`, and `/app`.
+Create `App.vue` with the product name and `<router-view />`. Create `main.ts` that mounts Vue, router, and Pinia. Import Element Plus in later feature views when those components are first used, so Task 1 does not ship the full UI library in the first bundle. Create `router/index.ts` with routes for `/`, `/login`, and `/app`.
 
-- [ ] **Step 5: Run frontend tests and build**
+- [x] **Step 5: Run frontend tests and build**
 
 ```bash
 cd frontend
@@ -134,7 +134,7 @@ npm run test
 npm run build
 ```
 
-- [ ] **Step 6: Commit Task 1**
+- [x] **Step 6: Commit Task 1**
 
 ```bash
 git add frontend docs/superpowers/plans/2026-06-20-phase-8-frontend-integration-implementation-plan.md

@@ -2,8 +2,11 @@
 **/.DS_Store
 target/
 node_modules/
+dist/
+frontend/dist/
 .env
 .idea/
 .vscode/
 .worktrees/
 .m2repo/
+.npm-cache/
