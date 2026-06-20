@@ -80,7 +80,7 @@ DOCUMENT_ID=$(json_get "$BODY_FILE" data.id)
 check knowledgeSearch 200 POST /api/kb/search "$ADMIN_TOKEN" '{"query":"How do I reset a forgotten password?","topK":3}'
 check ragAsk 200 POST /api/ai/chat/ask "$USER_TOKEN" '{"question":"How do I reset a forgotten password?"}'
 SESSION_ID=$(json_get "$BODY_FILE" data.sessionId)
-check createTicket 200 POST /api/tickets/from-ai-session "$USER_TOKEN" "{\"sessionId\":$SESSION_ID,\"title\":\"Phase 7 smoke ticket\",\"description\":\"Need manual confirmation after smoke ask\",\"categoryId\":1,\"priority\":\"MEDIUM\"}"
+check createTicket 200 POST /api/tickets/from-ai-session "$USER_TOKEN" "{\"sessionId\":$SESSION_ID,\"title\":\"Phase 7 smoke ticket\",\"description\":\"Need manual confirmation after smoke ask\",\"categoryId\":1,\"priority\":\"NORMAL\"}"
 TICKET_ID=$(json_get "$BODY_FILE" data.id)
 check assignTicket 200 POST "/api/tickets/$TICKET_ID/assign" "$ADMIN_TOKEN" '{"assigneeId":3,"comment":"Phase 7 smoke assignment"}'
 check myTickets 200 GET /api/tickets/my "$USER_TOKEN"

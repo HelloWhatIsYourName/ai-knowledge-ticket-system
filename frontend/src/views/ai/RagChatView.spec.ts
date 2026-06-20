@@ -41,7 +41,7 @@ describe('RagChatView', () => {
       id: 8,
       ticketNo: 'TK-20260620-0001',
       title: '无法登录',
-      status: 'PENDING'
+      status: 'PENDING_ASSIGN'
     })
     const streamResult: RagAnswerResponse = {
       sessionId: 7,

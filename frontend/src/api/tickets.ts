@@ -1,9 +1,9 @@
 import { http, unwrapData, type ApiResponse } from './http'
 
-export type TicketPriority = 'LOW' | 'MEDIUM' | 'HIGH' | 'URGENT'
-export type TicketStatus = 'PENDING' | 'PROCESSING' | 'RESOLVED' | 'CLOSED'
+export type TicketPriority = 'LOW' | 'NORMAL' | 'HIGH' | 'URGENT'
+export type TicketStatus = 'PENDING_ASSIGN' | 'PENDING_PROCESS' | 'PROCESSING' | 'RESOLVED' | 'CLOSED'
 export type TicketSource = 'MANUAL' | 'AI_SESSION'
-export type TicketCommentType = 'REPLY' | 'INTERNAL_NOTE' | 'SYSTEM'
+export type TicketCommentType = 'USER_REPLY' | 'AGENT_REPLY' | 'INTERNAL_NOTE' | 'SYSTEM'
 
 export interface TicketCategory {
   id: number

@@ -32,7 +32,7 @@ describe('TicketListView', () => {
         id: 1,
         ticketNo: 'TK-20260620-0001',
         title: '无法登录后台',
-        status: 'PENDING',
+        status: 'PENDING_ASSIGN',
         priority: 'HIGH',
         source: 'AI_SESSION',
         transferReason: 'AI 置信度低，需要人工处理',
@@ -55,7 +55,7 @@ describe('TicketListView', () => {
     expect(wrapper.text()).toContain('我的工单')
     expect(wrapper.text()).toContain('TK-20260620-0001')
     expect(wrapper.text()).toContain('无法登录后台')
-    expect(wrapper.text()).toContain('待处理')
+    expect(wrapper.text()).toContain('待分配')
     expect(wrapper.text()).toContain('高')
     expect(wrapper.text()).toContain('AI 置信度低，需要人工处理')
     expect(wrapper.find('a[href="/app/tickets/1"]').exists()).toBe(true)
@@ -69,8 +69,8 @@ describe('TicketListView', () => {
         id: 2,
         ticketNo: 'TK-20260620-0002',
         title: 'VPN 连接失败',
-        status: 'PROCESSING',
-        priority: 'MEDIUM',
+        status: 'PENDING_PROCESS',
+        priority: 'NORMAL',
         source: 'MANUAL',
         transferReason: null,
         createdAt: '2026-06-20T11:30:00'
@@ -92,7 +92,8 @@ describe('TicketListView', () => {
     expect(wrapper.text()).toContain('分配给我的工单')
     expect(wrapper.text()).toContain('TK-20260620-0002')
     expect(wrapper.text()).toContain('VPN 连接失败')
-    expect(wrapper.text()).toContain('处理中')
+    expect(wrapper.text()).toContain('待处理')
+    expect(wrapper.text()).toContain('普通')
     expect(listAssignedTicketsMock).toHaveBeenCalledOnce()
     expect(listMyTicketsMock).not.toHaveBeenCalled()
   })

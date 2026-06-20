@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
 import EmptyState from '../../components/common/EmptyState.vue'
 import ErrorState from '../../components/common/ErrorState.vue'
 import LoadingState from '../../components/common/LoadingState.vue'
+import { useAuthStore } from '../../stores/auth'
 import {
   closeTicket,
   confirmCloseTicket,
@@ -22,19 +23,32 @@ import {
 } from '../../api/tickets'
 
 const route = useRoute()
+const auth = useAuthStore()
 const ticketId = computed(() => Number(route.params.ticketId))
 const ticket = ref<TicketDetail | null>(null)
 const comments = ref<TicketComment[]>([])
 const loading = ref(true)
 const error = ref('')
 const actionComment = ref('')
-const commentType = ref<TicketCommentType>('REPLY')
+const commentType = ref<TicketCommentType>('USER_REPLY')
 const commentContent = ref('')
 const submittingComment = ref(false)
 const runningAction = ref('')
+const canWriteAgentComment = computed(
+  () => auth.permissions.includes('ticket:process') || auth.permissions.includes('ticket:manage')
+)
+const commentTypeOptions = computed(() =>
+  canWriteAgentComment.value
+    ? [
+        { value: 'AGENT_REPLY' as TicketCommentType, label: '坐席回复' },
+        { value: 'INTERNAL_NOTE' as TicketCommentType, label: '内部备注' }
+      ]
+    : [{ value: 'USER_REPLY' as TicketCommentType, label: '用户回复' }]
+)
 
 const statusLabel: Record<TicketStatus, string> = {
-  PENDING: '待处理',
+  PENDING_ASSIGN: '待分配',
+  PENDING_PROCESS: '待处理',
   PROCESSING: '处理中',
   RESOLVED: '已解决',
   CLOSED: '已关闭'
@@ -42,7 +56,7 @@ const statusLabel: Record<TicketStatus, string> = {
 
 const priorityLabel: Record<TicketPriority, string> = {
   LOW: '低',
-  MEDIUM: '中',
+  NORMAL: '普通',
   HIGH: '高',
   URGENT: '紧急'
 }
@@ -64,6 +78,14 @@ function formatDate(value?: string | null) {
 }
 
 function formatCommentType(type: TicketCommentType) {
+  if (type === 'USER_REPLY') {
+    return '用户回复'
+  }
+
+  if (type === 'AGENT_REPLY') {
+    return '坐席回复'
+  }
+
   if (type === 'INTERNAL_NOTE') {
     return '内部备注'
   }
@@ -74,6 +96,12 @@ function formatCommentType(type: TicketCommentType) {
 
   return '回复'
 }
+
+watchEffect(() => {
+  if (!commentTypeOptions.value.some((option) => option.value === commentType.value)) {
+    commentType.value = commentTypeOptions.value[0].value
+  }
+})
 
 async function loadTicket() {
   loading.value = true
@@ -205,8 +233,9 @@ onMounted(loadTicket)
             <label>
               类型
               <select v-model="commentType">
-                <option value="REPLY">回复</option>
-                <option value="INTERNAL_NOTE">内部备注</option>
+                <option v-for="option in commentTypeOptions" :key="option.value" :value="option.value">
+                  {{ option.label }}
+                </option>
               </select>
             </label>
             <label>

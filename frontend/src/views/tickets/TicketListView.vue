@@ -25,7 +25,8 @@ const emptyMessage = computed(() => (isAssignedMode.value ? '暂无分配给你�
 const tableLabel = computed(() => (isAssignedMode.value ? '分配给我的工单列表' : '我的工单列表'))
 
 const statusLabel: Record<TicketStatus, string> = {
-  PENDING: '待处理',
+  PENDING_ASSIGN: '待分配',
+  PENDING_PROCESS: '待处理',
   PROCESSING: '处理中',
   RESOLVED: '已解决',
   CLOSED: '已关闭'
@@ -33,7 +34,7 @@ const statusLabel: Record<TicketStatus, string> = {
 
 const priorityLabel: Record<TicketPriority, string> = {
   LOW: '低',
-  MEDIUM: '中',
+  NORMAL: '普通',
   HIGH: '高',
   URGENT: '紧急'
 }

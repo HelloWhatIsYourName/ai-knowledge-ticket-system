@@ -50,7 +50,7 @@ describe('tickets api', () => {
     postMock.mockResolvedValueOnce({
       data: {
         success: true,
-        data: { id: 8, ticketNo: 'TK-20260620-0001', title: '无法登录', status: 'PENDING' },
+        data: { id: 8, ticketNo: 'TK-20260620-0001', title: '无法登录', status: 'PENDING_ASSIGN' },
         message: 'ok'
       }
     })
@@ -99,14 +99,14 @@ describe('tickets api', () => {
       .mockResolvedValueOnce({
         data: {
           success: true,
-          data: { id: 8, ticketNo: 'TK-8', title: '无法登录', status: 'PENDING', flowLogs: [] },
+          data: { id: 8, ticketNo: 'TK-8', title: '无法登录', status: 'PENDING_ASSIGN', flowLogs: [] },
           message: 'ok'
         }
       })
       .mockResolvedValueOnce({
         data: {
           success: true,
-          data: [{ id: 3, ticketId: 8, commentType: 'REPLY', content: '已收到', internal: false }],
+          data: [{ id: 3, ticketId: 8, commentType: 'AGENT_REPLY', content: '已收到', internal: false }],
           message: 'ok'
         }
       })
@@ -122,7 +122,7 @@ describe('tickets api', () => {
       .mockResolvedValueOnce({
         data: {
           success: true,
-          data: { id: 5, ticketId: 8, commentType: 'REPLY', content: '已收到', internal: false },
+          data: { id: 5, ticketId: 8, commentType: 'AGENT_REPLY', content: '已收到', internal: false },
           message: 'ok'
         }
       })
@@ -141,12 +141,12 @@ describe('tickets api', () => {
         }
       })
 
-    await expect(createTicketComment(8, { commentType: 'REPLY', content: '已收到' })).resolves.toMatchObject({
+    await expect(createTicketComment(8, { commentType: 'AGENT_REPLY', content: '已收到' })).resolves.toMatchObject({
       content: '已收到'
     })
     await expect(startTicket(8, '开始处理')).resolves.toMatchObject({ status: 'PROCESSING' })
     await expect(resolveTicket(8, '已解决')).resolves.toMatchObject({ status: 'RESOLVED' })
-    expect(postMock).toHaveBeenNthCalledWith(1, '/tickets/8/comments', { commentType: 'REPLY', content: '已收到' })
+    expect(postMock).toHaveBeenNthCalledWith(1, '/tickets/8/comments', { commentType: 'AGENT_REPLY', content: '已收到' })
     expect(postMock).toHaveBeenNthCalledWith(2, '/tickets/8/start', { comment: '开始处理' })
     expect(postMock).toHaveBeenNthCalledWith(3, '/tickets/8/resolve', { comment: '已解决' })
   })

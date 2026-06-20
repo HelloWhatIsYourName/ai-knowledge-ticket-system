@@ -36,7 +36,7 @@ const transferMessage = ref('')
 const ticketTitle = ref('')
 const ticketDescription = ref('')
 const ticketCategoryId = ref<number | undefined>()
-const ticketPriority = ref<TicketPriority>('MEDIUM')
+const ticketPriority = ref<TicketPriority>('NORMAL')
 
 const confidenceText = computed(() => {
   if (!answer.value) {
@@ -136,7 +136,7 @@ function applyAnswer(result: RagAnswerResponse, normalizedQuestion: string) {
   selectedSessionId.value = result.sessionId
   ticketTitle.value = normalizedQuestion.slice(0, 80)
   ticketDescription.value = `${normalizedQuestion}\n\nAI 回答：${result.answer}`
-  ticketPriority.value = result.transferSuggested ? 'HIGH' : 'MEDIUM'
+  ticketPriority.value = result.transferSuggested ? 'HIGH' : 'NORMAL'
 }
 
 async function refreshSessions() {
@@ -291,7 +291,7 @@ onMounted(loadInitialData)
             优先级
             <select v-model="ticketPriority">
               <option value="LOW">低</option>
-              <option value="MEDIUM">中</option>
+              <option value="NORMAL">普通</option>
               <option value="HIGH">高</option>
               <option value="URGENT">紧急</option>
             </select>

@@ -1,4 +1,5 @@
 import { flushPromises, mount } from '@vue/test-utils'
+import { createPinia, setActivePinia } from 'pinia'
 import { describe, expect, it, vi } from 'vitest'
 import TicketDetailView from './TicketDetailView.vue'
 import {
@@ -8,6 +9,7 @@ import {
   resolveTicket,
   startTicket
 } from '../../api/tickets'
+import { useAuthStore } from '../../stores/auth'
 
 vi.mock('vue-router', () => ({
   useRoute: () => ({
@@ -36,12 +38,17 @@ const resolveTicketMock = vi.mocked(resolveTicket)
 
 describe('TicketDetailView', () => {
   it('renders ticket detail, comments, and workflow actions', async () => {
+    const pinia = createPinia()
+    setActivePinia(pinia)
+    const auth = useAuthStore()
+    auth.permissions = ['ticket:process']
+
     getTicketMock.mockResolvedValue({
       id: 8,
       ticketNo: 'TK-20260620-0001',
       title: '无法登录后台',
       description: '用户反馈后台登录失败。',
-      status: 'PENDING',
+      status: 'PENDING_ASSIGN',
       priority: 'HIGH',
       source: 'AI_SESSION',
       transferReason: 'AI 置信度低，需要人工处理',
@@ -64,7 +71,7 @@ describe('TicketDetailView', () => {
         id: 3,
         ticketId: 8,
         authorId: 2,
-        commentType: 'REPLY',
+        commentType: 'AGENT_REPLY',
         content: '已收到，正在排查。',
         internal: false,
         createdAt: '2026-06-20T10:05:00'
@@ -83,7 +90,7 @@ describe('TicketDetailView', () => {
       id: 5,
       ticketId: 8,
       authorId: 2,
-      commentType: 'REPLY',
+      commentType: 'AGENT_REPLY',
       content: '请用户重新尝试登录。',
       internal: false
     })
@@ -108,6 +115,7 @@ describe('TicketDetailView', () => {
     expect(wrapper.text()).toContain('用户反馈后台登录失败。')
     expect(wrapper.text()).toContain('AI 置信度低，需要人工处理')
     expect(wrapper.text()).toContain('AI 会话转入工单')
+    expect(wrapper.text()).toContain('坐席回复')
     expect(wrapper.text()).toContain('已收到，正在排查。')
     expect(wrapper.text()).toContain('内部备注：疑似账号锁定。')
     expect(wrapper.text()).toContain('开始处理')
@@ -118,5 +126,14 @@ describe('TicketDetailView', () => {
     await flushPromises()
 
     expect(startTicketMock).toHaveBeenCalledWith(8, '开始处理这个工单')
+
+    await wrapper.find('.comment-form textarea').setValue('请用户重新尝试登录。')
+    await wrapper.find('.comment-form').trigger('submit')
+    await flushPromises()
+
+    expect(createTicketCommentMock).toHaveBeenCalledWith(8, {
+      commentType: 'AGENT_REPLY',
+      content: '请用户重新尝试登录。'
+    })
   })
 })
