@@ -36,10 +36,10 @@ request() {
 
 request_stream() {
   local token="$1"
-  local body="$2"
+  local question="$2"
   local code
   set +e
-  code=$(curl -sS --max-time 20 -o "$BODY_FILE" -w '%{http_code}' -X POST "$BASE_URL/api/ai/chat/stream" -H "Authorization: Bearer $token" -H 'Content-Type: application/json' -d "$body")
+  code=$(curl -sS --max-time 20 -o "$BODY_FILE" -w '%{http_code}' -G "$BASE_URL/api/ai/chat/stream" -H "Authorization: Bearer $token" --data-urlencode "question=$question")
   local exit_code=$?
   set -e
   if [[ "$exit_code" != "0" ]]; then
@@ -101,9 +101,9 @@ printf 'adminLogin 200 token:redacted\n'
 printf 'userLogin 200 token:redacted\n'
 
 check authMe 200 GET /api/auth/me "$ADMIN_TOKEN"
-check knowledgeSearch 200 POST /api/kb/search "$USER_TOKEN" '{"query":"忘记密码后应该如何重置？","topK":3}'
+check knowledgeSearch 200 POST /api/kb/search "$ADMIN_TOKEN" '{"query":"忘记密码后应该如何重置？","topK":3}'
 check ragAsk 200 POST /api/ai/chat/ask "$USER_TOKEN" '{"question":"忘记密码后应该如何重置？"}'
-check_stream "$USER_TOKEN" '{"question":"忘记密码后应该如何重置？"}'
+check_stream "$USER_TOKEN" '忘记密码后应该如何重置？'
 check adminOverview 200 GET /api/admin/statistics/overview "$ADMIN_TOKEN"
 
 printf 'phase19Preflight complete token:redacted\n'

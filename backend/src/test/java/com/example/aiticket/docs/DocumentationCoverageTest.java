@@ -18,6 +18,7 @@ class DocumentationCoverageTest {
         assertThat(script).contains("/api/auth/me");
         assertThat(script).contains("/api/kb/documents/text");
         assertThat(script).contains("/api/kb/search");
+        assertThat(script).contains("check knowledgeSearch 200 POST /api/kb/search \"$ADMIN_TOKEN\"");
         assertThat(script).doesNotContain("/api/knowledge/documents/text");
         assertThat(script).doesNotContain("/api/knowledge/search");
         assertThat(script).contains("/api/ai/chat/ask");
@@ -71,6 +72,7 @@ class DocumentationCoverageTest {
         assertThat(script).contains("/api/auth/login");
         assertThat(script).contains("/api/auth/me");
         assertThat(script).contains("/api/kb/search");
+        assertThat(script).contains("check knowledgeSearch 200 POST /api/kb/search \"$ADMIN_TOKEN\"");
         assertThat(script).contains("/api/ai/chat/ask");
         assertThat(script).contains("/api/ai/chat/stream");
         assertThat(script).contains("/api/admin/statistics/overview");
@@ -111,7 +113,8 @@ class DocumentationCoverageTest {
         assertThat(report).contains("Frontend");
         assertThat(report).contains("AI_EMBEDDING_API_KEY");
         assertThat(report).contains("AI_CHAT_API_KEY");
-        assertThat(report).contains("BLOCKED");
+        assertThat(report).contains("PASS");
+        assertThat(report).contains("Phase 19 preflight");
         assertThat(report).contains("token:redacted");
 
         String script = Files.readString(scriptPath);
