@@ -1,5 +1,12 @@
 import { defineStore } from 'pinia'
-import { login as loginRequest, type LoginRequest, type MenuSummary, type UserSummary } from '../api/auth'
+import {
+  getCurrentUser,
+  login as loginRequest,
+  type CurrentUserResponse,
+  type LoginRequest,
+  type MenuSummary,
+  type UserSummary
+} from '../api/auth'
 
 interface AuthState {
   token: string
@@ -22,15 +29,27 @@ export const useAuthStore = defineStore('auth', {
     firstMenuPath: (state) => state.menus[0]?.path ?? '/app'
   },
   actions: {
-    async login(request: LoginRequest) {
-      const response = await loginRequest(request)
-
-      this.token = response.accessToken
+    applyCurrentUser(response: CurrentUserResponse) {
       this.user = response.user
       this.roles = response.roles
       this.permissions = response.permissions
       this.menus = response.menus
+    },
+    async login(request: LoginRequest) {
+      const response = await loginRequest(request)
+
+      this.token = response.accessToken
+      this.applyCurrentUser(response)
       localStorage.setItem('akt_token', response.accessToken)
+    },
+    async loadCurrentUser() {
+      try {
+        const response = await getCurrentUser()
+        this.applyCurrentUser(response)
+      } catch (err) {
+        this.logout()
+        throw err
+      }
     },
     logout() {
       this.token = ''

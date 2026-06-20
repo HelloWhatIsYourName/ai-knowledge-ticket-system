@@ -28,8 +28,21 @@ export interface LoginResponse {
   menus: MenuSummary[]
 }
 
+export interface CurrentUserResponse {
+  user: UserSummary
+  roles: string[]
+  permissions: string[]
+  menus: MenuSummary[]
+}
+
 export async function login(request: LoginRequest): Promise<LoginResponse> {
   const response = await http.post<ApiResponse<LoginResponse>>('/auth/login', request)
+
+  return unwrapData(response.data)
+}
+
+export async function getCurrentUser(): Promise<CurrentUserResponse> {
+  const response = await http.get<ApiResponse<CurrentUserResponse>>('/auth/me')
 
   return unwrapData(response.data)
 }

@@ -1,8 +1,15 @@
-import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHistory, type RouteLocationNormalized, type RouteRecordRaw } from 'vue-router'
 import AppShell from '../layouts/AppShell.vue'
 import LoginView from '../views/LoginView.vue'
 import HomeView from '../views/HomeView.vue'
 import PlaceholderView from '../views/PlaceholderView.vue'
+import { useAuthStore } from '../stores/auth'
+
+interface AuthGuardStore {
+  isAuthenticated: boolean
+  user: unknown
+  loadCurrentUser: () => Promise<void>
+}
 
 export const routes: RouteRecordRaw[] = [
   {
@@ -19,6 +26,7 @@ export const routes: RouteRecordRaw[] = [
     path: '/app',
     name: 'app',
     component: AppShell,
+    meta: { requiresAuth: true },
     children: [
       {
         path: '',
@@ -64,9 +72,42 @@ export const routes: RouteRecordRaw[] = [
   }
 ]
 
+export async function resolveAuthNavigation(
+  to: Pick<RouteLocationNormalized, 'fullPath' | 'matched'>,
+  auth: AuthGuardStore = useAuthStore()
+) {
+  const requiresAuth = to.matched.some((record) => record.meta.requiresAuth)
+
+  if (!requiresAuth) {
+    return true
+  }
+
+  if (!auth.isAuthenticated) {
+    return {
+      path: '/login',
+      query: { redirect: to.fullPath }
+    }
+  }
+
+  if (!auth.user) {
+    try {
+      await auth.loadCurrentUser()
+    } catch {
+      return {
+        path: '/login',
+        query: { redirect: to.fullPath }
+      }
+    }
+  }
+
+  return true
+}
+
 const router = createRouter({
   history: createWebHistory(),
   routes
 })
+
+router.beforeEach((to) => resolveAuthNavigation(to))
 
 export default router

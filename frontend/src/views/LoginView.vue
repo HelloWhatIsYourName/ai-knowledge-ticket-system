@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 
 const router = useRouter()
+const route = useRoute()
 const auth = useAuthStore()
 const username = ref('')
 const password = ref('')
@@ -16,7 +17,8 @@ async function submit() {
 
   try {
     await auth.login({ username: username.value, password: password.value })
-    await router.push(auth.firstMenuPath)
+    const redirect = typeof route.query.redirect === 'string' ? route.query.redirect : ''
+    await router.push(redirect.startsWith('/app') ? redirect : auth.firstMenuPath)
   } catch (err) {
     error.value = err instanceof Error ? err.message : '登录失败'
   } finally {
