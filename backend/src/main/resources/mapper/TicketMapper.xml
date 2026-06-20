@@ -15,6 +15,10 @@
         SELECT ticket_comment_seq.NEXTVAL FROM dual
     </select>
 
+    <select id="nextTicketCategoryId" resultType="long">
+        SELECT ticket_category_seq.NEXTVAL FROM dual
+    </select>
+
     <select id="findOwnedAiSession" resultType="com.example.aiticket.ai.rag.domain.AiSession">
         SELECT id, user_id, title, last_question, transfer_suggested, created_at, updated_at
         FROM ai_session
@@ -157,6 +161,48 @@
           AND internal = 0
         </if>
         ORDER BY created_at ASC, id ASC
+    </select>
+
+    <insert id="insertTicketCategory">
+        INSERT INTO ticket_category (
+            id, name, parent_id, sort_order, enabled
+        )
+        VALUES (
+            #{id}, #{name}, #{parentId,jdbcType=NUMERIC}, #{sortOrder},
+            <choose>
+                <when test="enabled">1</when>
+                <otherwise>0</otherwise>
+            </choose>
+        )
+    </insert>
+
+    <update id="updateTicketCategory">
+        UPDATE ticket_category
+        SET name = #{name},
+            parent_id = #{parentId,jdbcType=NUMERIC},
+            sort_order = #{sortOrder},
+            updated_at = CURRENT_TIMESTAMP
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateTicketCategoryEnabled">
+        UPDATE ticket_category
+        SET enabled =
+            <choose>
+                <when test="enabled">1</when>
+                <otherwise>0</otherwise>
+            </choose>,
+            updated_at = CURRENT_TIMESTAMP
+        WHERE id = #{id}
+    </update>
+
+    <select id="listTicketCategories" resultType="com.example.aiticket.ticket.domain.TicketCategory">
+        SELECT id, name, parent_id, sort_order, enabled, created_at, updated_at
+        FROM ticket_category
+        <if test="!includeDisabled">
+        WHERE enabled = 1
+        </if>
+        ORDER BY sort_order ASC, id ASC
     </select>
 
     <update id="updateTicketStatus">

@@ -3,6 +3,7 @@ package com.example.aiticket.ticket.mapper;
 import com.example.aiticket.ai.rag.domain.AiMessage;
 import com.example.aiticket.ai.rag.domain.AiSession;
 import com.example.aiticket.ticket.domain.Ticket;
+import com.example.aiticket.ticket.domain.TicketCategory;
 import com.example.aiticket.ticket.domain.TicketComment;
 import com.example.aiticket.ticket.domain.TicketCommentType;
 import com.example.aiticket.ticket.domain.TicketFlowLog;
@@ -23,6 +24,8 @@ public interface TicketMapper {
     Long nextFlowLogId();
 
     Long nextCommentId();
+
+    Long nextTicketCategoryId();
 
     AiSession findOwnedAiSession(@Param("sessionId") Long sessionId, @Param("userId") Long userId);
 
@@ -85,6 +88,21 @@ public interface TicketMapper {
 
     List<TicketComment> listComments(@Param("ticketId") Long ticketId,
                                      @Param("includeInternal") boolean includeInternal);
+
+    int insertTicketCategory(@Param("id") Long id,
+                             @Param("name") String name,
+                             @Param("parentId") Long parentId,
+                             @Param("sortOrder") int sortOrder,
+                             @Param("enabled") boolean enabled);
+
+    int updateTicketCategory(@Param("id") Long id,
+                             @Param("name") String name,
+                             @Param("parentId") Long parentId,
+                             @Param("sortOrder") int sortOrder);
+
+    int updateTicketCategoryEnabled(@Param("id") Long id, @Param("enabled") boolean enabled);
+
+    List<TicketCategory> listTicketCategories(@Param("includeDisabled") boolean includeDisabled);
 
     int updateTicketStatus(@Param("ticketId") Long ticketId,
                            @Param("status") TicketStatus status,

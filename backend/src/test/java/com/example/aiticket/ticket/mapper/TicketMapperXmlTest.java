@@ -36,5 +36,10 @@ class TicketMapperXmlTest {
         assertThat(mapper).contains("nextCommentId");
         assertThat(mapper).contains("insertComment");
         assertThat(mapper).contains("listComments");
+        assertThat(mapper).contains("nextTicketCategoryId");
+        assertThat(mapper).contains("insertTicketCategory");
+        assertThat(mapper).contains("updateTicketCategory");
+        assertThat(mapper).contains("updateTicketCategoryEnabled");
+        assertThat(mapper).contains("listTicketCategories");
     }
 }

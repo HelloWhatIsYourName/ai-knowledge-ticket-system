@@ -246,7 +246,7 @@ git add backend/src/main/java/com/example/aiticket/admin/statistics/web backend/
 git commit -m "feat: expose admin statistics api"
 ```
 
-## Task 3: Ticket Category Management API
+## Task 3: Ticket Category Management API ⭐
 
 **Files:**
 - Modify: `backend/src/main/java/com/example/aiticket/ticket/mapper/TicketMapper.java`
@@ -260,11 +260,11 @@ git commit -m "feat: expose admin statistics api"
 - Test: `backend/src/test/java/com/example/aiticket/ticket/service/TicketCategoryServiceTest.java`
 - Test: `backend/src/test/java/com/example/aiticket/ticket/web/TicketCategoryControllerTest.java`
 
-- [ ] **Step 1: Write failing tests**
+- [x] **Step 1: Write failing tests**
 
 Extend `TicketMapperXmlTest` to assert `nextTicketCategoryId`, `insertTicketCategory`, `updateTicketCategory`, `updateTicketCategoryEnabled`, and `listTicketCategories`. Write service tests for create, rename/reorder, enable, disable, and list. Write controller tests for permission `ticket:manage`.
 
-- [ ] **Step 2: Run focused tests to verify RED**
+- [x] **Step 2: Run focused tests to verify RED**
 
 ```bash
 cd backend
@@ -273,7 +273,7 @@ JAVA_HOME=/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home PATH=/o
 
 Expected: fail because category write methods and web API do not exist.
 
-- [ ] **Step 3: Implement mapper methods**
+- [x] **Step 3: Implement mapper methods**
 
 Add mapper methods:
 
@@ -291,11 +291,11 @@ List<TicketCategory> listTicketCategories(boolean includeDisabled);
 
 In XML, use server-side `1/0` generation for booleans with `<choose>`.
 
-- [ ] **Step 4: Implement service**
+- [x] **Step 4: Implement service**
 
 Validate nonblank names. Default `sortOrder` to `0` and `enabled` to `true` on create. Throw `TicketWorkflowException("ticket category name is required")` for blank names.
 
-- [ ] **Step 5: Implement controller**
+- [x] **Step 5: Implement controller**
 
 Expose:
 
@@ -309,14 +309,14 @@ POST /api/ticket-categories/{id}/disable
 
 Use `@PreAuthorize("hasAuthority('ticket:manage')")` for all methods.
 
-- [ ] **Step 6: Run focused Task 3 tests**
+- [x] **Step 6: Run focused Task 3 tests**
 
 ```bash
 cd backend
 JAVA_HOME=/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home PATH=/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home/bin:$PATH mvn -Dmaven.repo.local=/Users/xianghuaifeng/Documents/毕业设计/.worktrees/knowledge-live-verification/.m2repo -Dtest=TicketMapperXmlTest,TicketCategoryServiceTest,TicketCategoryControllerTest test
 ```
 
-- [ ] **Step 7: Commit Task 3**
+- [x] **Step 7: Commit Task 3**
 
 ```bash
 git add backend/src/main/java/com/example/aiticket/ticket backend/src/main/resources/mapper/TicketMapper.xml backend/src/test/java/com/example/aiticket/ticket docs/superpowers/plans/2026-06-20-phase-6-admin-dashboard-implementation-plan.md

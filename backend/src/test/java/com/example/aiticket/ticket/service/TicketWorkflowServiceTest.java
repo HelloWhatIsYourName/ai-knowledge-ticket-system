@@ -4,6 +4,7 @@ import com.example.aiticket.ai.rag.domain.AiMessage;
 import com.example.aiticket.ai.rag.domain.AiMessageRole;
 import com.example.aiticket.ai.rag.domain.AiSession;
 import com.example.aiticket.ticket.domain.Ticket;
+import com.example.aiticket.ticket.domain.TicketCategory;
 import com.example.aiticket.ticket.domain.TicketComment;
 import com.example.aiticket.ticket.domain.TicketCommentType;
 import com.example.aiticket.ticket.domain.TicketFlowLog;
@@ -247,6 +248,11 @@ class TicketWorkflowServiceTest {
         }
 
         @Override
+        public Long nextTicketCategoryId() {
+            return 1L;
+        }
+
+        @Override
         public AiSession findOwnedAiSession(Long sessionId, Long userId) {
             if (ownedSession != null && ownedSession.id().equals(sessionId) && ownedSession.userId().equals(userId)) {
                 return ownedSession;
@@ -361,6 +367,26 @@ class TicketWorkflowServiceTest {
                     .map(comment -> new TicketComment(comment.id(), comment.ticketId(), comment.authorId(),
                             comment.commentType(), comment.content(), comment.internal(), LocalDateTime.now()))
                     .toList();
+        }
+
+        @Override
+        public int insertTicketCategory(Long id, String name, Long parentId, int sortOrder, boolean enabled) {
+            return 0;
+        }
+
+        @Override
+        public int updateTicketCategory(Long id, String name, Long parentId, int sortOrder) {
+            return 0;
+        }
+
+        @Override
+        public int updateTicketCategoryEnabled(Long id, boolean enabled) {
+            return 0;
+        }
+
+        @Override
+        public List<TicketCategory> listTicketCategories(boolean includeDisabled) {
+            return List.of();
         }
 
         @Override
